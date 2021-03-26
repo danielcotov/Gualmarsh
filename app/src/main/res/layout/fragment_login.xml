@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="bottom"
+    android:background="@color/w_blueLogo">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="105dp"
+            android:layout_marginTop="134dp"
+            android:src="@drawable/logo"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_logIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="LOG IN"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="35sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="241dp"
+        android:textAlignment="center"/>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="328dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="299dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/log_in_division" />
+
+    <EditText
+        android:id="@+id/edt_logInEmail"
+        android:layout_width="328dp"
+        android:layout_height="wrap_content"
+        android:hint="Email Address"
+        android:fontFamily="sans-serif-light"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/opacityText"
+        android:inputType="textPassword"
+        android:drawableTint="@color/white"
+        android:backgroundTint="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="344dp"/>
+
+    <EditText
+        android:id="@+id/edt_logInPassword"
+        android:layout_width="328dp"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:fontFamily="sans-serif-light"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/opacityText"
+        android:inputType="textEmailAddress"
+        android:drawableTint="@color/white"
+        android:backgroundTint="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="404dp"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_logInGo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:backgroundTint="#FFC221"
+        app:tint="@color/white"
+        android:layout_marginTop="479dp"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/ic_forward_arrow" />
+
+    <TextView
+        android:id="@+id/tv_registerNew"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:text="@string/logIn_register"
+        android:textAlignment="center"
+        android:layout_marginTop="565dp"/>
+
+
+
+</RelativeLayout>
