@@ -75,12 +75,6 @@ public class LoginFragment extends Fragment {
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = Auth.getCurrentUser();
-        refreshUI(currentUser);
-    }
     private void refreshUI(FirebaseUser user) {
         if (user != null) {
             startActivity(new Intent(getContext(), DashboardActivity.class));
@@ -93,25 +87,22 @@ public class LoginFragment extends Fragment {
     public void login(View view) {
         String email = edt_Email.getText().toString();
         String password = edt_Password.getText().toString();
-//        Toast.makeText(<T>, email, Toast.LENGTH_LONG).show();
-        Toast.makeText(getContext(),email,Toast.LENGTH_SHORT).show();
-        Auth.signInWithEmailAndPassword(email, password).addOnCompleteListener((LoginActivity)getContext(), new OnCompleteListener<AuthResult>(){
+        Auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>(){
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (emailValidation(email)) {
                     if (!TextUtils.isEmpty(password) && password.length() >= 6) {
                         if (task.isSuccessful()) {
-                            //Obtenemos el usuario que se esta autenticando
                             FirebaseUser user = Auth.getCurrentUser();
                             refreshUI(user);
                         } else {
-                            Toast.makeText(view.getContext(), "The username you entered is incorrect, please try again", Toast.LENGTH_LONG).show();
+                            Toast.makeText(view.getContext(), R.string.incorrect_username, Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        Toast.makeText(view.getContext(), "Invalid password. It should have 6 characters minimum", Toast.LENGTH_LONG).show();
+                        Toast.makeText(view.getContext(), R.string.invalid_password, Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(view.getContext(), "The email format is incorrect", Toast.LENGTH_LONG).show();
+                    Toast.makeText(view.getContext(), R.string.incorrect_email, Toast.LENGTH_LONG).show();
                 }
 
             }

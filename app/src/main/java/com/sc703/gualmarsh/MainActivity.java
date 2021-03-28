@@ -5,6 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.sc703.gualmarsh.dashboard.DashboardActivity;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -15,8 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        TimerTask timerTask = new TimerTask(){
+        TimerTask timerTask = new TimerTask() {
 
             @Override
             public void run() {
@@ -25,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         };
-
         Timer time = new Timer();
         time.schedule(timerTask,2500);
     }

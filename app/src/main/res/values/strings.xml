@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">Gualmarsh</string>
-    <string name="title_activity_home_login">HomeLoginActivity</string>
-    <string name="title_activity_dashboard">DashboardActivity</string>
-    <string name="home_fragment_label">Home Fragment</string>
-    <string name="login_fragment_label">Login Fragment</string>
-    <string name="register_fragment_label">Register Fragment</string>
+    <string name="title_activity_home_login" translatable="false">HomeLoginActivity</string>
+    <string name="title_activity_dashboard" translatable="false">DashboardActivity</string>
+    <string name="title_activity_log_in" translatable="false">LoginActivity</string>
+    <string name="home_fragment_label" translatable="false">Home Fragment</string>
+    <string name="login_fragment_label" translatable="false">Login Fragment</string>
+    <string name="register_fragment_label" translatable="false">Register Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="log_in_upperCase">LOG IN</string>
@@ -14,11 +15,18 @@
     <string name="password_hint">Password</string>
     <string name="confirm_password_hint">Confirm Password</string>
     <string name="dashboard_summary">SUMMARY</string>
-    <string name="title_activity_log_in">Login</string>
+
     <string name="register_new_account"><u>Register a new account</u></string>
     <string name="already_have_account"><u>Already have an account</u></string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Toast Strings -->
+    <string name="signed_out">Signed out</string>
+    <string name="incorrect_username">The username you entered is incorrect, try again later</string>
+    <string name="invalid_password">Invalid password. It should have 6 characters minimum</string>
+    <string name="incorrect_email">The email format is incorrect</string>
+    <string name="registration_failed">Registration failed, try again later</string>
+
+    <string name="hello_first_fragment" translatable="false">Hello first fragment</string>
+    <string name="hello_second_fragment" translatable="false">Hello second fragment. Arg: %1$s</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 </resources>

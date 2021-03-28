@@ -112,13 +112,13 @@ public class RegisterFragment extends Fragment {
                             FirebaseUser user = Auth.getCurrentUser();
                             refreshUI(user);
                         } else {
-                            Toast.makeText(view.getContext(), "The creation of the user failed", Toast.LENGTH_LONG).show();
+                            Toast.makeText(view.getContext(), R.string.registration_failed, Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        Toast.makeText(view.getContext(), "The password is not valid", Toast.LENGTH_LONG).show();
+                        Toast.makeText(view.getContext(), R.string.invalid_password, Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(view.getContext(), "The email format is not correct", Toast.LENGTH_LONG).show();
+                    Toast.makeText(view.getContext(), R.string.incorrect_email, Toast.LENGTH_LONG).show();
                 }
             }
 

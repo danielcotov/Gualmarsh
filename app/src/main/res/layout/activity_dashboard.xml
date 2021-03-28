@@ -85,33 +85,31 @@
                     android:background="@drawable/dashboard_box"
                     android:elevation="8dp"
                     android:orientation="vertical">
-
-                    <ImageView
+                    <Button
+                        android:id="@+id/btn_inventory"
                         android:layout_width="47dp"
                         android:layout_height="47dp"
-                        android:src="@mipmap/ic_items_round"
+                        android:layout_marginStart="64dp"
                         android:layout_marginTop="32dp"
-                        android:layout_marginStart="64dp"/>
-
-
-
-
-
-
+                        android:src="@mipmap/ic_items_round" />
 
                 </LinearLayout>
 
-
-
-
-
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/dashboard_box"
                     android:layout_marginStart="18dp"
                     android:layout_marginTop="34dp"
-                    android:elevation="8dp" />
+                    android:elevation="8dp">
+                <Button
+                    android:id="@+id/btn_web"
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:layout_marginStart="64dp"
+                    android:layout_marginTop="32dp"
+                    android:src="@mipmap/ic_items_round" />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -119,23 +117,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/dashboard_box"
                     android:layout_marginStart="27dp"
                     android:layout_marginTop="18dp"
+                    android:background="@drawable/dashboard_box"
                     android:elevation="8dp" />
 
-
-
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/dashboard_box"
                     android:layout_marginStart="18dp"
                     android:layout_marginTop="18dp"
-                    android:elevation="8dp" />
+                    android:background="@drawable/dashboard_box"
+                    android:elevation="8dp">
+
+                    <Button
+                        android:id="@+id/btn_sign_out"
+                        android:layout_width="47dp"
+                        android:layout_height="47dp"
+                        android:layout_marginStart="64dp"
+                        android:layout_marginTop="32dp"
+                        android:src="@mipmap/ic_items_round" />
+                </LinearLayout>
 
             </LinearLayout>
 

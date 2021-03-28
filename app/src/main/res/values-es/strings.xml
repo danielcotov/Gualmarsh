@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gualmarsh</string>
+    <string name="next">Siguiente</string>
+    <string name="previous">Anterior</string>
+    <string name="register_upperCase">REGISTRARSE</string>
+    <string name="log_in_upperCase">INICIAR SESIÓN</string>
+    <string name="name_hint">Nombre</string>
+    <string name="email_address_hint">Correo Electrónico</string>
+    <string name="password_hint">Contraseña</string>
+    <string name="confirm_password_hint">Confirmar Contraseña</string>
+    <string name="dashboard_summary">RESUMEN</string>
+    <string name="register_new_account">Registrar una cuenta nueva</string>
+    <string name="already_have_account">Ya tengo una cuenta</string>
+    <string name="signed_out">Desconectado</string>
+    <string name="incorrect_username">El usuario no es correcto, intente nuevamente</string>
+    <string name="invalid_password">"Contraseña inválida. Debe contener al menos 6 caracteres "</string>
+    <string name="incorrect_email">El formato de correo no es correcto</string>
+    <string name="registration_failed">Registro fallido, intente nuevamente</string>
+</resources>
