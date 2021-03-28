@@ -23,11 +23,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.sc703.gualmarsh.LoginActivity;
 import com.sc703.gualmarsh.R;
-import com.sc703.gualmarsh.dashboard.DashboardActivity;
+import com.sc703.gualmarsh.principal.PrincipalActivity;
 
-import java.util.concurrent.Executor;
 import java.util.regex.Pattern;
 
 public class RegisterFragment extends Fragment {
@@ -95,7 +93,7 @@ public class RegisterFragment extends Fragment {
     }
     private void refreshUI(FirebaseUser user) {
         if (user != null) {
-            startActivity(new Intent(getContext(), DashboardActivity.class));
+            startActivity(new Intent(getContext(), PrincipalActivity.class));
         }
     }
     public void registration(View view) {

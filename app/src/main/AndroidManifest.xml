@@ -11,10 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gualmarsh">
         <activity
-            android:name=".dashboard.DashboardActivity"
+            android:name=".principal.PrincipalActivity"
             android:label="@string/title_activity_dashboard"
             android:theme="@style/Theme.Gualmarsh.NoActionBar" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".login.LoginActivity" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.Design.NoActionBar">

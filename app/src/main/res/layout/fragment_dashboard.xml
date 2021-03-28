@@ -102,13 +102,13 @@
                     android:layout_marginStart="18dp"
                     android:layout_marginTop="34dp"
                     android:elevation="8dp">
-                <Button
-                    android:id="@+id/btn_web"
-                    android:layout_width="47dp"
-                    android:layout_height="47dp"
-                    android:layout_marginStart="64dp"
-                    android:layout_marginTop="32dp"
-                    android:src="@mipmap/ic_items_round" />
+                    <Button
+                        android:id="@+id/btn_web"
+                        android:layout_width="47dp"
+                        android:layout_height="47dp"
+                        android:layout_marginStart="64dp"
+                        android:layout_marginTop="32dp"
+                        android:src="@mipmap/ic_items_round" />
                 </LinearLayout>
 
             </LinearLayout>

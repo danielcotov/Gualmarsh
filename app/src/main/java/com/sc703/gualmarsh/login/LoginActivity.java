@@ -1,4 +1,4 @@
-package com.sc703.gualmarsh;
+package com.sc703.gualmarsh.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.sc703.gualmarsh.dashboard.DashboardActivity;
+import com.sc703.gualmarsh.R;
+import com.sc703.gualmarsh.principal.PrincipalActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void refreshUI(FirebaseUser user) {
         if (user != null) {
-            startActivity(new Intent(this, DashboardActivity.class));
+            startActivity(new Intent(this, PrincipalActivity.class));
         }
     }
 

@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.sc703.gualmarsh.dashboard.DashboardActivity;
+import com.sc703.gualmarsh.login.LoginActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;

@@ -1,4 +1,4 @@
-package com.sc703.gualmarsh;
+package com.sc703.gualmarsh.principal.web;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
