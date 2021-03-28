@@ -105,10 +105,10 @@ public class LoginFragment extends Fragment {
                             FirebaseUser user = Auth.getCurrentUser();
                             refreshUI(user);
                         } else {
-                            Toast.makeText(view.getContext(), "The username you enter is incorrect, please try again", Toast.LENGTH_LONG).show();
+                            Toast.makeText(view.getContext(), "The username you entered is incorrect, please try again", Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        Toast.makeText(view.getContext(), "The password is incorrect, password is 6 characters minimum", Toast.LENGTH_LONG).show();
+                        Toast.makeText(view.getContext(), "Invalid password. It should have 6 characters minimum", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(view.getContext(), "The email format is incorrect", Toast.LENGTH_LONG).show();

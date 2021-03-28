@@ -1,21 +1,22 @@
 <resources>
     <string name="app_name">Gualmarsh</string>
     <string name="title_activity_home_login">HomeLoginActivity</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
-    <string name="hello_world">Hello Square World!</string>
-    <string name="title_activity_log_in">LogIn</string>
-    <string name="logIn_register"><u>Register a new account</u></string>
-    <string name="logIn_register1"><u>Already have an account</u></string>
     <string name="title_activity_dashboard">DashboardActivity</string>
-    <!-- Strings used for fragments for navigation -->
     <string name="home_fragment_label">Home Fragment</string>
     <string name="login_fragment_label">Login Fragment</string>
     <string name="register_fragment_label">Register Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="log_in_upperCase">LOG IN</string>
+    <string name="register_upperCase">REGISTER</string>
+    <string name="name_hint">Name</string>
+    <string name="email_address_hint">Email Address</string>
+    <string name="password_hint">Password</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="dashboard_summary">SUMMARY</string>
+    <string name="title_activity_log_in">Login</string>
+    <string name="register_new_account"><u>Register a new account</u></string>
+    <string name="already_have_account"><u>Already have an account</u></string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>

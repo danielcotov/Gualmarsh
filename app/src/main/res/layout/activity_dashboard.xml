@@ -65,7 +65,7 @@
                     android:layout_marginTop="13dp"
                     android:layout_marginBottom="13dp"
                     android:fontFamily="sans-serif-medium"
-                    android:text="SUMMARY"
+                    android:text="@string/dashboard_summary"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 
@@ -151,6 +151,7 @@
         android:layout_height="277dp"
         android:background="@drawable/icon_bar"
         android:layout_marginTop="684dp">
+
 
     </LinearLayout>
 
