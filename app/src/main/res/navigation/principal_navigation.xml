@@ -10,6 +10,22 @@
         android:name="com.sc703.gualmarsh.principal.dashboard.DashboardFragment"
         android:label="@string/home_fragment_label"
         tools:layout="@layout/fragment_dashboard">
+
+    <action
+        android:id="@+id/action_Dashboard_to_Web"
+        app:destination="@id/fragment_web" />
+
         
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_web"
+        android:name="com.sc703.gualmarsh.principal.web.WebFragment"
+        android:label="@string/web_fragment_label"
+        tools:layout="@layout/fragment_web">
+
+        <action
+            android:id="@+id/action_Web_to_Dashboard"
+            app:destination="@id/fragment_dashboard" />
     </fragment>
 </navigation>
