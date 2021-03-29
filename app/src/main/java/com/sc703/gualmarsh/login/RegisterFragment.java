@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,7 +34,7 @@ public class RegisterFragment extends Fragment {
 
     TextView alreadyRegistered;
     FloatingActionButton btnLogInGo;
-    private EditText edt_Email, edt_Password, edt_confirmPassword;
+    private TextInputLayout edt_Email, edt_Password, edt_confirmPassword;
     private FirebaseAuth Auth;
 
     @Override
@@ -97,9 +99,9 @@ public class RegisterFragment extends Fragment {
         }
     }
     public void registration(View view) {
-        String email = edt_Email.getText().toString();
-        String password = edt_Password.getText().toString().trim();
-        String confirmPassword = edt_confirmPassword.getText().toString().trim();
+        String email = edt_Email.getEditText().toString();
+        String password = edt_Password.getEditText().toString().trim();
+        String confirmPassword = edt_confirmPassword.getEditText().toString().trim();
 
         Auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener((LoginActivity) getContext(), new OnCompleteListener<AuthResult>() {
             @Override
@@ -113,7 +115,8 @@ public class RegisterFragment extends Fragment {
                             Toast.makeText(view.getContext(), R.string.registration_failed, Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        Toast.makeText(view.getContext(), R.string.invalid_password, Toast.LENGTH_LONG).show();
+                        edt_Password.setError("Invalid password");
+                        /*Toast.makeText(view.getContext(), R.string.invalid_password, Toast.LENGTH_LONG).show();*/
                     }
                 } else {
                     Toast.makeText(view.getContext(), R.string.incorrect_email, Toast.LENGTH_LONG).show();
