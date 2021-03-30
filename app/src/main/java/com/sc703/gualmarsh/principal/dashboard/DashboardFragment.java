@@ -24,7 +24,7 @@ public class DashboardFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-        Button btnSignOut = root.findViewById(R.id.btn_sign_out);
+        /*Button btnSignOut = root.findViewById(R.id.btn_sign_out);
         Button btnWeb = root.findViewById(R.id.btn_web);
 
         btnSignOut.setOnClickListener(new View.OnClickListener() {
@@ -42,7 +42,7 @@ public class DashboardFragment extends Fragment {
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
                 navController.navigate(R.id.action_Dashboard_to_Web);
             }
-        });
+        });*/
 
 
         return root;
