@@ -20,6 +20,9 @@
     <string name="register_new_account"><u>Register a new account</u></string>
     <string name="already_have_account"><u>Already have an account</u></string>
 
+    <!--Validations-->
+    <string name="emptyField">Field cannot be empty</string>
+
     <!-- Toast Strings -->
     <string name="signed_out">Signed out</string>
     <string name="incorrect_username">The username you entered is incorrect, try again later</string>

@@ -54,6 +54,9 @@
         app:endIconTint="@color/white"
         app:boxStrokeWidthFocused="2dp"
         app:boxStrokeColor="@color/white"
+        app:boxStrokeErrorColor="@color/w_yellow"
+        app:errorTextColor="@color/w_yellow"
+        app:errorIconTint="@color/w_yellow"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:layout_marginStart="42dp"
@@ -81,6 +84,9 @@
             app:endIconTint="@color/white"
             app:boxStrokeWidthFocused="2dp"
             app:boxStrokeColor="@color/white"
+            app:boxStrokeErrorColor="@color/w_yellow"
+            app:errorTextColor="@color/w_yellow"
+            app:errorIconTint="@color/w_yellow"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:layout_marginStart="42dp"
@@ -106,12 +112,15 @@
             android:textColorHint="@color/opacityText"
             app:boxStrokeWidthFocused="2dp"
             app:boxStrokeColor="@color/white"
+            app:boxStrokeErrorColor="@color/w_yellow"
+            app:errorTextColor="@color/w_yellow"
+            app:errorIconTint="@color/w_yellow"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:layout_marginStart="42dp"
+            app:hintTextAppearance="@style/text_in_layout_hint_Style"
             app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/white"
-            app:hintTextAppearance="@style/text_in_layout_hint_Style">
+            app:passwordToggleTint="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -133,12 +142,15 @@
             android:textColorHint="@color/opacityText"
             app:boxStrokeWidthFocused="2dp"
             app:boxStrokeColor="@color/white"
+            app:boxStrokeErrorColor="@color/w_yellow"
+            app:errorTextColor="@color/w_yellow"
+            app:errorIconTint="@color/w_yellow"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:layout_marginStart="42dp"
+            app:hintTextAppearance="@style/text_in_layout_hint_Style"
             app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/white"
-            app:hintTextAppearance="@style/text_in_layout_hint_Style">
+            app:passwordToggleTint="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"

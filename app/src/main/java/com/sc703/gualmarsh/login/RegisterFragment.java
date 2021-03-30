@@ -34,7 +34,7 @@ public class RegisterFragment extends Fragment {
 
     TextView alreadyRegistered;
     FloatingActionButton btnLogInGo;
-    private TextInputLayout edt_Email, edt_Password, edt_confirmPassword;
+    private TextInputLayout edt_Email, edt_Password, edt_confirmPassword, edt_Name;
     private FirebaseAuth Auth;
 
     @Override
@@ -44,8 +44,7 @@ public class RegisterFragment extends Fragment {
         alreadyRegistered = (TextView) root.findViewById(R.id.tv_alreadyRegistered);
         btnLogInGo = (FloatingActionButton) root.findViewById(R.id.btn_logInGo);
         btnLogInGo = (FloatingActionButton) root.findViewById(R.id.btn_logInGo);
-
-
+        edt_Name = root.findViewById(R.id.edt_registerName);
         edt_Email = root.findViewById(R.id.edt_registerEmail);
         edt_Password = root.findViewById(R.id.edt_registerPassword);
         edt_confirmPassword = root.findViewById(R.id.edt_registerConfirmPassword);
@@ -98,10 +97,27 @@ public class RegisterFragment extends Fragment {
             startActivity(new Intent(getContext(), PrincipalActivity.class));
         }
     }
+
+    private Boolean validateName(){
+        String name = edt_Name.getEditText().getText().toString().trim();
+
+        if(name.isEmpty()){
+            edt_Name.setError(getText(R.string.emptyField));
+            return false;
+        }else{
+            edt_Name.setError(null);
+            edt_Name.setErrorEnabled(false);
+            return true;
+        }
+    }
     public void registration(View view) {
         String email = edt_Email.getEditText().toString();
         String password = edt_Password.getEditText().toString().trim();
         String confirmPassword = edt_confirmPassword.getEditText().toString().trim();
+
+        if(!validateName()){
+            return;
+        }
 
         Auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener((LoginActivity) getContext(), new OnCompleteListener<AuthResult>() {
             @Override
@@ -115,8 +131,7 @@ public class RegisterFragment extends Fragment {
                             Toast.makeText(view.getContext(), R.string.registration_failed, Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        edt_Password.setError("Invalid password");
-                        /*Toast.makeText(view.getContext(), R.string.invalid_password, Toast.LENGTH_LONG).show();*/
+                        Toast.makeText(view.getContext(), R.string.invalid_password, Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(view.getContext(), R.string.incorrect_email, Toast.LENGTH_LONG).show();
