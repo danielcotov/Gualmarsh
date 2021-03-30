@@ -27,6 +27,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
         BottomNavigationView navView = findViewById(R.id.bottomNav_view);
 
+
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.dashboardFragment, R.id.itemsFragment, R.id.searchFragment, R.id.settingsFragment)
                 .build();

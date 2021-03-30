@@ -37,6 +37,7 @@
 
     <!--Items-->
     <string name="items_main">Items</string>
+    <string name="items_lastUpdated">Last Updated</string>
 
 
 
