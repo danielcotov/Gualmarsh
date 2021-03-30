@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Gualmarsh</string>
     <string name="title_activity_home_login" translatable="false">HomeLoginActivity</string>
-    <string name="title_activity_dashboard" translatable="false">DashboardActivity</string>
+    <string name="title_activity_principal" translatable="false">PrincipalActivity</string>
     <string name="title_activity_log_in" translatable="false">LoginActivity</string>
     <string name="home_fragment_label" translatable="false">Home Fragment</string>
     <string name="login_fragment_label" translatable="false">Login Fragment</string>
