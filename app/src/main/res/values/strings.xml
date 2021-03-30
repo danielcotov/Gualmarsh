@@ -28,11 +28,15 @@
 
     <!--Dashboard-->
     <string name="dashboard_summary">SUMMARY</string>
+    <string name="dashboard_main">Dashboard</string>
     <string name="dashboard_recent_items">RECENT ITEMS</string>
     <string name="dashboard_items">Items</string>
     <string name="dashboard_categories">Categories</string>
     <string name="dashboard_quantity">Total quantity</string>
     <string name="dashboard_total">Total value</string>
+
+    <!--Items-->
+    <string name="items_main">Items</string>
 
 
 
