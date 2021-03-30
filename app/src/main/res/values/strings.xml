@@ -30,7 +30,7 @@
     <!--Validations-->
     <string name="emptyField">Field cannot be empty</string>
     <string name="incorrect_username">The username you entered is incorrect, please try again</string>
-    <string name="invalid_password">Password should contain at least 1 digit, 1 upper case, and 1 special character</string>
+    <string name="invalid_password">Password should contain at least 1 digit, 1 upper case, 1 lower case, and 1 special character</string>
     <string name="invalid_password_length">Password should have 6 character minumum</string>
     <string name="password_mismatch">Passwords do not match</string>
     <string name="incorrect_email">The email format is incorrect</string>
