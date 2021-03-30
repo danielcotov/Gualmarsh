@@ -20,7 +20,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <style name="Theme.Gualmarsh.Background" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Gualmarsh.Background" parent="Theme.Gualmarsh">
         <item name="android:windowBackground">@color/w_blueLogo</item>
     </style>
 
