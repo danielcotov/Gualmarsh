@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="dashboardFragment"
+        android:id="@+id/dashboardFragment"
         android:icon="@drawable/ic_dashboard"
         android:title="Dashboard" />
     <item
-        android:id="itemsFragment"
+        android:id="@+id/itemsFragment"
         android:icon="@drawable/ic_items"
         android:title="Items" />
     <item
-        android:id="searchFragment"
+        android:id="@+id/searchFragment"
         android:icon="@drawable/ic_search"
         android:title="Search" />
     <item
-        android:id="settingsFragment"
+        android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_settings"
         android:title="Settings" />
 </menu>
