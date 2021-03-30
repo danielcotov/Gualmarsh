@@ -9,6 +9,7 @@
     tools:context=".principal.PrincipalActivity">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/w_divider"

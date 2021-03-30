@@ -111,8 +111,9 @@ public class RegisterFragment extends Fragment {
                 "(?=.*[A-Z])" +         //at least 1 upper case letter
                 "(?=.*[a-zA-Z])" +      //any letter
                 "(?=.*[!@#$%^&+=])" +    //at least 1 special character
-                ".{1,}" +               //at least 4 characters
+                ".{1,}" +
                 "$";
+
         String checkPasswordLength = "^" +
                 ".{6,}" +               //at least 4 characters
                 "$";
