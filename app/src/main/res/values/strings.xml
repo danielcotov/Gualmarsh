@@ -7,6 +7,8 @@
     <string name="login_fragment_label" translatable="false">Login Fragment</string>
     <string name="register_fragment_label" translatable="false">Register Fragment</string>
     <string name="web_fragment_label" translatable="false">Web Fragment</string>
+
+    <!--Login & Register-->
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="log_in_upperCase">LOG IN</string>
@@ -15,6 +17,14 @@
     <string name="email_address_hint">Email Address</string>
     <string name="password_hint">Password</string>
     <string name="confirm_password_hint">Confirm Password</string>
+    <string name="register_new_account"><u>Register a new account</u></string>
+    <string name="already_have_account"><u>Already have an account</u></string>
+
+    <!--Bottom Navigation Bar-->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_items">Items</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_settings">Settings</string>
 
     <!--Dashboard-->
     <string name="dashboard_summary">SUMMARY</string>
@@ -24,8 +34,9 @@
     <string name="dashboard_quantity">Total quantity</string>
     <string name="dashboard_total">Total value</string>
 
-    <string name="register_new_account"><u>Register a new account</u></string>
-    <string name="already_have_account"><u>Already have an account</u></string>
+
+
+
 
     <!--Validations-->
     <string name="emptyField">Field cannot be empty</string>
