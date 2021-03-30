@@ -20,7 +20,7 @@ public class PrincipalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
-        Button btnSignOut = findViewById(R.id.btn_sign_out);
+        /*Button btnSignOut = findViewById(R.id.btn_sign_out);
 
         btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,6 +30,6 @@ public class PrincipalActivity extends AppCompatActivity {
                 Intent intent = new Intent(PrincipalActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 }
