@@ -1,96 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="bottom"
-    android:background="@color/w_blueLogo">
+    android:background="@color/w_blueLogo"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="match_parent"
-            android:layout_height="105dp"
-            android:layout_marginTop="134dp"
-            android:src="@drawable/logo"/>
-
-    </LinearLayout>
+        android:layout_height="105dp"
+        android:layout_marginTop="134dp"
+        android:src="@drawable/logo" />
 
     <TextView
         android:id="@+id/tv_logIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/log_in_upperCase"
+        android:layout_marginTop="12dp"
         android:fontFamily="sans-serif-medium"
-        android:textSize="35sp"
+        android:text="@string/log_in_upperCase"
+        android:textAlignment="center"
         android:textColor="@color/white"
-        android:layout_marginTop="241dp"
-        android:textAlignment="center"/>
+        android:textSize="35sp" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="328dp"
         android:layout_height="15dp"
-        android:layout_marginTop="299dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginStart="42.5dp"
+        android:layout_marginTop="12dp"
         android:src="@drawable/log_in_division" />
 
-    <EditText
-        android:id="@+id/edt_logInEmail"
-        android:layout_width="328dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/email_address_hint"
-        android:fontFamily="sans-serif-light"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/opacityText"
-        android:inputType="textEmailAddress"
-        android:drawableTint="@color/white"
-        android:backgroundTint="@color/white"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="344dp"/>
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edt_logInPassword"
-        android:layout_width="328dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/password_hint"
-        android:fontFamily="sans-serif-light"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/opacityText"
-        android:inputType="textPassword"
-        android:drawableTint="@color/white"
-        android:backgroundTint="@color/white"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="404dp"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edt_loginEmail"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="328dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="42dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-light"
+            android:hint="@string/email_address_hint"
+            android:textColorHint="@color/opacityText"
+            android:textSize="20sp"
+            app:boxStrokeColor="@color/white"
+            app:boxStrokeErrorColor="@color/w_yellow"
+            app:boxStrokeWidthFocused="2dp"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/white"
+            app:errorIconTint="@color/w_yellow"
+            app:errorTextColor="@color/w_yellow"
+            app:hintTextAppearance="@style/text_in_layout_hint_Style"
+            app:hintTextColor="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/white" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edt_loginPassword"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="328dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="42dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-light"
+            android:hint="@string/password_hint"
+            android:textColorHint="@color/opacityText"
+            android:textSize="20sp"
+            app:boxStrokeColor="@color/white"
+            app:boxStrokeErrorColor="@color/w_yellow"
+            app:boxStrokeWidthFocused="2dp"
+            app:errorIconTint="@color/w_yellow"
+            app:errorTextColor="@color/w_yellow"
+            app:hintTextAppearance="@style/text_in_layout_hint_Style"
+            app:hintTextColor="@color/white"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textColor="@color/white" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_logInGo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="179dp"
+        android:layout_marginTop="45dp"
         android:clickable="true"
         app:backgroundTint="#FFC221"
-        app:tint="@color/white"
-        android:layout_marginTop="479dp"
-        android:layout_centerHorizontal="true"
-        app:srcCompat="@drawable/ic_forward_arrow" />
+        app:srcCompat="@drawable/ic_forward_arrow"
+        app:tint="@color/white" />
 
     <TextView
         android:id="@+id/tv_registerNew"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:fontFamily="sans-serif"
-        android:textSize="15sp"
-        android:textColor="@color/white"
         android:text="@string/register_new_account"
         android:textAlignment="center"
-        android:layout_marginTop="565dp"/>
+        android:textColor="@color/white"
+        android:textSize="15sp" />
 
 
-
-</RelativeLayout>
+</LinearLayout>

@@ -14,7 +14,10 @@
     <string name="already_have_account">Ya tengo una cuenta</string>
     <string name="signed_out">Desconectado</string>
     <string name="incorrect_username">El usuario no es correcto, intente nuevamente</string>
-    <string name="invalid_password">"Contraseña inválida. Debe contener al menos 6 caracteres "</string>
     <string name="incorrect_email">El formato de correo no es correcto</string>
     <string name="registration_failed">Registro fallido, intente nuevamente</string>
+    <string name="emptyField">El campo no puede estar vacío</string>
+    <string name="invalid_password_length">"Contraseña debe contener al menos 6 caracteres "</string>
+    <string name="invalid_password">Contraseña debe contener al menos 1 número, 1 mayúscula y 1 caracter especial</string>
+    <string name="password_mismatch">Contraseñas no concuerdan</string>
 </resources>

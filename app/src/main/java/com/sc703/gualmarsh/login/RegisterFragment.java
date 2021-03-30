@@ -68,75 +68,109 @@ public class RegisterFragment extends Fragment {
         });
         return root;
     }
-    private boolean emailValidation(String email) {
-        Pattern pattern = Patterns.EMAIL_ADDRESS;
-        return pattern.matcher(email).matches();
-    }
-    public boolean passValidation(final String password) {
 
-        final Pattern Password_Pat = Pattern.compile("^" +
-                //"(?=.*[0-9])" +         //at least 1 digit
-                //"(?=.*[a-z])" +         //at least 1 lower case letter
-                "(?=.*[A-Z])" +         //at least 1 upper case letter
-                "(?=.*[a-zA-Z])" +      //any letter
-                "(?=.*[@#$%^&+=])" +    //at least 1 special character
-                "(?=\\S+$)" +           //no white spaces
-                ".{4,}" +               //at least 4 characters
-                "$");
-        if (password.isEmpty()) {
-            return false;
-        } else if (!Password_Pat.matcher(password).matches()) {
-            return false;
-        } else {
-            return true;
-        }
-
-    }
     private void refreshUI(FirebaseUser user) {
         if (user != null) {
             startActivity(new Intent(getContext(), PrincipalActivity.class));
         }
     }
 
-    private Boolean validateName(){
+    private Boolean validateName() {
         String name = edt_Name.getEditText().getText().toString().trim();
 
-        if(name.isEmpty()){
+        if (name.isEmpty()) {
             edt_Name.setError(getText(R.string.emptyField));
             return false;
-        }else{
+        } else {
             edt_Name.setError(null);
             edt_Name.setErrorEnabled(false);
             return true;
         }
     }
-    public void registration(View view) {
-        String email = edt_Email.getEditText().toString();
-        String password = edt_Password.getEditText().toString().trim();
-        String confirmPassword = edt_confirmPassword.getEditText().toString().trim();
+    private boolean validateEmail() {
+        String email = edt_Email.getEditText().getText().toString().trim();
+        String checkEmail = "[a-zA-Z0-9._-]+@[a-z]+.+[a-z]+";
 
-        if(!validateName()){
+        if (email.isEmpty()) {
+            edt_Email.setError(getText(R.string.emptyField));
+            return false;
+        } else if (!email.matches(checkEmail)) {
+            edt_Email.setError(getText(R.string.incorrect_email));
+            return false;
+        } else {
+            edt_Email.setError(null);
+            edt_Email.setErrorEnabled(false);
+            return true;
+        }
+    }
+    private boolean validatePassword() {
+        String password = edt_Password.getEditText().getText().toString().trim();
+        String checkPassword = "^" +
+                "(?=.*[0-9])" +         //at least 1 digit
+                "(?=.*[a-z])" +         //at least 1 lower case letter
+                "(?=.*[A-Z])" +         //at least 1 upper case letter
+                "(?=.*[a-zA-Z])" +      //any letter
+                "(?=.*[@#$%^&+=])" +    //at least 1 special character
+                ".{6,}" +               //at least 4 characters
+                "$";
+        String checkPasswordLength = "^" +
+                ".{6,}" +               //at least 4 characters
+                "$";
+
+        if (password.isEmpty()) {
+            edt_Password.setError(getText(R.string.emptyField));
+            return false;
+        } else if (!password.matches(checkPassword)) {
+            edt_Password.setError(getText(R.string.invalid_password));
+            return false;
+        } else if (!password.matches(checkPasswordLength)) {
+            edt_Password.setError(getText(R.string.invalid_password_length));
+            return false;
+        } else {
+            edt_Password.setError(null);
+            edt_Password.setErrorEnabled(false);
+            return true;
+        }
+    }
+    private boolean validateConfirmPassword() {
+        String confirmPassword = edt_confirmPassword.getEditText().getText().toString().trim();
+        String password = edt_Password.getEditText().getText().toString().trim();
+        System.out.println(password);
+        System.out.printf(confirmPassword);
+        if (confirmPassword.isEmpty()) {
+            edt_confirmPassword.setError(getText(R.string.emptyField));
+            return false;
+        } else if (!confirmPassword.equals(password)) {
+            edt_confirmPassword.setError(getText(R.string.password_mismatch));
+            return false;
+        } else {
+            edt_confirmPassword.setError(null);
+            edt_confirmPassword.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    public void registration(View view) {
+        String email = edt_Email.getEditText().getText().toString();
+        String password = edt_Password.getEditText().getText().toString().trim();
+
+        System.out.println(email);
+        System.out.printf(password);
+        if (!validateName() | !validateEmail() | !validatePassword() | !validateConfirmPassword()) {
             return;
         }
 
-        Auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener((LoginActivity) getContext(), new OnCompleteListener<AuthResult>() {
+        Auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (emailValidation(email)) {
-                    if (!TextUtils.isEmpty(password) && !passValidation(password) && password.length() >= 6 && password != confirmPassword) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = Auth.getCurrentUser();
-                            refreshUI(user);
-                        } else {
-                            Toast.makeText(view.getContext(), R.string.registration_failed, Toast.LENGTH_LONG).show();
-                        }
-                    } else {
-                        Toast.makeText(view.getContext(), R.string.invalid_password, Toast.LENGTH_LONG).show();
-                    }
+                if (task.isSuccessful()) {
+                    FirebaseUser user = Auth.getCurrentUser();
+                    refreshUI(user);
                 } else {
-                    Toast.makeText(view.getContext(), R.string.incorrect_email, Toast.LENGTH_LONG).show();
+                    Toast.makeText(view.getContext(), R.string.registration_failed, Toast.LENGTH_LONG).show();
                 }
             }
+
 
         });
 
