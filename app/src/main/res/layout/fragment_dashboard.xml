@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/w_darkBG"
-    android:gravity="center"
-    android:clipToPadding="false"
-    android:clipChildren="false">
+    android:background="@color/w_darkBG">
 
     <LinearLayout
         android:id="@+id/dahsboardLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="79dp"
         android:background="@color/w_darkBG">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="27dp"
-            android:layout_marginTop="49dp"
+            android:layout_marginTop="25dp"
             android:fontFamily="sans-serif-black"
             android:text="Dashboard"
             android:textColor="@color/w_blue"
@@ -31,7 +29,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="154dp"
-            android:layout_marginTop="61.5dp"
+            android:layout_marginTop="37.5dp"
             android:src="@drawable/ic_filter"
             app:tint="@color/w_blue" />
 
@@ -41,7 +39,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="103dp"
+        android:layout_marginTop="0dp"
         android:clipToPadding="false"
         android:clipChildren="false">
 
@@ -53,12 +51,13 @@
             android:clipChildren="false">
 
             <LinearLayout
-                android:id="@+id/dashboardLayout2"
+                android:id="@+id/dashboardSummaryDivider"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/w_divider">
 
                 <TextView
+                    android:id="@+id/tv_summary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="27dp"
@@ -89,9 +88,32 @@
                     <ImageView
                         android:layout_width="47dp"
                         android:layout_height="47dp"
-                        android:layout_marginStart="64dp"
+                        android:layout_marginStart="62dp"
                         android:layout_marginTop="32dp"
                         android:src="@mipmap/ic_items_round" />
+
+                    <TextView
+                        android:id="@+id/tv_dashboardItemsNum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="2"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:id="@+id/tv_dashboardItems"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/dashboard_items"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:layout_marginTop="0dp" />
+
 
                 </LinearLayout>
 
@@ -101,14 +123,37 @@
                     android:background="@drawable/dashboard_box"
                     android:layout_marginStart="18dp"
                     android:layout_marginTop="34dp"
-                    android:elevation="8dp">
+                    android:elevation="8dp"
+                    android:orientation="vertical">
+
                     <ImageView
-                        android:id="@+id/btn_web"
                         android:layout_width="47dp"
                         android:layout_height="47dp"
-                        android:layout_marginStart="64dp"
+                        android:layout_marginStart="62dp"
                         android:layout_marginTop="32dp"
                         android:src="@mipmap/ic_categories_round" />
+
+                    <TextView
+                        android:id="@+id/tv_dashboardCategoriesNum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="2"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:id="@+id/tv_dashboardCategories"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/dashboard_categories"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:layout_marginTop="0dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -124,7 +169,39 @@
                     android:layout_marginStart="27dp"
                     android:layout_marginTop="18dp"
                     android:background="@drawable/dashboard_box"
-                    android:elevation="8dp" />
+                    android:elevation="8dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="47dp"
+                        android:layout_height="47dp"
+                        android:layout_marginStart="62dp"
+                        android:layout_marginTop="32dp"
+                        android:src="@mipmap/ic_quantity_round" />
+
+                    <TextView
+                        android:id="@+id/tv_dashboardQuantityNum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="15"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:id="@+id/tv_dashboardQuantity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/dashboard_quantity"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:layout_marginTop="0dp" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -132,19 +209,61 @@
                     android:layout_marginStart="18dp"
                     android:layout_marginTop="18dp"
                     android:background="@drawable/dashboard_box"
-                    android:elevation="8dp">
+                    android:elevation="8dp"
+                    android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/btn_sign_out"
                         android:layout_width="47dp"
                         android:layout_height="47dp"
                         android:layout_marginStart="64dp"
                         android:layout_marginTop="32dp"
-                        android:src="@mipmap/ic_items_round" />
+                        android:src="@mipmap/ic_total_round" />
+
+                    <TextView
+                        android:id="@+id/tv_dashboardTotalNum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="¢15000"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tv_dashboardTotal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@string/dashboard_total"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:layout_marginTop="0dp" />
                 </LinearLayout>
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/dashboardLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="33dp"
+                android:background="@color/w_divider">
+
+                <TextView
+                    android:id="@+id/tv_recentItems"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="27dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="13dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/dashboard_recent_items"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -152,13 +271,7 @@
     </ScrollView>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="277dp"
-        android:background="@drawable/icon_bar"
-        android:layout_marginTop="684dp">
 
 
-    </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
