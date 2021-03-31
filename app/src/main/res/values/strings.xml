@@ -40,9 +40,6 @@
     <string name="items_lastUpdated">Last Updated</string>
 
 
-
-
-
     <!--Validations-->
     <string name="emptyField">Field cannot be empty</string>
     <string name="incorrect_username">The username you entered is incorrect, please try again</string>
@@ -54,7 +51,6 @@
     <!-- Toast Strings -->
     <string name="signed_out">Signed out</string>
     <string name="registration_failed">Registration failed, please try again</string>
-
 
 
     <string name="hello_first_fragment" translatable="false">Hello first fragment</string>

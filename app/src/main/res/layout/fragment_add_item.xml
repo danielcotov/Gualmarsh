@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addItemFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/w_darkBG"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_close"
+            app:tint="@color/w_blueLogo"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="29dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="255dp"
+            android:layout_marginTop="19dp"
+            android:layout_marginEnd="26dp"
+            android:text="SAVE"
+            android:textColor="@color/w_darkBG"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="359dp"
+        android:layout_height="235dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/add_photo">
+    </ImageView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_item_folder"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="40dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Meat"
+            android:textColor="@color/textColorGray"
+            android:fontFamily="sans-serif"
+            android:textSize="16sp"
+            android:layout_marginTop="40.5dp"
+            android:layout_marginStart="10dp"/>
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="Enter Item Name"
+        android:textColorHint="@color/textColorGray"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="35dp"
+        android:layout_marginStart="26dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/addItem_Box1"
+            android:layout_width="206dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/edit_text_item"/>
+
+        <TextView
+            android:id="@+id/tv_quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:text="Quantity"
+            android:layout_alignTop="@id/addItem_Box1"
+            android:layout_marginTop="9dp"
+            android:textColor="@color/textColorGray"
+            android:textSize="15dp"/>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="-"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:background="@null"
+            android:layout_marginTop="44dp"
+            android:layout_marginStart="26dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="|  unit"
+            android:textSize="15sp"
+            android:textColor="@color/textColorGray"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="48dp"/>
+
+        <ImageView
+            android:id="@+id/addItem_Box2"
+            android:layout_width="206dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="206dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/edit_text_item" />
+
+        <TextView
+            android:id="@+id/tv_item_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="221dp"
+            android:text="Barcode"
+            android:layout_alignTop="@id/addItem_Box2"
+            android:layout_marginTop="9dp"
+            android:textColor="@color/textColorGray"
+            android:textSize="15dp"/>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="-"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:background="@null"
+            android:layout_marginTop="44dp"
+            android:layout_marginStart="221dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="|  unit"
+            android:textSize="15sp"
+            android:textColor="@color/textColorGray"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="48dp"/>
+    </RelativeLayout>
+
+</LinearLayout>
