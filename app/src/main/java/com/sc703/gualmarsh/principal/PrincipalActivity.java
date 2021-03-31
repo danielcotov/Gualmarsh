@@ -29,7 +29,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.dashboardFragment, R.id.itemsFragment, R.id.searchFragment, R.id.settingsFragment)
+                R.id.dashboardFragment, R.id.itemFragment, R.id.searchFragment, R.id.settingsFragment)
                 .build();
 
 

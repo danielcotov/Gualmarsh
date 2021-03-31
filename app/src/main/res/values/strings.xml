@@ -6,6 +6,10 @@
     <string name="home_fragment_label" translatable="false">Home Fragment</string>
     <string name="login_fragment_label" translatable="false">Login Fragment</string>
     <string name="register_fragment_label" translatable="false">Register Fragment</string>
+    <string name="item_fragment_label" translatable="false">Item Fragment</string>
+    <string name="product_fragment_label" translatable="false">Product Fragment</string>
+    <string name="search_fragment_label" translatable="false">Search Fragment</string>
+    <string name="settings_fragment_label" translatable="false">Settings Fragment</string>
     <string name="web_fragment_label" translatable="false">Web Fragment</string>
 
     <!--Login & Register-->
@@ -37,6 +41,7 @@
 
     <!--Items-->
     <string name="items_main">Items</string>
+    <string name="items_products_main">Products</string>
     <string name="items_lastUpdated">Last Updated</string>
 
 

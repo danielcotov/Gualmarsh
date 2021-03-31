@@ -26,7 +26,7 @@
                 app:srcCompat="@mipmap/ic_launcher_round" />
 
             <TextView
-                android:id="@+id/tv_test"
+                android:id="@+id/tv_grid_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -38,7 +38,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/testMV1" />
 
             <TextView
-                android:id="@+id/tv_test2"
+                android:id="@+id/tv_grid_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="MEAT"
@@ -46,8 +46,8 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/tv_test"
-                app:layout_constraintTop_toBottomOf="@+id/tv_test" />
+                app:layout_constraintStart_toStartOf="@+id/tv_grid_code"
+                app:layout_constraintTop_toBottomOf="@+id/tv_grid_code" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -55,11 +55,11 @@
                 android:orientation="horizontal"
                 android:gravity="center"
                 android:layout_marginTop="1dp"
-                app:layout_constraintStart_toStartOf="@+id/tv_test2"
-                app:layout_constraintTop_toBottomOf="@+id/tv_test2">
+                app:layout_constraintStart_toStartOf="@+id/tv_grid_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_grid_name">
 
                 <ImageView
-                    android:id="@+id/testMV2"
+                    android:id="@+id/imv_grid_quantity_icon"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center"
@@ -67,7 +67,7 @@
                     android:foregroundGravity="center_vertical"                    app:srcCompat="@drawable/ic_settings" />
 
                 <TextView
-                    android:id="@+id/tv_test3"
+                    android:id="@+id/tv_grid_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -75,11 +75,11 @@
                     android:text="2"
                     android:textColor="@color/black"
                     android:textSize="14sp"
-                    app:layout_constraintStart_toEndOf="@id/testMV2"
-                    app:layout_constraintTop_toTopOf="@id/testMV2" />
+                    app:layout_constraintStart_toEndOf="@id/imv_grid_quantity_icon"
+                    app:layout_constraintTop_toTopOf="@id/imv_grid_quantity_icon" />
 
                 <TextView
-                    android:id="@+id/tv_test4"
+                    android:id="@+id/tv_grid_pipe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
@@ -89,7 +89,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_test5"
+                    android:id="@+id/tv_grid_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"

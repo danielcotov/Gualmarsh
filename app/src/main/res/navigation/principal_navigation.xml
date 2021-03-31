@@ -4,49 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/principal_navigation"
     app:startDestination="@id/dashboardFragment">
-
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.sc703.gualmarsh.principal.dashboard.DashboardFragment"
         android:label="@string/home_fragment_label"
         tools:layout="@layout/fragment_dashboard">
-
-    <action
-        android:id="@+id/action_Dashboard_to_Web"
-        app:destination="@id/fragment_web" />
-
-        
+        <action
+            android:id="@+id/action_Dashboard_to_Web"
+            app:destination="@id/fragment_web" />
     </fragment>
-
     <fragment
-        android:id="@+id/itemsFragment"
-        android:name="com.sc703.gualmarsh.principal.dashboard.ItemsFragment"
-        android:label="@string/home_fragment_label"
-        tools:layout="@layout/fragment_items">
-
+        android:id="@+id/itemFragment"
+        android:name="com.sc703.gualmarsh.principal.items.itemFragment"
+        android:label="@string/item_fragment_label"
+        tools:layout="@layout/fragment_item">
+        <action
+            android:id="@+id/action_Items_to_Products"
+            app:destination="@id/productFragment" />
     </fragment>
-
+    <fragment
+        android:id="@+id/productFragment"
+        android:name="com.sc703.gualmarsh.principal.items.ProductFragment"
+        android:label="@string/product_fragment_label"
+        tools:layout="@layout/fragment_item_product">
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.sc703.gualmarsh.principal.dashboard.SettingsFragment"
-        android:label="@string/home_fragment_label"
+        android:label="@string/settings_fragment_label"
         tools:layout="@layout/fragment_settings">
     </fragment>
-
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.sc703.gualmarsh.principal.dashboard.SearchFragment"
-        android:label="@string/home_fragment_label"
+        android:label="@string/search_fragment_label"
         tools:layout="@layout/fragment_search">
     </fragment>
-
-
     <fragment
         android:id="@+id/fragment_web"
         android:name="com.sc703.gualmarsh.principal.web.WebFragment"
         android:label="@string/web_fragment_label"
         tools:layout="@layout/fragment_web">
-
         <action
             android:id="@+id/action_Web_to_Dashboard"
             app:destination="@id/dashboardFragment" />
