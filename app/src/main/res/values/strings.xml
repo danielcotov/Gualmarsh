@@ -40,7 +40,10 @@
     <string name="dashboard_total">Total value</string>
     <!--Settings-->
     <string name="settings_main">Settings</string>
-
+    <string name="settings_Log_Out">Log Out</string>
+    <string name="settings_Web">About us</string>
+    <string name="settings_Phone">Contact Support</string>
+    <string name="settings_Email">Call us</string>
 
     <!--Items-->
     <string name="items_main">Items</string>
