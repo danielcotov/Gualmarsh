@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/w_blueLogo"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_Settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SETTINGS"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="35sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="12dp"
+        android:textAlignment="center"
+        tools:ignore="MissingConstraints"/>
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="328dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="42.5dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/log_in_division" />
+        <Button
+            android:id="@+id/btn_logOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Log out"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:drawableLeft="@drawable/ic_sign_out"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
