@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_Dashboard_to_Web"
             app:destination="@id/fragment_web" />
+        <action
+            android:id="@+id/action_dashboard_to_settings"
+            app:destination="@+id/settingsFragment"/>
     </fragment>
     <fragment
         android:id="@+id/itemFragment"
@@ -33,6 +36,9 @@
         android:name="com.sc703.gualmarsh.principal.dashboard.SettingsFragment"
         android:label="@string/settings_fragment_label"
         tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/settings_to_dashboard"
+            app:destination="@id/dashboardFragment"/>
     </fragment>
     <fragment
         android:id="@+id/searchFragment"

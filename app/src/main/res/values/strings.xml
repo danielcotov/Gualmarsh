@@ -38,6 +38,9 @@
     <string name="dashboard_categories">Categories</string>
     <string name="dashboard_quantity">Total quantity</string>
     <string name="dashboard_total">Total value</string>
+    <!--Settings-->
+    <string name="settings_main">Settings</string>
+
 
     <!--Items-->
     <string name="items_main">Items</string>
