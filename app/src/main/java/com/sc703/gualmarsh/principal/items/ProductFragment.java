@@ -3,6 +3,7 @@ package com.sc703.gualmarsh.principal.items;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,19 +22,20 @@ import com.sc703.gualmarsh.database.models.product.Product;
 
 public class ProductFragment extends Fragment {
 
-    private FirebaseDatabase fDatabase = FirebaseDatabase.getInstance();
-    private DatabaseReference bdRef = fDatabase.getReference();
-    private DatabaseReference product = bdRef.child("products");
-    private RecyclerView recyclerView;
+    private final FirebaseDatabase fDatabase = FirebaseDatabase.getInstance();
+    private final DatabaseReference bdRef = fDatabase.getReference();
     private ProductAdapter productAdapter;
-
+    private ItemViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_item_product, container, false);
-        recyclerView = root.findViewById(R.id.recyclerview);
+        viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
+
+        RecyclerView recyclerView = root.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        DatabaseReference product = bdRef.child("productCategories/" + viewModel.getCode().getValue());
         FirebaseRecyclerOptions<Product> options
                 = new FirebaseRecyclerOptions.Builder<Product>()
                 .setQuery(product, Product.class)
