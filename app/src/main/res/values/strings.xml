@@ -47,6 +47,18 @@
     <string name="items_products_main">Products</string>
     <string name="items_lastUpdated">Last Updated</string>
 
+    <!--Add Item-->
+    <string name="addItem_btnSave">SAVE</string>
+    <string name="addItem_enterItemName">Enter Item Name</string>
+    <string name="addItem_Quantity">Quantity</string>
+    <string name="addItem_Barcode">Barcode</string>
+    <string name="addItem_Price">Price</string>
+    <string name="addItem_Unit">|  unit(s)</string>
+    <string name="addItem_expirationDate">Expiration Date</string>
+    <string name="addItem_Description">Description</string>
+    <string name="addItem_Weight_Unit">Weight / Unit</string>
+
+
 
     <!--Validations-->
     <string name="emptyField">Field cannot be empty</string>
