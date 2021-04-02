@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,13 +18,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.sc703.gualmarsh.R;
 import com.sc703.gualmarsh.database.models.category.Category;
 import com.sc703.gualmarsh.database.models.category.CategoryAdapter;
+import com.sc703.gualmarsh.database.models.product.Product;
 
-public class itemFragment extends Fragment {
+public class ItemFragment extends Fragment {
 
-    private FirebaseDatabase fDatabase = FirebaseDatabase.getInstance();
-    private DatabaseReference bdRef = fDatabase.getReference();
-    private DatabaseReference category = bdRef.child("categories");
-    private RecyclerView recyclerView;
+    private final FirebaseDatabase fDatabase = FirebaseDatabase.getInstance();
+    private final DatabaseReference bdRef = fDatabase.getReference();
+    private final DatabaseReference category = bdRef.child("categories");
     private CategoryAdapter categoryAdapter;
 
 
@@ -29,7 +32,7 @@ public class itemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_item, container, false);
-        recyclerView = root.findViewById(R.id.recyclerview);
+        RecyclerView recyclerView = root.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         FirebaseRecyclerOptions<Category> options
                 = new FirebaseRecyclerOptions.Builder<Category>()
@@ -37,6 +40,13 @@ public class itemFragment extends Fragment {
                 .build();
         categoryAdapter = new CategoryAdapter(options);
         recyclerView.setAdapter(categoryAdapter);
+        categoryAdapter.setOnItemClickListener(new ItemClickListener() {
+            @Override
+            public void OnItemClick(int position) {
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
+                navController.navigate(R.id.action_Items_to_Products);
+            }
+        });
 
         return root;
     }
