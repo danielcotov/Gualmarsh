@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/w_blueLogo"
+    android:background="@color/w_darkBG"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,37 +34,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/settings_Log_Out"
-            android:textAlignment="center"
-            android:textColor="@color/black"
+            android:gravity="left|center_vertical"
+            android:textColor="@color/white"
             android:textSize="15dp"
-            android:background="@color/w_yellow"
+            android:paddingLeft="25dp"
+            android:background="@color/transparent"
             android:drawableLeft="@drawable/ic_sign_out"/>
+
         <Button
             android:id="@+id/btn_Web"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/settings_Web"
-            android:textColor="@color/black"
-            android:background="@color/w_yellow"
+            android:textColor="@color/white"
+            android:background="@color/transparent"
             android:textSize="15dp"
+            android:paddingLeft="25dp"
+            android:gravity="left|center_vertical"
             android:drawableLeft="@drawable/ic_web"/>
         <Button
             android:id="@+id/btn_Phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/settings_Email"
-            android:textColor="@color/black"
-            android:background="@color/w_yellow"
+            android:textColor="@color/white"
+            android:background="@color/transparent"
             android:textSize="15dp"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="25dp"
             android:drawableLeft="@drawable/ic_phone"/>
         <Button
             android:id="@+id/btn_Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/settings_Phone"
-            android:textColor="@color/black"
-            android:background="@color/w_yellow"
+            android:textColor="@color/white"
+            android:background="@color/transparent"
+            android:gravity="left|center_vertical"
             android:textSize="15dp"
+            android:paddingLeft="25dp"
             android:drawableLeft="@drawable/ic_email"/>
 
     </LinearLayout>
