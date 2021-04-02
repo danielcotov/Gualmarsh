@@ -68,7 +68,7 @@
                     android:layout_marginTop="1dp"
                     app:tint="@color/textColorGray"
                     android:foregroundGravity="center_vertical"
-                    app:srcCompat="@drawable/ic_settings" />
+                    app:srcCompat="@drawable/ic_product_qty" />
 
                 <TextView
                     android:id="@+id/tv_grid_quantity"
