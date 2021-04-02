@@ -1,4 +1,4 @@
-package com.sc703.gualmarsh.principal.items;
+package com.sc703.gualmarsh.principal.inventory;
 
 
 import androidx.lifecycle.LiveData;

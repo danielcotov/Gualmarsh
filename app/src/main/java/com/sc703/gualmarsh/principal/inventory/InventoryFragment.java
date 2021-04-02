@@ -1,4 +1,4 @@
-package com.sc703.gualmarsh.principal.items;
+package com.sc703.gualmarsh.principal.inventory;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +24,7 @@ import com.sc703.gualmarsh.R;
 import com.sc703.gualmarsh.database.models.category.Category;
 import com.sc703.gualmarsh.database.models.category.CategoryAdapter;
 
-public class ItemFragment extends Fragment {
+public class InventoryFragment extends Fragment {
 
     private final FirebaseDatabase fDatabase = FirebaseDatabase.getInstance();
     private final DatabaseReference bdRef = fDatabase.getReference();
@@ -37,7 +37,7 @@ public class ItemFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_item, container, false);
+        View root = inflater.inflate(R.layout.fragment_inventory, container, false);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         FirebaseRecyclerOptions<Category> options

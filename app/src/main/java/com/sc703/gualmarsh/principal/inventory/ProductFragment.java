@@ -1,4 +1,4 @@
-package com.sc703.gualmarsh.principal.items;
+package com.sc703.gualmarsh.principal.inventory;
 
 import android.os.Bundle;
 
@@ -30,7 +30,7 @@ public class ProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_item_product, container, false);
+        View root = inflater.inflate(R.layout.fragment_inventory_product, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
 
         RecyclerView recyclerView = root.findViewById(R.id.recyclerview);

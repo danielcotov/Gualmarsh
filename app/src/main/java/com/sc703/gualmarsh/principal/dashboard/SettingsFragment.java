@@ -32,7 +32,6 @@ public class SettingsFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
-        SolicitarPermisos();
         Button btnSignOut = root.findViewById(R.id.btn_logOut);
         Button btnWeb = root.findViewById(R.id.btn_Web);
         Button btnPhone = root.findViewById(R.id.btn_Phone);
@@ -77,21 +76,5 @@ public class SettingsFragment extends Fragment {
 
         return root;
     }
-    private void SolicitarPermisos(){
-        final int PERMISSION_CODE = 55895;
-        int Permiso_GPS = ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-        int Permiso_Telefono = ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CALL_PHONE);
-        int Permiso_Internet = ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.INTERNET);
 
-        if(Permiso_GPS != PackageManager.PERMISSION_GRANTED
-                || Permiso_Telefono != PackageManager.PERMISSION_GRANTED
-                || Permiso_Internet != PackageManager.PERMISSION_GRANTED){
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                requestPermissions(new String[]{
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.CALL_PHONE,
-                        Manifest.permission.INTERNET},PERMISSION_CODE);
-            }
-        }
-    }
 }
