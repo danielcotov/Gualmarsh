@@ -36,6 +36,7 @@ public class SettingsFragment extends Fragment {
         Button btnSignOut = root.findViewById(R.id.btn_logOut);
         Button btnWeb = root.findViewById(R.id.btn_Web);
         Button btnPhone = root.findViewById(R.id.btn_Phone);
+        Button btnEmail = root.findViewById(R.id.btn_Email);
 
         btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,8 +57,20 @@ public class SettingsFragment extends Fragment {
         btnPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: 800-8000-722  "));
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel: 800-8000-722 "));
                 startActivity(intent);
+            }
+        });
+        btnEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("message/rfc822");
+                intent.putExtra(Intent.EXTRA_EMAIL, "gadafasolutions@gmail.com");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+                intent.putExtra(Intent.EXTRA_TEXT, "Insert email body");
+                startActivity(Intent.createChooser(intent, "Send Email"));
             }
         });
 
