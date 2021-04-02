@@ -3,6 +3,7 @@ package com.sc703.gualmarsh.database.models.category;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -16,15 +17,15 @@ import com.sc703.gualmarsh.database.models.product.Product;
 import com.sc703.gualmarsh.principal.items.ItemClickListener;
 
 public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryAdapter.Holder>  {
-
     private ItemClickListener itemClickListener;
+
 
     public CategoryAdapter(@NonNull FirebaseRecyclerOptions<Category> options)
     {
         super(options);
     }
 
-    public static class Holder extends RecyclerView.ViewHolder{
+    public class Holder extends RecyclerView.ViewHolder{
         TextView tvCategoryCode, tvCategoryName, tvCategoryQuantity;
 
         public Holder(View item){
@@ -32,19 +33,28 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
             tvCategoryCode = item.findViewById(R.id.tv_grid_code);
             tvCategoryName = item.findViewById(R.id.tv_grid_name);
             tvCategoryQuantity = item.findViewById(R.id.tv_grid_quantity);
+            itemView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && itemClickListener !=null){
+                        itemClickListener.OnItemClick(position);
+                    }
+                }
+            });
         }
+
     }
 
     @NonNull
     @Override
-    public CategoryAdapter.Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemRow = LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_item_view, parent, false);
         return new Holder(itemRow);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.Holder holder, int position, @NonNull Category model) {
-
         holder.tvCategoryCode.setText(model.getCode());
         holder.tvCategoryName.setText(String.format(String.valueOf(model.getName())));
         if (model.getQuantity() != null) {
@@ -52,6 +62,7 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
         }else{
             holder.tvCategoryQuantity.setText("");
         }
+
 
 
 
