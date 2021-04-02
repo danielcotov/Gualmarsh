@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/itemFragment"
-        android:name="com.sc703.gualmarsh.principal.items.itemFragment"
+        android:name="com.sc703.gualmarsh.principal.items.ItemFragment"
         android:label="@string/item_fragment_label"
         tools:layout="@layout/fragment_item">
         <action

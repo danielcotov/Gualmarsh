@@ -19,11 +19,7 @@ public class PrincipalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_principal);
         BottomNavigationView navView = findViewById(R.id.bottomNav_view);
 
-
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.dashboardFragment, R.id.itemFragment, R.id.searchFragment, R.id.settingsFragment)
-                .build();
-
+        
 
         NavController navController = Navigation.findNavController(PrincipalActivity.this, R.id.nav_principal_fragment);
         NavigationUI.setupWithNavController(navView, navController);
