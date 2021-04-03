@@ -44,6 +44,7 @@
     <string name="settings_Web">About us</string>
     <string name="settings_Phone">Contact Support</string>
     <string name="settings_Email">Call us</string>
+    <string name="settings_settings">Settings</string>
 
     <!--Items-->
     <string name="inventory_main">Inventory</string>
