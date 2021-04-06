@@ -76,6 +76,14 @@
     <string name="showItem_iconMove">Move</string>
     <string name="showItem_iconExport">Export</string>
 
+    <!--Pop up-->
+    <string name="discardPopUp_Title">Discard changes?</string>
+    <string name="discardPopUp_Text">Are you sure you want to discard your changes?</string>
+    <string name="discardPopup_Cancel">Cancel</string>
+    <string name="discardPopup_Discard">Discard</string>
+
+
+
 
     <!--Validations-->
     <string name="emptyField">Field cannot be empty</string>

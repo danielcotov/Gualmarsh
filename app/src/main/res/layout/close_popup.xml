@@ -9,42 +9,51 @@
     android:layout_gravity="center">
     
     <TextView
+        android:id="@+id/tv_discardPopup_Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Discard changes?"
+        android:text="@string/discardPopUp_Title"
         android:textColor="@color/white"
         android:textSize="28sp"
         android:fontFamily="sans-serif-medium"/>
 
     <TextView
+        android:id="@+id/tv_discardPopup_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:text="Are you sure you want to discard your changes?"
+        android:text="@string/discardPopUp_Text"
         android:layout_marginTop="25dp"
         android:textColor="@color/textColorGray"/>
 
     <LinearLayout
+        android:id="@+id/discardPopup_Icons"
         android:layout_marginTop="20dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/btn_discardPopup_Cancel"
             android:layout_width="fill_parent"
             android:layout_marginEnd="10dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:textSize="18sp"
+            android:textAllCaps="false"
             android:backgroundTint="@color/textColorGray"
             android:textColor="@color/w_darkBG"
-            android:text="Cancel"
+            android:text="@string/discardPopup_Cancel"
             android:layout_weight="1"/>
 
         <Button
+            android:id="@+id/btn_discardPopup_Discard"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:backgroundTint="@color/w_yellow"
             android:textColor="@color/w_darkBG"
-            android:text="Discard"
+            android:text="@string/discardPopup_Discard"
+            android:textAllCaps="false"
+            android:textSize="18sp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"/>
 
