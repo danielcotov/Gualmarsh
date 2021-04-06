@@ -14,7 +14,7 @@
             app:destination="@id/NavigationSettings"/>
     </fragment>
     <fragment
-        android:id="@+id/itemFragment"
+        android:id="@+id/inventoryFragment"
         android:name="com.sc703.gualmarsh.principal.inventory.InventoryFragment"
         android:label="@string/item_fragment_label"
         tools:layout="@layout/fragment_inventory">

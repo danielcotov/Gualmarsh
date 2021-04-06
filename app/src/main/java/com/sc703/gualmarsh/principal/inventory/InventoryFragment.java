@@ -5,12 +5,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,8 +36,9 @@ public class InventoryFragment extends Fragment {
     private final DatabaseReference bdRef = fDatabase.getReference();
     private final DatabaseReference categoryDB = bdRef.child("categories");
     private CategoryAdapter categoryAdapter;
+    private GridLayoutManager gridLayoutManager;
     private ItemViewModel viewModel;
-
+    boolean defaultView = true;
     private String category;
 
     @Override
@@ -39,14 +46,36 @@ public class InventoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_inventory, container, false);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
         FirebaseRecyclerOptions<Category> options
                 = new FirebaseRecyclerOptions.Builder<Category>()
                 .setQuery(categoryDB, Category.class)
                 .build();
-        categoryAdapter = new CategoryAdapter(options);
-        recyclerView.setAdapter(categoryAdapter);
+        categoryAdapter = new CategoryAdapter(options, gridLayoutManager);
         viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
+        ImageView imvChangeView = root.findViewById(R.id.imv_change_view);
+
+        imvChangeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(defaultView ==true){
+                    imvChangeView.setImageResource(R.drawable.ic_sort_down);
+                    defaultView = false;
+                }else{
+                    imvChangeView.setImageResource(R.drawable.ic_sort_list);
+                    defaultView = true;
+                }
+                switchLayout();
+
+            }
+        });
+
+        recyclerView.setAdapter(categoryAdapter);
+        RecyclerView.ItemDecoration itemDecoration = new
+                DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(itemDecoration);
         categoryAdapter.setOnItemClickListener(new ItemClickListener() {
             @Override
             public void OnItemClick(int position) {
@@ -92,11 +121,12 @@ public class InventoryFragment extends Fragment {
         super.onStop();
         categoryAdapter.stopListening();
     }
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getCategory() {
-        return category;
+    private void switchLayout(){
+        if (gridLayoutManager.getSpanCount() == 1){
+            gridLayoutManager.setSpanCount(2);
+        }else{
+            gridLayoutManager.setSpanCount(1);
+        }
+        categoryAdapter.notifyItemRangeChanged(0,2);
     }
 }

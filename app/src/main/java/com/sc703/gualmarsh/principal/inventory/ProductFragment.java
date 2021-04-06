@@ -32,7 +32,6 @@ public class ProductFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_inventory_product, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
-
         RecyclerView recyclerView = root.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         DatabaseReference product = bdRef.child("productCategories/" + viewModel.getCode().getValue());
