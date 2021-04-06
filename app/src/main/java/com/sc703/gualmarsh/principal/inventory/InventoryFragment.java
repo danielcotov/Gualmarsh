@@ -38,8 +38,7 @@ public class InventoryFragment extends Fragment {
     private CategoryAdapter categoryAdapter;
     private GridLayoutManager gridLayoutManager;
     private ItemViewModel viewModel;
-    boolean defaultView = true;
-    private String category;
+    public boolean defaultView = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,12 +54,12 @@ public class InventoryFragment extends Fragment {
                 .build();
         categoryAdapter = new CategoryAdapter(options, gridLayoutManager);
         viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
-        ImageView imvChangeView = root.findViewById(R.id.imv_change_view);
+        ImageView imvChangeView = root.findViewById(R.id.imv_change_view_inventory);
 
         imvChangeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(defaultView ==true){
+                if(defaultView == true){
                     imvChangeView.setImageResource(R.drawable.ic_sort_grid);
                     defaultView = false;
                 }else{
@@ -85,7 +84,8 @@ public class InventoryFragment extends Fragment {
                         try {
                             if (snapshot.getValue() != null) {
                                 try {
-                                    viewModel.setCode(snapshot.getValue().toString());
+                                    viewModel.setCategoryCode(snapshot.getValue().toString());
+
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

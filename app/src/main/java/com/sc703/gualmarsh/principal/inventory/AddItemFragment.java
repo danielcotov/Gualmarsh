@@ -1,4 +1,4 @@
-package com.sc703.gualmarsh.principal;
+package com.sc703.gualmarsh.principal.inventory;
 
 import android.os.Bundle;
 

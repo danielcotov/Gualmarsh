@@ -7,21 +7,25 @@ import androidx.lifecycle.ViewModel;
 
 
 public class ItemViewModel extends ViewModel {
-    private final MutableLiveData<String> itemCode = new MutableLiveData<>();
-    private final MutableLiveData<String> itemViewType = new MutableLiveData<>();
-
-    public void setCode(String category){
-        itemCode.setValue(category);
+    private final MutableLiveData<String> categoryCode = new MutableLiveData<>();
+    private final MutableLiveData<String> productCode = new MutableLiveData<>();
+    private final MutableLiveData<String> defaultView = new MutableLiveData<>();
+    public void setCategoryCode(String category){
+        categoryCode.setValue(category);
     }
-    public void setViewType(String viewType){
-        itemViewType.setValue(viewType);
+    public void setProductCode(String product){
+        productCode.setValue(product);
     }
-
-    public LiveData<String> getCode() {
-        return itemCode;
+    public void setDefaultView(String view){
+        defaultView.setValue(view);
     }
-    public LiveData<String> getViewType() {
-        return itemViewType;
+    public LiveData<String> getCategoryCode() {
+        return categoryCode;
     }
-
+    public LiveData<String> getProductCode() {
+        return productCode;
+    }
+    public LiveData<String> getDefaultView() {
+        return defaultView;
+    }
 }

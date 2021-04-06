@@ -30,6 +30,9 @@
         android:name="com.sc703.gualmarsh.principal.inventory.ProductFragment"
         android:label="@string/product_fragment_label"
         tools:layout="@layout/fragment_inventory_product">
+        <action
+            android:id="@+id/action_Products_to_Edit"
+            app:destination="@id/addItemFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -39,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/addItemFragment"
-        android:name="com.sc703.gualmarsh.principal.AddItemFragment"
+        android:name="com.sc703.gualmarsh.principal.inventory.AddItemFragment"
         android:label="@string/home_fragment_label"
         tools:layout="@layout/fragment_add_item">
     </fragment>

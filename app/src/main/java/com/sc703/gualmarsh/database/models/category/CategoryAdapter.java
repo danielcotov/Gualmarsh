@@ -23,35 +23,38 @@ import com.sc703.gualmarsh.principal.inventory.ItemViewModel;
 
 public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryAdapter.Holder> {
     private ItemClickListener itemClickListener;
-    private GridLayoutManager myLayoutManager;
+    private GridLayoutManager gridLayoutManager;
 
 
-    public CategoryAdapter(@NonNull FirebaseRecyclerOptions<Category> options, GridLayoutManager myLayoutManager) {
+    public CategoryAdapter(@NonNull FirebaseRecyclerOptions<Category> options, GridLayoutManager gridLayoutManager) {
         super(options);
-        this.myLayoutManager = myLayoutManager;
+        this.gridLayoutManager = gridLayoutManager;
     }
 
     @Override
     public int getItemViewType(int position) {
-        int spanCount = myLayoutManager.getSpanCount();
-        if (spanCount == 1){
+        int spanCount = gridLayoutManager.getSpanCount();
+        if (spanCount == 1) {
             return 1;
-        }else {
+        } else {
             return 2;
         }
     }
 
     public class Holder extends RecyclerView.ViewHolder {
-        TextView tvCategoryCodeGrid, tvCategoryCodeList, tvCategoryNameGrid, tvCategoryNameList, tvCategoryQuantityGrid, tvCategoryQuantityList;
+        TextView tvCategoryCode, tvCategoryName, tvCategoryQuantity;
 
-        public Holder(View item) {
+        public Holder(View item, int viewType) {
             super(item);
-            tvCategoryCodeGrid = item.findViewById(R.id.tv_grid_code);
-            tvCategoryCodeList = item.findViewById(R.id.tv_list_code);
-            tvCategoryNameGrid = item.findViewById(R.id.tv_grid_name);
-            tvCategoryNameList = item.findViewById(R.id.tv_list_name);
-            tvCategoryQuantityGrid = item.findViewById(R.id.tv_grid_quantity);
-            tvCategoryQuantityList = item.findViewById(R.id.tv_list_quantity);
+            if (viewType != 1) {
+                tvCategoryCode = item.findViewById(R.id.tv_grid_code);
+                tvCategoryName = item.findViewById(R.id.tv_grid_name);
+                tvCategoryQuantity = item.findViewById(R.id.tv_grid_quantity);
+            } else {
+                tvCategoryCode = item.findViewById(R.id.tv_list_code);
+                tvCategoryName = item.findViewById(R.id.tv_list_name);
+                tvCategoryQuantity = item.findViewById(R.id.tv_list_quantity);
+            }
             itemView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -62,44 +65,28 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
                 }
             });
         }
-
     }
-
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if(viewType == 1){
-            return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_view, parent, false));
-        }else{
-            return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_item_view, parent, false));
+        if (viewType == 1) {
+            return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_view, parent, false), viewType);
+        } else {
+            return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_item_view, parent, false), viewType);
         }
 
     }
 
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.Holder holder, int position, @NonNull Category model) {
-
-        if(getItemViewType(position) == 2){
-            holder.tvCategoryCodeGrid.setText(model.getCode());
-            holder.tvCategoryNameGrid.setText(String.format(String.valueOf(model.getName())));
-            if (model.getQuantity() != null) {
-                holder.tvCategoryQuantityGrid.setText(model.getQuantity().toString());
-            } else {
-                holder.tvCategoryQuantityGrid.setText("");
-            }
-        }else{
-            holder.tvCategoryCodeList.setText(model.getCode());
-            holder.tvCategoryNameList.setText(String.format(String.valueOf(model.getName())));
-            if (model.getQuantity() != null) {
-                holder.tvCategoryQuantityList.setText(model.getQuantity().toString());
-            } else {
-                holder.tvCategoryQuantityList.setText("");
-            }
+        holder.tvCategoryCode.setText(model.getCode());
+        holder.tvCategoryName.setText(String.format(String.valueOf(model.getName())));
+        if (model.getQuantity() != null) {
+            holder.tvCategoryQuantity.setText(model.getQuantity().toString());
+        } else {
+            holder.tvCategoryQuantity.setText("");
         }
     }
-
-
-
     public void setOnItemClickListener(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
 
