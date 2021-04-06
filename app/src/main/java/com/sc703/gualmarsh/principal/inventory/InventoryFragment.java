@@ -61,7 +61,7 @@ public class InventoryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(defaultView ==true){
-                    imvChangeView.setImageResource(R.drawable.ic_sort_down);
+                    imvChangeView.setImageResource(R.drawable.ic_sort_grid);
                     defaultView = false;
                 }else{
                     imvChangeView.setImageResource(R.drawable.ic_sort_list);
