@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/w_blueLogo"
+    android:background="@color/w_darkBG"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:id="@+id/tv_Settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SETTINGS"
+        android:text="@string/settings_settings"
         android:fontFamily="sans-serif-medium"
         android:textSize="35sp"
         android:textColor="@color/white"
@@ -33,13 +33,74 @@
             android:id="@+id/btn_logOut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Log out"
-            android:textColor="@color/black"
+            android:text="@string/settings_Log_Out"
+            android:gravity="left|center_vertical"
+            android:textColor="@color/white"
             android:textSize="15dp"
+            android:paddingLeft="25dp"
+            android:background="@color/transparent"
             android:drawableLeft="@drawable/ic_sign_out"/>
+
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:backgroundTint="@color/cardview_light_background"
+            android:background="?android:attr/listDivider" />
+
+        <Button
+            android:id="@+id/btn_Web"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_Web"
+            android:textColor="@color/white"
+            android:background="@color/transparent"
+            android:textSize="15dp"
+            android:paddingLeft="25dp"
+            android:gravity="left|center_vertical"
+            android:drawableLeft="@drawable/ic_web"/>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:backgroundTint="@color/cardview_light_background"
+            android:background="?android:attr/listDivider" />
+
+        <Button
+            android:id="@+id/btn_Phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_Email"
+            android:textColor="@color/white"
+            android:background="@color/transparent"
+            android:textSize="15dp"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="25dp"
+            android:drawableLeft="@drawable/ic_phone"/>
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:backgroundTint="@color/cardview_light_background"
+            android:background="?android:attr/listDivider" />
+
+        <Button
+            android:id="@+id/btn_Email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_Phone"
+            android:textColor="@color/white"
+            android:background="@color/transparent"
+            android:gravity="left|center_vertical"
+            android:textSize="15dp"
+            android:paddingLeft="25dp"
+            android:drawableLeft="@drawable/ic_email"/>
 
     </LinearLayout>
 
 
 
-</LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

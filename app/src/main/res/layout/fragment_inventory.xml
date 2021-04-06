@@ -27,7 +27,7 @@
                 android:layout_marginStart="27dp"
                 android:layout_marginTop="25dp"
                 android:fontFamily="sans-serif-black"
-                android:text="@string/items_main"
+                android:text="@string/inventory_main"
                 android:textColor="@color/w_blue"
                 android:textSize="35sp" />
 
@@ -52,7 +52,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="22dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="@string/items_lastUpdated"
+                android:text="@string/inventory_lastUpdated"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 

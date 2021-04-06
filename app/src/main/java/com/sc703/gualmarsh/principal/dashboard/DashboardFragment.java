@@ -31,27 +31,6 @@ public class DashboardFragment extends Fragment {
             window.setStatusBarColor(getActivity().getResources().getColor(R.color.w_darkBG));
         }
 
-        /*Button btnSignOut = root.findViewById(R.id.btn_sign_out);
-        Button btnWeb = root.findViewById(R.id.btn_web);
-
-        btnSignOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Toast.makeText(getActivity(), R.string.signed_out, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-        btnWeb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
-                navController.navigate(R.id.action_Dashboard_to_Web);
-            }
-        });*/
-
-
         return root;
     }
 }

@@ -40,12 +40,16 @@
     <string name="dashboard_total">Total value</string>
     <!--Settings-->
     <string name="settings_main">Settings</string>
-
+    <string name="settings_Log_Out">Log Out</string>
+    <string name="settings_Web">About us</string>
+    <string name="settings_Phone">Contact Support</string>
+    <string name="settings_Email">Call us</string>
+    <string name="settings_settings">Settings</string>
 
     <!--Items-->
-    <string name="items_main">Items</string>
-    <string name="items_products_main">Products</string>
-    <string name="items_lastUpdated">Last Updated</string>
+    <string name="inventory_main">Inventory</string>
+    <string name="inventory_products_main">Products</string>
+    <string name="inventory_lastUpdated">Last Updated</string>
 
     <!--Add Item-->
     <string name="addItem_btnSave">SAVE</string>

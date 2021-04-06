@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.sc703.gualmarsh.R;
-import com.sc703.gualmarsh.database.models.product.Product;
-import com.sc703.gualmarsh.principal.items.ItemClickListener;
+import com.sc703.gualmarsh.principal.inventory.ItemClickListener;
 
 public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryAdapter.Holder>  {
     private ItemClickListener itemClickListener;
