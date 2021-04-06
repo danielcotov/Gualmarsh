@@ -60,15 +60,28 @@
     <string name="addItem_Unit">|  unit(s)</string>
     <string name="addItem_expirationDate">Expiration Date</string>
     <string name="addItem_Description">Description</string>
-    <string name="addItem_Weight_Unit">Weight / Unit</string>
 
+    <!--Show Item-->
+    <string name="showItem_btnSave">SAVE</string>
+    <string name="showItem_enterItemName">Enter Item Name</string>
+    <string name="showItem_Quantity">Quantity</string>
+    <string name="showItem_Barcode">Barcode</string>
+    <string name="showItem_Price">Price</string>
+    <string name="showItem_Unit">|  unit(s)</string>
+    <string name="showItem_expirationDate">Expiration Date</string>
+    <string name="showItem_Description">Description</string>
+    <string name="showItem_TotalPrice">Total Price</string>
+    <string name="showItem_LastUpdated">Last Updated</string>
+    <string name="showItem_iconDelete">Delete</string>
+    <string name="showItem_iconMove">Move</string>
+    <string name="showItem_iconExport">Export</string>
 
 
     <!--Validations-->
     <string name="emptyField">Field cannot be empty</string>
     <string name="incorrect_username">The username you entered is incorrect, please try again</string>
     <string name="invalid_password">Password should contain at least 1 digit, 1 upper case, 1 lower case, and 1 special character</string>
-    <string name="invalid_password_length">Password should have 6 character minumum</string>
+    <string name="invalid_password_length">Password should have 6 character minimum</string>
     <string name="password_mismatch">Passwords do not match</string>
     <string name="incorrect_email">The email format is incorrect</string>
 

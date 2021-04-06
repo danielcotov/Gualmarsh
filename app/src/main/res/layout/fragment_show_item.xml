@@ -1,0 +1,448 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addItemFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/w_darkBG"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/showItem_Close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_close"
+            app:tint="@color/w_blueLogo"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="29dp" />
+
+        <Button
+            android:id="@+id/btn_showItem_Save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="255dp"
+            android:layout_marginTop="19dp"
+            android:layout_marginEnd="26dp"
+            android:text="@string/showItem_btnSave"
+            android:textColor="@color/w_darkBG"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/showItem_Photo"
+        android:layout_width="match_parent"
+        android:layout_height="235dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/img_meat">
+    </ImageView>
+
+    <LinearLayout
+        android:id="@+id/showItem_Folder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imv_showItem_folder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_item_folder"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="40dp"/>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edt_showItem_productName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:text="Punta de Solomo"
+        android:hint="@string/showItem_enterItemName"
+        android:textColor="@color/white"
+        android:textColorHint="@color/textColorGray"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="35dp"
+        android:layout_marginStart="26dp"/>
+
+    <RelativeLayout
+        android:id="@+id/showItem_Icons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/showItem_BoxMain"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/edit_text_item"/>
+
+        <LinearLayout
+            android:id="@+id/showItem_Icons1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/showItem_Delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="32.5dp">
+
+                <ImageView
+                    android:id="@+id/imv_showItem_Delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_delete"
+                    app:tint="@color/white"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/tv_showItem_Delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/showItem_iconDelete"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/showItem_Move"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="107dp"
+                android:layout_marginTop="32.5dp">
+
+                <ImageView
+                    android:id="@+id/imv_showItem_Move"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_move"
+                    app:tint="@color/white"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/tv_showItem_Move"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/showItem_iconMove"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/showItem_Export"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="107dp"
+                android:layout_marginTop="32.5dp">
+
+                <ImageView
+                    android:id="@+id/imv_showItem_Export"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_export"
+                    app:tint="@color/white"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/tv_showItem_Export"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/showItem_iconExport"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-15dp">
+
+        <ImageView
+            android:id="@+id/showItem_Box1"
+            android:layout_width="206dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/edit_text_item"/>
+
+        <TextView
+            android:id="@+id/tv_showItem_Quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:text="@string/showItem_Quantity"
+            android:layout_alignTop="@id/showItem_Box1"
+            android:layout_marginTop="9dp"
+            android:textColor="@color/textColorGray"
+            android:textSize="15dp"/>
+
+
+        <TextView
+            android:id="@+id/tv_showItem_quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="-"
+            android:text="1"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:background="@null"
+            android:layout_marginTop="44dp"
+            android:layout_marginStart="26dp"/>
+
+        <TextView
+            android:id="@+id/tv_showItem_Unit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/showItem_Unit"
+            android:textSize="15sp"
+            android:textColor="@color/textColorGray"
+            android:layout_marginStart="140dp"
+            android:layout_marginTop="48dp"/>
+
+        <ImageView
+            android:id="@+id/showItem_Box2"
+            android:layout_width="206dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="206dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/edit_text_item" />
+
+        <TextView
+            android:id="@+id/tv_showItem_Barcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="221dp"
+            android:text="@string/showItem_Barcode"
+            android:layout_alignTop="@id/showItem_Box2"
+            android:layout_marginTop="9dp"
+            android:textColor="@color/textColorGray"
+            android:textSize="15dp"/>
+
+
+        <TextView
+            android:id="@+id/tv_showItem_barcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="-"
+            android:text="MEAT001"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:background="@null"
+            android:layout_marginTop="44dp"
+            android:layout_marginStart="221dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-15dp">
+
+        <ImageView
+            android:id="@+id/showItem_Box3"
+            android:layout_width="206dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/edit_text_item"/>
+
+        <TextView
+            android:id="@+id/tv_showItem_Price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:text="@string/showItem_Price"
+            android:layout_alignTop="@id/showItem_Box3"
+            android:layout_marginTop="9dp"
+            android:textColor="@color/textColorGray"
+            android:textSize="15dp"/>
+
+
+        <TextView
+            android:id="@+id/tv_showItem_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="¢10.900,00"
+            android:hint="-"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:background="@null"
+            android:layout_marginTop="44dp"
+            android:layout_marginStart="26dp"/>
+
+
+        <ImageView
+            android:id="@+id/showItem_Box4"
+            android:layout_width="206dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="206dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/edit_text_item" />
+
+        <TextView
+            android:id="@+id/tv_showItem_ExpDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="221dp"
+            android:text="@string/showItem_expirationDate"
+            android:layout_alignTop="@id/showItem_Box4"
+            android:layout_marginTop="9dp"
+            android:textColor="@color/textColorGray"
+            android:textSize="15dp"/>
+
+
+        <TextView
+            android:id="@+id/tv_showItem_expDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="02/25/2021"
+            android:hint="-"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:background="@null"
+            android:layout_marginTop="44dp"
+            android:layout_marginStart="221dp"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-15dp">
+
+        <ImageView
+            android:id="@+id/showItem_Box5"
+            android:layout_width="206dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/edit_text_item"/>
+
+        <TextView
+            android:id="@+id/tv_showItem_TotalPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:text="@string/showItem_TotalPrice"
+            android:layout_alignTop="@id/showItem_Box5"
+            android:layout_marginTop="9dp"
+            android:textColor="@color/textColorGray"
+            android:textSize="15dp"/>
+
+
+        <TextView
+            android:id="@+id/tv_showItem_totalPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="¢10.900,00"
+            android:hint="-"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:background="@null"
+            android:layout_marginTop="44dp"
+            android:layout_marginStart="26dp"/>
+
+
+        <ImageView
+            android:id="@+id/showItem_Box6"
+            android:layout_width="206dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="206dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/edit_text_item" />
+
+        <TextView
+            android:id="@+id/tv_showItem_LastUpdated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="221dp"
+            android:text="@string/showItem_LastUpdated"
+            android:layout_alignTop="@id/showItem_Box6"
+            android:layout_marginTop="9dp"
+            android:textColor="@color/textColorGray"
+            android:textSize="15dp"/>
+
+
+        <TextView
+            android:id="@+id/tv_showItem_lastUpdated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="02/10/2021"
+            android:hint="-"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:background="@null"
+            android:layout_marginTop="44dp"
+            android:layout_marginStart="221dp"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-15dp">
+
+        <ImageView
+            android:id="@+id/showItem_Box7"
+            android:layout_width="412dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/edit_text_item"/>
+
+        <TextView
+            android:id="@+id/tv_showItem_Description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:text="@string/addItem_Description"
+            android:layout_alignTop="@id/showItem_Box7"
+            android:layout_marginTop="9dp"
+            android:textColor="@color/textColorGray"
+            android:textSize="15dp"/>
+
+
+        <TextView
+            android:id="@+id/tv_showItem_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Punta de Solomo Premium 1kg"
+            android:hint="-"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:background="@null"
+            android:layout_marginTop="44dp"
+            android:layout_marginStart="26dp"/>
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>
