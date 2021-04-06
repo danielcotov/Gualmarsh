@@ -1,12 +1,16 @@
-package com.sc703.gualmarsh;
+package com.sc703.gualmarsh.principal;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.sc703.gualmarsh.R;
 
 
 public class AddItemFragment extends Fragment {
