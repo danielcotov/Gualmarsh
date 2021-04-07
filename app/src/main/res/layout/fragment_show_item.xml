@@ -8,40 +8,41 @@
     android:orientation="vertical"
     android:layout_marginBottom="56dp">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_gravity="center"
+        app:cardBackgroundColor="@color/w_darkBG"
+        app:cardElevation="5dp">
 
-        <ImageView
-            android:id="@+id/showItem_Close"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="26dp"
-            android:layout_marginTop="29dp"
-            android:src="@drawable/ic_close"
-            app:tint="@color/w_blueLogo" />
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_showItem_Save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="255dp"
-            android:layout_marginTop="19dp"
-            android:layout_marginEnd="26dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="@string/showItem_btnSave"
-            android:textColor="@color/w_darkBG"
-            android:textSize="14sp" />
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/showItem_Close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="29dp"
+                android:src="@drawable/ic_close"
+                app:tint="@color/w_blueLogo" />
 
+            <Button
+                android:id="@+id/btn_showItem_Save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="255dp"
+                android:layout_marginTop="19dp"
+                android:layout_marginEnd="26dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/showItem_btnSave"
+                android:textColor="@color/w_darkBG"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
-    <ImageView
-        android:id="@+id/showItem_Photo"
-        android:layout_width="match_parent"
-        android:layout_height="235dp"
-        android:layout_marginTop="18dp"
-        android:background="@drawable/img_meat"></ImageView>
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -51,8 +52,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/transparent"
             android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/showItem_Photo"
+                android:layout_width="match_parent"
+                android:layout_height="235dp"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/img_meat"/>
 
 
             <LinearLayout

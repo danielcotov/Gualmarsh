@@ -26,14 +26,6 @@ public class PrincipalActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(PrincipalActivity.this, R.id.nav_principal_fragment);
         NavigationUI.setupWithNavController(navView, navController);
 
-        FloatingActionButton addItem = findViewById(R.id.fab_itemsAdd);
-
-        addItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navController.navigate(R.id.action_add_item);
-            }
-        });
 
 
     }
