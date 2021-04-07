@@ -3,10 +3,17 @@ package com.sc703.gualmarsh.principal.inventory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.selection.ItemDetailsLookup;
+import androidx.recyclerview.selection.ItemKeyProvider;
+import androidx.recyclerview.selection.SelectionPredicates;
+import androidx.recyclerview.selection.SelectionTracker;
+import androidx.recyclerview.selection.StableIdKeyProvider;
+import androidx.recyclerview.selection.StorageStrategy;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -38,6 +46,8 @@ public class ProductFragment extends Fragment {
     private ProductAdapter productAdapter;
     private ItemViewModel viewModel;
     private GridLayoutManager gridLayoutManager;
+    private RecyclerView recyclerView;
+    private SelectionTracker<Long> selectedProductTracker;
     public boolean defaultView = true;
 
     @Override
@@ -65,7 +75,7 @@ public class ProductFragment extends Fragment {
                 navController.navigate(R.id.action_Products_to_Add);
             }
         });
-        RecyclerView recyclerView = root.findViewById(R.id.recyclerview);
+        recyclerView = root.findViewById(R.id.recyclerview);
         gridLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
         DatabaseReference product = bdRef.child("productCategories/" + viewModel.getCategoryCode().getValue());
@@ -76,15 +86,14 @@ public class ProductFragment extends Fragment {
         productAdapter = new ProductAdapter(options, gridLayoutManager);
         recyclerView.setAdapter(productAdapter);
 
-
         ImageView imvChangeView = root.findViewById(R.id.imv_change_view_inventory_product);
         imvChangeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(defaultView == true){
+                if (defaultView == true) {
                     imvChangeView.setImageResource(R.drawable.ic_sort_grid);
                     defaultView = false;
-                }else{
+                } else {
                     imvChangeView.setImageResource(R.drawable.ic_sort_list);
                     defaultView = true;
                 }
@@ -116,11 +125,13 @@ public class ProductFragment extends Fragment {
                             e.printStackTrace();
                         }
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         Log.e("onCancelled", " cancelled");
                     }
-                });;
+                });
+                ;
 
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
                 navController.navigate(R.id.action_Products_to_Show);
@@ -128,6 +139,7 @@ public class ProductFragment extends Fragment {
         });
         return root;
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -135,17 +147,19 @@ public class ProductFragment extends Fragment {
     }
 
     @Override
-    public void onStop()
-    {
+    public void onStop() {
         super.onStop();
         productAdapter.stopListening();
     }
-    private void switchLayout(){
-        if (gridLayoutManager.getSpanCount() == 1){
+
+    private void switchLayout() {
+        if (gridLayoutManager.getSpanCount() == 1) {
             gridLayoutManager.setSpanCount(2);
-        }else{
+        } else {
             gridLayoutManager.setSpanCount(1);
         }
-        productAdapter.notifyItemRangeChanged(0,2);
+        productAdapter.notifyItemRangeChanged(0, 2);
     }
+
+
 }

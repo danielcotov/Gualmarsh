@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:background="@color/w_darkBG"
     android:id="@+id/iv_list"
+    android:clickable="true"
     >
 
     <LinearLayout

@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
 public class LoginFragment extends Fragment {
 
     TextView registerNew;
-    FloatingActionButton btnLogInGo;
+    FloatingActionButton btnLogin;
     private TextInputLayout edt_Email, edt_Password;
     private FirebaseAuth Auth;
 
@@ -44,9 +44,7 @@ public class LoginFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_login, container, false);
 
         registerNew = (TextView) root.findViewById(R.id.tv_registerNew);
-        btnLogInGo = (FloatingActionButton) root.findViewById(R.id.btn_logInGo);
-        registerNew = (TextView) root.findViewById(R.id.tv_registerNew);
-        btnLogInGo = (FloatingActionButton) root.findViewById(R.id.btn_logInGo);
+        btnLogin = (FloatingActionButton) root.findViewById(R.id.btn_login_next);
 
         edt_Email = root.findViewById(R.id.edt_loginEmail);
         edt_Password = root.findViewById(R.id.edt_loginPassword);
@@ -62,11 +60,10 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        btnLogInGo.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 login(v);
-//                startActivity(new Intent(getContext(), DashboardActivity.class));
             }
         });
 

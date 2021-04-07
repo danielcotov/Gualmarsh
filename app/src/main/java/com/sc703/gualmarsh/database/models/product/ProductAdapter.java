@@ -34,11 +34,19 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
             return 2;
         }
     }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
     public class Holder extends RecyclerView.ViewHolder{
         TextView tvProductCode, tvProductName, tvProductQuantity;
+        public int position;
 
         public Holder(View item, int viewType){
             super(item);
+
             if (viewType != 1) {
                 tvProductCode = item.findViewById(R.id.tv_grid_code);
                 tvProductName = item.findViewById(R.id.tv_grid_name);

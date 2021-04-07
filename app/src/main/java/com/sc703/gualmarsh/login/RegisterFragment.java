@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
 public class RegisterFragment extends Fragment {
 
     TextView alreadyRegistered;
-    FloatingActionButton btnLogInGo;
+    FloatingActionButton btnRegister;
     private TextInputLayout edt_Email, edt_Password, edt_confirmPassword, edt_Name;
     private FirebaseAuth Auth;
 
@@ -42,8 +42,7 @@ public class RegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_register, container, false);
         alreadyRegistered = (TextView) root.findViewById(R.id.tv_alreadyRegistered);
-        btnLogInGo = (FloatingActionButton) root.findViewById(R.id.btn_logInGo);
-        btnLogInGo = (FloatingActionButton) root.findViewById(R.id.btn_logInGo);
+        btnRegister = (FloatingActionButton) root.findViewById(R.id.btn_register_next);
         edt_Name = root.findViewById(R.id.edt_registerName);
         edt_Email = root.findViewById(R.id.edt_registerEmail);
         edt_Password = root.findViewById(R.id.edt_registerPassword);
@@ -59,7 +58,7 @@ public class RegisterFragment extends Fragment {
             }
         });
 
-        btnLogInGo.setOnClickListener(new View.OnClickListener() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 registration(v);
