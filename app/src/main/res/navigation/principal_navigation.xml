@@ -11,10 +11,7 @@
         tools:layout="@layout/fragment_dashboard">
         <action
             android:id="@+id/action_dashboard_to_settings"
-            app:destination="@id/NavigationSettings"/>
-        <action
-            android:id="@+id/action_add_item"
-            app:destination="@id/addItemFragment"/>
+            app:destination="@id/navigationSettings"/>
     </fragment>
     <fragment
         android:id="@+id/inventoryFragment"
@@ -31,6 +28,9 @@
         android:label="@string/product_fragment_label"
         tools:layout="@layout/fragment_inventory_product">
         <action
+            android:id="@+id/action_Products_to_Add"
+            app:destination="@id/addItemFragment"/>
+        <action
             android:id="@+id/action_Products_to_Show"
             app:destination="@id/showItemFragment" />
     </fragment>
@@ -45,6 +45,9 @@
         android:name="com.sc703.gualmarsh.principal.inventory.AddItemFragment"
         android:label="@string/home_fragment_label"
         tools:layout="@layout/fragment_add_item">
+        <action
+            android:id="@+id/action_Add_to_Products"
+            app:destination="@id/productFragment" />
     </fragment>
     <fragment
         android:id="@+id/showItemFragment"

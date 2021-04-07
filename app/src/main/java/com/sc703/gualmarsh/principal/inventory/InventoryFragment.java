@@ -85,7 +85,6 @@ public class InventoryFragment extends Fragment {
                             if (snapshot.getValue() != null) {
                                 try {
                                     viewModel.setCategoryCode(snapshot.getValue().toString());
-
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -100,8 +99,7 @@ public class InventoryFragment extends Fragment {
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         Log.e("onCancelled", " cancelled");
                     }
-                });;
-
+                });
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
                 navController.navigate(R.id.action_Items_to_Products);
             }

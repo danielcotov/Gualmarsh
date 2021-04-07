@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 
@@ -44,6 +45,26 @@ public class ProductFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_inventory_product, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
+        Button btnAdd = root.findViewById(R.id.btn_addItem);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ValueEventListener valueEventListener = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        viewModel.setProductCount(Long.toString(snapshot.child("productCategories/" + viewModel.getCategoryCode().getValue()).getChildrenCount()));
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                };
+                bdRef.addValueEventListener(valueEventListener);
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
+                navController.navigate(R.id.action_Products_to_Add);
+            }
+        });
         RecyclerView recyclerView = root.findViewById(R.id.recyclerview);
         gridLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -54,6 +75,8 @@ public class ProductFragment extends Fragment {
                 .build();
         productAdapter = new ProductAdapter(options, gridLayoutManager);
         recyclerView.setAdapter(productAdapter);
+
+
         ImageView imvChangeView = root.findViewById(R.id.imv_change_view_inventory_product);
         imvChangeView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +104,7 @@ public class ProductFragment extends Fragment {
                         try {
                             if (snapshot.getValue() != null) {
                                 try {
+                                    System.out.println(snapshot.getRef().getParent().getKey());
                                     viewModel.setProductCode(snapshot.getValue().toString());
                                 } catch (Exception e) {
                                     e.printStackTrace();
