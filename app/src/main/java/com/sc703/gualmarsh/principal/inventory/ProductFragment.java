@@ -99,7 +99,7 @@ public class ProductFragment extends Fragment {
                 });;
 
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
-                navController.navigate(R.id.action_Products_to_Edit);
+                navController.navigate(R.id.action_Products_to_Show);
             }
         });
         return root;

@@ -31,8 +31,8 @@
         android:label="@string/product_fragment_label"
         tools:layout="@layout/fragment_inventory_product">
         <action
-            android:id="@+id/action_Products_to_Edit"
-            app:destination="@id/addItemFragment" />
+            android:id="@+id/action_Products_to_Show"
+            app:destination="@id/showItemFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -46,7 +46,13 @@
         android:label="@string/home_fragment_label"
         tools:layout="@layout/fragment_add_item">
     </fragment>
-    <navigation android:id="@+id/NavigationSettings"
+    <fragment
+        android:id="@+id/showItemFragment"
+        android:name="com.sc703.gualmarsh.principal.inventory.ShowItemFragment"
+        android:label="@string/search_fragment_label"
+        tools:layout="@layout/fragment_show_item">
+    </fragment>
+    <navigation android:id="@+id/navigationSettings"
         app:startDestination="@id/settingsFragment">
         <fragment
             android:id="@+id/settingsFragment"
@@ -55,10 +61,10 @@
             tools:layout="@layout/fragment_settings">
             <action
                 android:id="@+id/action_settings_to_Web"
-                app:destination="@id/fragment_web" />
+                app:destination="@id/webFragment" />
         </fragment>
         <fragment
-            android:id="@+id/fragment_web"
+            android:id="@+id/webFragment"
             android:name="com.sc703.gualmarsh.principal.web.WebFragment"
             android:label="@string/web_fragment_label"
             tools:layout="@layout/fragment_web">
