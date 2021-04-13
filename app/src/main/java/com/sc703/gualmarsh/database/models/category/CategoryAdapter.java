@@ -1,6 +1,7 @@
 package com.sc703.gualmarsh.database.models.category;
 
 
+import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.sc703.gualmarsh.principal.inventory.ItemClickListener;
 import com.sc703.gualmarsh.principal.inventory.ItemViewModel;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryAdapter.Holder> {
@@ -95,27 +97,9 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
 
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.Holder holder, int position, @NonNull Category model) {
+        loadImages(holder.imvImage.getContext(), holder.imvImage, model.getCode());
         holder.tvCategoryCode.setText(model.getCode());
         holder.tvCategoryName.setText(String.format(String.valueOf(model.getName())));
-        storage = FirebaseStorage.getInstance().getReference().child("Resources/Categories/"+ model.getCode() + ".jpg");
-        File tempFile = null;
-        try {
-            tempFile = File.createTempFile("image", "jpg");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        final File FINAL_FILE = tempFile;
-        storage.getFile(tempFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                String file = FINAL_FILE.getAbsolutePath();
-                holder.imvImage.setImageBitmap(BitmapFactory.decodeFile(file));
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-            }
-        });
         if (model.getQuantity() != null) {
             holder.tvCategoryQuantity.setText(model.getQuantity().toString());
         } else {
@@ -124,5 +108,32 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
     }
     public void setOnItemClickListener(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
+    }
+    public void loadImages (Context context, ImageView imvImage, String code){
+        String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".jpg";
+        File cacheFile = new File(cachePath);
+        if (!cacheFile.exists()){
+            storage = FirebaseStorage.getInstance().getReference().child("Resources/Categories/"+ code + ".jpg");
+            File localFile = null;
+            try {
+                localFile = new File(context.getCacheDir(), code + ".jpg");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            final File FINAL_FILE = localFile;
+            storage.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    String file = FINAL_FILE.getAbsolutePath();
+                    imvImage.setImageBitmap(BitmapFactory.decodeFile(file));
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                }
+            });
+        }else{
+            imvImage.setImageBitmap(BitmapFactory.decodeFile(cachePath));
+        }
     }
 }
