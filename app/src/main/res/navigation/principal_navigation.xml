@@ -54,6 +54,9 @@
         android:name="com.sc703.gualmarsh.principal.inventory.ShowItemFragment"
         android:label="@string/search_fragment_label"
         tools:layout="@layout/fragment_show_item">
+        <action
+            android:id="@+id/action_Show_to_Products"
+            app:destination="@id/productFragment" />
     </fragment>
     <navigation android:id="@+id/navigationSettings"
         app:startDestination="@id/settingsFragment">
