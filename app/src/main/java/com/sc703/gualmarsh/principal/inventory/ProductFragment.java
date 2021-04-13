@@ -113,7 +113,6 @@ public class ProductFragment extends Fragment {
                         try {
                             if (snapshot.getValue() != null) {
                                 try {
-                                    System.out.println(snapshot.getRef().getParent().getKey());
                                     viewModel.setProductCode(snapshot.getValue().toString());
                                 } catch (Exception e) {
                                     e.printStackTrace();
