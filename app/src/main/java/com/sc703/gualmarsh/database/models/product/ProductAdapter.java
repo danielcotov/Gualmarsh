@@ -101,29 +101,9 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
 
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.Holder holder, int position, @NonNull Product model) {
+        loadImages(holder.imvImage.getContext(), holder.imvImage, model.getCode());
         holder.tvProductCode.setText(model.getCode());
         holder.tvProductName.setText(String.format(String.valueOf(model.getName())));
-
-        storage = FirebaseStorage.getInstance().getReference().child("Resources/Products/"+ model.getCode() + ".jpg");
-        File tempFile = null;
-        try {
-            tempFile = File.createTempFile("image", "jpg");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        final File FINAL_FILE = tempFile;
-        storage.getFile(tempFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                String file = FINAL_FILE.getAbsolutePath();
-                holder.imvImage.setImageBitmap(BitmapFactory.decodeFile(file));
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-            }
-        });
-
         if (model.getQuantity() != null) {
             holder.tvProductQuantity.setText(model.getQuantity().toString());
         }else{
@@ -136,6 +116,32 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
         this.itemClickListener = itemClickListener;
 
     }
-
+    public void loadImages (Context context, ImageView imvImage, String code){
+        String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".jpg";
+        File cacheFile = new File(cachePath);
+        if (!cacheFile.exists()){
+            storage = FirebaseStorage.getInstance().getReference().child("Resources/Products/"+ code + ".jpg");
+            File localFile = null;
+            try {
+                localFile = new File(context.getCacheDir(), code + ".jpg");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            final File FINAL_FILE = localFile;
+            storage.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    String file = FINAL_FILE.getAbsolutePath();
+                    imvImage.setImageBitmap(BitmapFactory.decodeFile(file));
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                }
+            });
+        }else{
+            imvImage.setImageBitmap(BitmapFactory.decodeFile(cachePath));
+        }
+    }
 
 }
