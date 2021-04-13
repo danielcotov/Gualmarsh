@@ -11,7 +11,9 @@
         <LinearLayout
             android:id="@+id/close_save"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -19,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="26dp"
-                android:layout_marginTop="29dp"
+                android:layout_marginTop="11dp"
                 android:src="@drawable/ic_close"
                 app:tint="@color/w_blueLogo" />
 
@@ -28,7 +30,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="255dp"
-                android:layout_marginTop="19dp"
+                android:layout_marginTop="11dp"
+                android:visibility="gone"
                 android:layout_marginEnd="26dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="@string/showItem_btnSave"
@@ -400,8 +403,8 @@
                     android:textSize="15dp" />
 
 
-                <EditText
-                    android:id="@+id/edt_showItem_lastUpdated"
+                <TextView
+                    android:id="@+id/tv_showItem_lastUpdated"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="221dp"
@@ -439,86 +442,8 @@
                     android:textSize="15dp" />
 
 
-                <TextView
-                    android:id="@+id/tv_showItem_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="26dp"
-                    android:layout_marginTop="44dp"
-                    android:background="@null"
-                    android:hint="-"
-                    android:text="Punta de Solomo Premium 1kg"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
-                    android:textSize="18sp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-15dp">
-
-                <ImageView
-                    android:id="@+id/showItem_Box7"
-                    android:layout_width="412dp"
-                    android:layout_height="65dp"
-                    android:layout_marginTop="13dp"
-                    android:background="@drawable/edit_text_item" />
-
-                <TextView
-                    android:id="@+id/tv_showItem_Description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/showItem_Box7"
-                    android:layout_marginStart="26dp"
-                    android:layout_marginTop="9dp"
-                    android:text="@string/addItem_Description"
-                    android:textColor="@color/textColorGray"
-                    android:textSize="15dp" />
-
-
-                <TextView
-                    android:id="@+id/tv_showItem_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="26dp"
-                    android:layout_marginTop="44dp"
-                    android:background="@null"
-                    android:hint="-"
-                    android:text="Punta de Solomo Premium 1kg"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
-                    android:textSize="18sp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-15dp">
-
-                <ImageView
-                    android:id="@+id/showItem_Box7"
-                    android:layout_width="412dp"
-                    android:layout_height="65dp"
-                    android:layout_marginTop="13dp"
-                    android:background="@drawable/edit_text_item" />
-
-                <TextView
-                    android:id="@+id/tv_showItem_Description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/showItem_Box7"
-                    android:layout_marginStart="26dp"
-                    android:layout_marginTop="9dp"
-                    android:text="@string/addItem_Description"
-                    android:textColor="@color/textColorGray"
-                    android:textSize="15dp" />
-
-
-                <TextView
-                    android:id="@+id/tv_showItem_description"
+                <EditText
+                    android:id="@+id/edt_showItem_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="26dp"
