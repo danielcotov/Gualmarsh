@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -55,6 +56,9 @@ public class AddItemFragment extends Fragment {
     private EditText edtName, edtCode, edtQuantity, edtDescription, edtPrice;
     public DatePickerDialog.OnDateSetListener dateSetListener;
     public TextView tvDate;
+    private Button btn_Cancel, btn_Discard;
+    private AlertDialog dialog;
+    private AlertDialog.Builder builder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,7 +79,7 @@ public class AddItemFragment extends Fragment {
         tvDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), android.R.style.Theme_Material_Dialog_MinWidth,dateSetListener,year,month,day);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), android.R.style.Theme_Material_Dialog_MinWidth, dateSetListener, year, month, day);
                 datePickerDialog.show();
             }
         });
@@ -94,8 +98,40 @@ public class AddItemFragment extends Fragment {
         imvClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
-                navController.navigate(R.id.action_Add_to_Products);
+
+                if (!edtCode.getText().toString().isEmpty() | !edtName.getText().toString().isEmpty() | !edtDescription.getText().toString().isEmpty()
+                        | !edtPrice.getText().toString().isEmpty() | !edtQuantity.getText().toString().isEmpty()) {
+                    builder = new AlertDialog.Builder(v.getContext());
+                    View view = getLayoutInflater().inflate(R.layout.close_popup, null, false);
+                    btn_Cancel = view.findViewById(R.id.btn_discardPopup_Cancel);
+                    btn_Discard = view.findViewById(R.id.btn_discardPopup_Discard);
+
+                    builder.setView(view);
+                    dialog = builder.create();
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.getWindow().clearFlags(WindowManager.LayoutParams.DIM_AMOUNT_CHANGED);
+                    dialog.show();
+
+                    btn_Discard.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
+                            navController.navigate(R.id.action_Add_to_Products);
+                            dialog.dismiss();
+                        }
+                    });
+
+                    btn_Cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                } else {
+                    NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
+                    navController.navigate(R.id.action_Add_to_Products);
+                }
             }
         });
 
@@ -106,24 +142,22 @@ public class AddItemFragment extends Fragment {
             public void onClick(View v) {
                 DatabaseReference product = bdRef.child("productCategories/" + viewModel.getCategoryCode().getValue());
                 Map<String, Object> productAdd = new HashMap<>();
-                if (addItem(v)){
+                if (addItem(v)) {
                     int productKey = Integer.parseInt(viewModel.getProductCount().getValue()) + 1;
                     productAdd.put(Integer.toString(productKey), new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
                             Long.parseLong(edtPrice.getText().toString()), Long.parseLong(edtQuantity.getText().toString())));
                     product.updateChildren(productAdd);
                     Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT);
-                }else{
+                } else {
 
                     Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT);
+                }
             }
-        }
 
-    });
+        });
 
         return root;
-}
-
-
+    }
 
 
     private boolean validateCode(String code) {
@@ -135,6 +169,7 @@ public class AddItemFragment extends Fragment {
             return true;
         }
     }
+
     private boolean validateName(String name) {
         if (name.isEmpty()) {
             edtName.setError(getText(R.string.emptyField));
@@ -144,6 +179,7 @@ public class AddItemFragment extends Fragment {
             return true;
         }
     }
+
     private boolean validateDescription(String description) {
         if (description.isEmpty()) {
             edtDescription.setError(getText(R.string.emptyField));
@@ -153,6 +189,7 @@ public class AddItemFragment extends Fragment {
             return true;
         }
     }
+
     private boolean validatePrice(String price) {
         if (price.isEmpty()) {
             edtPrice.setError(getText(R.string.emptyField));
@@ -162,6 +199,7 @@ public class AddItemFragment extends Fragment {
             return true;
         }
     }
+
     private boolean validateQuantity(String quantity) {
         if (quantity.isEmpty()) {
             edtQuantity.setError(getText(R.string.emptyField));
