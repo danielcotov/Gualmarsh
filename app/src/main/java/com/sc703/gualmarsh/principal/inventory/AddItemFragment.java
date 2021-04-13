@@ -1,5 +1,9 @@
 package com.sc703.gualmarsh.principal.inventory;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -17,8 +21,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,6 +39,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.sc703.gualmarsh.R;
 import com.sc703.gualmarsh.database.models.product.Product;
 
+import org.w3c.dom.Text;
+
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,6 +53,8 @@ public class AddItemFragment extends Fragment {
     private final DatabaseReference bdRef = fDatabase.getReference();
     private ItemViewModel viewModel;
     private EditText edtName, edtCode, edtQuantity, edtDescription, edtPrice;
+    public DatePickerDialog.OnDateSetListener dateSetListener;
+    public TextView tvDate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,6 +66,29 @@ public class AddItemFragment extends Fragment {
         edtQuantity = root.findViewById(R.id.edt_addItem_quantity);
         edtDescription = root.findViewById(R.id.edt_addItem_description);
         edtPrice = root.findViewById(R.id.edt_addItem_price);
+        tvDate = root.findViewById(R.id.tv_datePicker);
+        Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        tvDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), android.R.style.Theme_Material_Dialog_MinWidth,dateSetListener,year,month,day);
+                datePickerDialog.show();
+            }
+        });
+
+        dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month = month + 1;
+                String date = month + "/" + dayOfMonth + "/" + year;
+                tvDate.setText(date);
+            }
+        };
+
 
         ImageView imvClose = root.findViewById(R.id.addItem_Close);
         imvClose.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +98,8 @@ public class AddItemFragment extends Fragment {
                 navController.navigate(R.id.action_Add_to_Products);
             }
         });
+
+
         Button btnSave = root.findViewById(R.id.btn_addItem_Save);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,11 +117,14 @@ public class AddItemFragment extends Fragment {
                     Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT);
             }
         }
-    });
 
+    });
 
         return root;
 }
+
+
+
 
     private boolean validateCode(String code) {
         if (code.isEmpty()) {

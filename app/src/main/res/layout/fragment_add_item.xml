@@ -222,16 +222,19 @@
 
 
         <TextView
+            android:id="@+id/tv_datePicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="-"
+            style="?spinnerStyle"
             android:textSize="18sp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:background="@null"
             android:paddingRight="15dp"
             android:layout_marginTop="44dp"
-            android:layout_marginStart="221dp"/>
+            android:layout_marginStart="221dp"
+            android:clickable="true"/>
 
     </RelativeLayout>
     <RelativeLayout
