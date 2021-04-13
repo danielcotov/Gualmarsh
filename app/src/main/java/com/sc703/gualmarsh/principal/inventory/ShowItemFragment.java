@@ -8,6 +8,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,8 +40,12 @@ public class ShowItemFragment extends Fragment {
         btnSave = root.findViewById(R.id.btn_showItem_Save);
 
         bName = edtName.getText().toString();
+        bCode = edtCode.getText().toString();
+        bQuantity = edtQuantity.getText().toString();
+        bDescription = edtDescription.getText().toString();
+        bPrice = edtPrice.getText().toString();
 
-        edtName.addTextChangedListener(new TextWatcher() {
+        TextWatcher watcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -48,22 +53,25 @@ public class ShowItemFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(!s.toString().equals(bName)){
-                    System.out.println("MALDTA SEA");
+                if((!s.toString().equals(bName)) && (!s.toString().equals(bCode)) && (!s.toString().equals(bQuantity)) &&
+                        (!s.toString().equals(bDescription)) && (!s.toString().equals(bPrice))){
                     btnSave.setVisibility(View.VISIBLE);
                 }else{
-                    System.out.println("JAJAJA");
                     btnSave.setVisibility(View.GONE);
                 }
-                System.out.println(s);
-                System.out.println(bName);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
 
             }
-        });
+        };
+
+        edtName.addTextChangedListener(watcher);
+        edtCode.addTextChangedListener(watcher);
+        edtDescription.addTextChangedListener(watcher);
+        edtPrice.addTextChangedListener(watcher);
+        edtQuantity.addTextChangedListener(watcher);
 
 
         imvClose.setOnClickListener(new View.OnClickListener() {
