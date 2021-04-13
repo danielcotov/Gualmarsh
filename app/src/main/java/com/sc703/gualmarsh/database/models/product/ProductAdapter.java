@@ -1,6 +1,8 @@
 package com.sc703.gualmarsh.database.models.product;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
@@ -23,6 +25,7 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.sc703.gualmarsh.R;
+import com.sc703.gualmarsh.principal.PrincipalActivity;
 import com.sc703.gualmarsh.principal.inventory.ItemClickListener;
 
 import java.io.File;
@@ -33,9 +36,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
     private ItemClickListener itemClickListener;
     private GridLayoutManager gridLayoutManager;
     private StorageReference storage;
-    private ImageView imvImage;
-    private Uri ImageURI;
-    private final Integer CODE= 1234;
+
 
 
     public ProductAdapter(@NonNull FirebaseRecyclerOptions<Product> options, GridLayoutManager gridLayoutManager)
@@ -60,7 +61,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
 
     public class Holder extends RecyclerView.ViewHolder{
         TextView tvProductCode, tvProductName, tvProductQuantity;
-        public int position;
+        ImageView imvImage;
 
         public Holder(View item, int viewType){
             super(item);
@@ -103,23 +104,23 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
         holder.tvProductCode.setText(model.getCode());
         holder.tvProductName.setText(String.format(String.valueOf(model.getName())));
 
-        storage = FirebaseStorage.getInstance().getReference().child("Imagenes/"+ model.getCode());
+        storage = FirebaseStorage.getInstance().getReference().child("Resources/Products/"+ model.getCode() + ".jpg");
         File tempFile = null;
         try {
             tempFile = File.createTempFile("image", "jpg");
         } catch (IOException e) {
             e.printStackTrace();
-        }final File finalFile = tempFile;
+        }
+        final File FINAL_FILE = tempFile;
         storage.getFile(tempFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                String file = finalFile.getAbsolutePath();
-                imvImage.setImageBitmap(BitmapFactory.decodeFile(file));
+                String file = FINAL_FILE.getAbsolutePath();
+                holder.imvImage.setImageBitmap(BitmapFactory.decodeFile(file));
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e("Tag", "Image not found");
             }
         });
 

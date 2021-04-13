@@ -25,8 +25,7 @@
             <ImageView
                 android:id="@+id/imv_list_itemPhoto"
                 android:layout_width="75dp"
-                android:layout_height="75dp"
-                app:tint="@color/textColorGray"/>
+                android:layout_height="75dp"/>
         </LinearLayout>
 
         <LinearLayout
