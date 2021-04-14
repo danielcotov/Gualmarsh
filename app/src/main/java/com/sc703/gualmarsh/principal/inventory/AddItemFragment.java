@@ -169,13 +169,15 @@ public class AddItemFragment extends Fragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference product = bdRef.child("productCategories/" + viewModel.getCategoryCode().getValue());
+                DatabaseReference productCategory = bdRef.child("productCategories/" + viewModel.getCategoryCode().getValue());
+                DatabaseReference product = bdRef.child("products/" + viewModel.getCategoryCode().getValue());
                 Map<String, Object> productAdd = new HashMap<>();
                 if (addItem(v)) {
                     try{
                         int productKey = Integer.parseInt(viewModel.getProductCount().getValue()) + 1;
                         productAdd.put(Integer.toString(productKey), new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
                                 Long.parseLong(edtPrice.getText().toString()), Long.parseLong(edtQuantity.getText().toString())));
+                        productCategory.updateChildren(productAdd);
                         product.updateChildren(productAdd);
                         uploadImage(v);
 
