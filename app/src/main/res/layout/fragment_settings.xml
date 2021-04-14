@@ -29,25 +29,7 @@
             android:layout_marginStart="42.5dp"
             android:layout_centerHorizontal="true"
             android:src="@drawable/log_in_division" />
-        <Button
-            android:id="@+id/btn_logOut"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_Log_Out"
-            android:gravity="left|center_vertical"
-            android:textColor="@color/white"
-            android:textSize="15dp"
-            android:paddingLeft="25dp"
-            android:background="@color/transparent"
-            android:drawableLeft="@drawable/ic_sign_out"/>
 
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:backgroundTint="@color/cardview_light_background"
-            android:background="?android:attr/listDivider" />
 
         <Button
             android:id="@+id/btn_Web"
@@ -62,7 +44,7 @@
             android:drawableLeft="@drawable/ic_web"/>
 
         <View
-            android:id="@+id/divider2"
+            android:id="@+id/divider1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:backgroundTint="@color/cardview_light_background"
@@ -81,7 +63,7 @@
             android:drawableLeft="@drawable/ic_phone"/>
 
         <View
-            android:id="@+id/divider3"
+            android:id="@+id/divider2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:backgroundTint="@color/cardview_light_background"
@@ -98,6 +80,24 @@
             android:textSize="15dp"
             android:paddingLeft="25dp"
             android:drawableLeft="@drawable/ic_email"/>
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:backgroundTint="@color/cardview_light_background"
+            android:background="?android:attr/listDivider" />
+        <Button
+            android:id="@+id/btn_logOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_Log_Out"
+            android:gravity="left|center_vertical"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:paddingLeft="25dp"
+            android:background="@color/transparent"
+            android:drawableLeft="@drawable/ic_sign_out"/>
+
 
     </LinearLayout>
 
