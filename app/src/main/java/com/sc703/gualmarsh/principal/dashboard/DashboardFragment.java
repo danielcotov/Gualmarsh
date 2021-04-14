@@ -36,15 +36,8 @@ public class DashboardFragment extends Fragment {
     TextView dashboardTotal;
     private FirebaseDatabase FBDB = FirebaseDatabase.getInstance();
     private DatabaseReference BDref = FBDB.getReference();
-    private DatabaseReference categories = BDref.child("categories");
-    private DatabaseReference productsTotal = BDref.child("products");
-    private DatabaseReference productsCatTotal = BDref.child("productCategories");
-
-
-    long categoriesTemp;
-    long productsTotalTemp;
-    long productsCatTotalTemp;
-
+    private DatabaseReference categoriesref = BDref.child("categories");
+    private DatabaseReference allRefs = FirebaseDatabase.getInstance().getReference();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,18 +53,18 @@ public class DashboardFragment extends Fragment {
             window.setStatusBarColor(getActivity().getResources().getColor(R.color.w_darkBG));
         }
 
+
         return root;
     }
     @Override
     public void onStart() {
         super.onStart();
-
-        categories.addListenerForSingleValueEvent (new ValueEventListener() {
+        categoriesref.addListenerForSingleValueEvent (new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 String textCategories = String.valueOf(snapshot.getChildrenCount());
-                categoriesTemp = snapshot.getChildrenCount();
+//                dashboardQuantity.setText(String.valueOf(snapshot.getChildrenCount()));
 
                 categoriesNum.setText(textCategories);
             }
@@ -82,10 +75,21 @@ public class DashboardFragment extends Fragment {
                 categoriesNum.setText(text);
             }
         });
-        productsTotal.addListenerForSingleValueEvent(new ValueEventListener() {
+        allRefs.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                productsCatTotalTemp = snapshot.getChildrenCount();
+                long count = 0;
+                long productSnapshotPrice = 0;
+
+                DataSnapshot productCattSnapshot = snapshot.child("productCategories");
+                DataSnapshot productSnapshot = snapshot.child("products");
+                count = count + productCattSnapshot.getChildrenCount();
+                count = count + productSnapshot.getChildrenCount();
+                dashboardQuantity.setText(String.valueOf(count));
+
+//                productSnapshotPrice = productSnapshotPrice + snapshot.child("products").child("1").getValue(Long.class );
+//                productSnapshotPrice = productSnapshotPrice + (long) snapshot.child("productCategories").child("price").getValue();
+//                dashboardTotal.setText(snapshot.child("products").child("1").child("price").getValue());
             }
 
             @Override
@@ -93,24 +97,6 @@ public class DashboardFragment extends Fragment {
 
             }
         });
-        productsCatTotal.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                productsCatTotalTemp = snapshot.getChildrenCount();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        long totalQuantity = productsCatTotalTemp + productsTotalTemp + categoriesTemp;
-
-        String total = String.valueOf(totalQuantity);
-
-        dashboardTotal.setText(total);
-
-
 
     }
 }
