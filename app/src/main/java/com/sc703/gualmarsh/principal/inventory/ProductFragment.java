@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -101,6 +102,16 @@ public class ProductFragment extends Fragment {
 
             }
         });
+
+        TextView backArrow = root.findViewById(R.id.tv_back_arrow);
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
+                navController.navigate(R.id.action_Products_to_Inventory);
+            }
+        });
+
         RecyclerView.ItemDecoration itemDecoration = new
                 DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);

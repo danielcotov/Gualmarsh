@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_Products_to_Show"
             app:destination="@id/showItemFragment" />
+        <action
+            android:id="@+id/action_Products_to_Inventory"
+            app:destination="@+id/inventoryFragment"/>
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
