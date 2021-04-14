@@ -35,7 +35,7 @@ public class SearchFragment extends Fragment {
     private ItemViewModel viewModel;
     private EditText edtSearchBar;
     private LinearLayout logoSearch;
-    private String search;
+    String search;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +53,7 @@ public class SearchFragment extends Fragment {
         searchAdapter = new SearchAdapter(options);
         recyclerView.setAdapter(searchAdapter);
         logoSearch = root.findViewById(R.id.imv_logoSearch);
+        edtSearchBar = root.findViewById(R.id.edt_search);
         search = edtSearchBar.getText().toString();
 
         TextWatcher watcher = new TextWatcher() {
@@ -63,7 +64,7 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(search.isEmpty()){
+                if(!s.toString().isEmpty()){
                     logoSearch.setVisibility(View.GONE);
                 }else{
                     logoSearch.setVisibility(View.VISIBLE);
@@ -75,6 +76,8 @@ public class SearchFragment extends Fragment {
 
             }
         };
+
+        edtSearchBar.addTextChangedListener(watcher);
 
         return root;
     }
