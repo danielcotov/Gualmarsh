@@ -21,12 +21,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.sc703.gualmarsh.R;
 
 import java.util.Calendar;
 
 public class ShowItemFragment extends Fragment {
 
+    private final FirebaseDatabase fDatabase = FirebaseDatabase.getInstance();
+    private final DatabaseReference bdRef = fDatabase.getReference();
     private ImageView imvClose;
     private EditText edtName, edtQuantity, edtCode, edtDescription, edtPrice;
     String bName, bQuantity, bCode, bDescription, bPrice;
