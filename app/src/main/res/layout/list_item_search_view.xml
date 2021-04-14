@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/w_darkBG"
+    android:id="@+id/iv_list"
+    android:clickable="true"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imv_list_itemPhoto"
+                android:layout_width="75dp"
+                android:layout_height="75dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_list_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/textColorGray"/>
+
+            <TextView
+                android:id="@+id/tv_list_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/white"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="1dp">
+
+                <ImageView
+                    android:id="@+id/imv_list_quantity_icon"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="1dp"
+                    app:tint="@color/textColorGray"
+                    android:foregroundGravity="center_vertical"
+                    app:srcCompat="@drawable/ic_product_qty" />
+
+                <TextView
+                    android:id="@+id/tv_list_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/textColorGray"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@id/imv_grid_quantity_icon"
+                    app:layout_constraintTop_toTopOf="@id/imv_grid_quantity_icon" />
+
+                <TextView
+                    android:id="@+id/tv_list_pipe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:fontFamily="sans-serif"
+                    android:text="|"
+                    android:textColor="@color/textColorGray"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_list_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/textColorGray"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="4.5"
+            android:gravity="center"
+            android:orientation="vertical"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="5px"
+        android:background="@android:color/darker_gray">
+
+    </LinearLayout>
+
+</LinearLayout>
