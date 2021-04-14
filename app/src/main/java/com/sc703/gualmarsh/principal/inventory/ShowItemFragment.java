@@ -2,10 +2,14 @@ package com.sc703.gualmarsh.principal.inventory;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -21,31 +25,43 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.sc703.gualmarsh.R;
 
+import java.io.File;
 import java.util.Calendar;
 
 public class ShowItemFragment extends Fragment {
 
     private final FirebaseDatabase fDatabase = FirebaseDatabase.getInstance();
     private final DatabaseReference bdRef = fDatabase.getReference();
-    private ImageView imvClose;
+    private ItemViewModel viewModel;
+    private ImageView imvShowImage, imvClose;
     private EditText edtName, edtQuantity, edtCode, edtDescription, edtPrice;
-    String bName, bQuantity, bCode, bDescription, bPrice;
-    Button btnSave;
+    private String bName, bQuantity, bCode, bDescription, bPrice;
+    private Button btnSave;
+    private StorageReference storage;
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private TextView tvDate;
     private Button btnCancel, btnDiscard;
     private AlertDialog dialog;
     private AlertDialog.Builder builder;
 
+    public ShowItemFragment() {
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_show_item, container, false);
-
+        viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
+        imvShowImage = root.findViewById(R.id.showItem_Photo);
         edtName = root.findViewById(R.id.edt_showItem_productName);
         edtCode = root.findViewById(R.id.edt_showItem_barcode);
         edtQuantity = root.findViewById(R.id.edt_showItem_quantity);
@@ -58,6 +74,13 @@ public class ShowItemFragment extends Fragment {
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
+        edtName.setText(viewModel.getProductName().getValue());
+        edtCode.setText(viewModel.getProductCode().getValue());
+        edtQuantity.setText(viewModel.getProductQuantity().getValue());
+        edtDescription.setText(viewModel.getProductDescription().getValue());
+        edtPrice.setText(viewModel.getProductPrice().getValue());
+        loadImage(getContext(), imvShowImage, viewModel.getProductCode().getValue());
+
 
         bName = edtName.getText().toString();
         bCode = edtCode.getText().toString();
@@ -119,6 +142,33 @@ public class ShowItemFragment extends Fragment {
         });
 
         return root;
+    }
+    public void loadImage (Context context, ImageView imvImage, String code){
+        String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".jpg";
+        File cacheFile = new File(cachePath);
+        if (!cacheFile.exists()){
+            storage = FirebaseStorage.getInstance().getReference().child("Resources/Products/"+ code + ".jpg");
+            File localFile = null;
+            try {
+                localFile = new File(context.getCacheDir(), code + ".jpg");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            final File FINAL_FILE = localFile;
+            storage.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    String file = FINAL_FILE.getAbsolutePath();
+                    imvImage.setImageBitmap(BitmapFactory.decodeFile(file));
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                }
+            });
+        }else{
+            imvImage.setImageBitmap(BitmapFactory.decodeFile(cachePath));
+        }
     }
 
     private boolean validateCode(String code) {

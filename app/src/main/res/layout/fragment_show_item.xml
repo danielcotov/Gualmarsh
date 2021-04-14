@@ -57,7 +57,6 @@
                 android:layout_height="235dp"
                 android:layout_below="@+id/cv_close_save"
                 android:layout_marginTop="18dp"
-                android:background="@drawable/img_meat"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"/>
 
@@ -78,7 +77,6 @@
                 android:background="@null"
                 android:fontFamily="sans-serif-medium"
                 android:hint="@string/showItem_enterItemName"
-                android:text="Punta de Solomo"
                 android:textColor="@color/white"
                 android:textColorHint="@color/textColorGray"
                 android:textSize="35dp" />
@@ -222,7 +220,6 @@
                     android:layout_marginTop="44dp"
                     android:background="@null"
                     android:hint="-"
-                    android:text="1"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
                     android:textSize="18sp" />
@@ -265,7 +262,6 @@
                     android:layout_marginTop="44dp"
                     android:background="@null"
                     android:hint="-"
-                    android:text="MEAT001"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
                     android:textSize="18sp" />
@@ -304,7 +300,6 @@
                     android:layout_marginTop="44dp"
                     android:background="@null"
                     android:hint="-"
-                    android:text="¢10.900,00"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
                     android:textSize="18sp" />
@@ -338,7 +333,6 @@
                     android:layout_marginTop="44dp"
                     android:background="@null"
                     android:hint="-"
-                    android:text="02/25/2021"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
                     android:textSize="18sp" />
@@ -377,7 +371,6 @@
                     android:layout_marginTop="44dp"
                     android:background="@null"
                     android:hint="-"
-                    android:text="¢10.900,00"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
                     android:textSize="18sp" />
@@ -450,7 +443,6 @@
                     android:layout_marginTop="44dp"
                     android:background="@null"
                     android:hint="-"
-                    android:text="Punta de Solomo Premium 1kg"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
                     android:textSize="18sp" />

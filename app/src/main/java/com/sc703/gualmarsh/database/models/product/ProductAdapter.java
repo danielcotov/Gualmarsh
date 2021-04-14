@@ -104,7 +104,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
 
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.Holder holder, int position, @NonNull Product model) {
-        loadImages(holder.imvImage.getContext(), holder.imvImage, model.getCode());
+        loadImage(holder.imvImage.getContext(), holder.imvImage, model.getCode());
         holder.tvProductCode.setText(model.getCode());
         holder.tvProductName.setText(String.format(String.valueOf(model.getName())));
         if (model.getQuantity() != null) {
@@ -119,7 +119,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
         this.itemClickListener = itemClickListener;
 
     }
-    public void loadImages (Context context, ImageView imvImage, String code){
+    public void loadImage (Context context, ImageView imvImage, String code){
         String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".jpg";
         File cacheFile = new File(cachePath);
         if (!cacheFile.exists()){

@@ -118,13 +118,18 @@ public class ProductFragment extends Fragment {
         productAdapter.setOnItemClickListener(new ItemClickListener() {
             @Override
             public void OnItemClick(int position) {
-                productAdapter.getRef(position).child("code").addValueEventListener(new ValueEventListener() {
+                productAdapter.getRef(position).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
                         try {
                             if (snapshot.getValue() != null) {
                                 try {
-                                    viewModel.setProductCode(snapshot.getValue().toString());
+                                    viewModel.setProductCode(snapshot.child("code").getValue().toString());
+                                    viewModel.setProductName(snapshot.child("name").getValue().toString());
+                                    viewModel.setProductDescription(snapshot.child("description").getValue().toString());
+                                    viewModel.setProductPrice("¢" + snapshot.child("price").getValue().toString());
+                                    viewModel.setProductQuantity(snapshot.child("quantity").getValue().toString());
+
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
