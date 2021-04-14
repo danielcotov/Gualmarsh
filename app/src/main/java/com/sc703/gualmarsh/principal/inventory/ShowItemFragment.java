@@ -1,5 +1,7 @@
 package com.sc703.gualmarsh.principal.inventory;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.media.Image;
 import android.os.Bundle;
 
@@ -14,10 +16,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.sc703.gualmarsh.R;
+
+import java.util.Calendar;
 
 public class ShowItemFragment extends Fragment {
 
@@ -25,6 +31,11 @@ public class ShowItemFragment extends Fragment {
     private EditText edtName, edtQuantity, edtCode, edtDescription, edtPrice;
     String bName, bQuantity, bCode, bDescription, bPrice;
     Button btnSave;
+    private DatePickerDialog.OnDateSetListener dateSetListener;
+    private TextView tvDate;
+    private Button btnCancel, btnDiscard;
+    private AlertDialog dialog;
+    private AlertDialog.Builder builder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,6 +49,11 @@ public class ShowItemFragment extends Fragment {
         edtPrice = root.findViewById(R.id.edt_showItem_price);
         imvClose = root.findViewById(R.id.showItem_Close);
         btnSave = root.findViewById(R.id.btn_showItem_Save);
+        tvDate = root.findViewById(R.id.tv_showItem_datePicker);
+        Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         bName = edtName.getText().toString();
         bCode = edtCode.getText().toString();
@@ -73,6 +89,22 @@ public class ShowItemFragment extends Fragment {
         edtPrice.addTextChangedListener(watcher);
         edtQuantity.addTextChangedListener(watcher);
 
+        tvDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), android.R.style.Theme_Material_Dialog_MinWidth, dateSetListener, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+
+        dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month = month + 1;
+                String date = month + "/" + dayOfMonth + "/" + year;
+                tvDate.setText(date);
+            }
+        };
 
         imvClose.setOnClickListener(new View.OnClickListener() {
             @Override
