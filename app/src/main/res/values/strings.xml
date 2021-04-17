@@ -26,7 +26,7 @@
 
     <!--Bottom Navigation Bar-->
     <string name="nav_dashboard">Dashboard</string>
-    <string name="nav_items">Items</string>
+    <string name="nav_items">Inventory</string>
     <string name="nav_search">Search</string>
     <string name="nav_settings">Settings</string>
 
