@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,12 +33,14 @@ public class SettingsFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
-        Button btnSignOut = root.findViewById(R.id.btn_logOut);
-        Button btnWeb = root.findViewById(R.id.btn_Web);
-        Button btnPhone = root.findViewById(R.id.btn_Phone);
-        Button btnEmail = root.findViewById(R.id.btn_Email);
+        LinearLayout btn_logOut = root.findViewById(R.id.btn_settings_logOut);
+        LinearLayout btn_contactSupport = root.findViewById(R.id.btn_settings_contactSupport);
+        LinearLayout btn_callUs = root.findViewById(R.id.btn_settings_callUs);
+        LinearLayout btn_aboutUs = root.findViewById(R.id.btn_settings_aboutUs);
+        LinearLayout btn_translate = root.findViewById(R.id.btn_settings_translate);
 
-        btnSignOut.setOnClickListener(new View.OnClickListener() {
+
+        btn_logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
@@ -46,22 +49,22 @@ public class SettingsFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        btnWeb.setOnClickListener(new View.OnClickListener() {
+        btn_aboutUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_settings_to_Web);
 
             }
         });
-        btnPhone.setOnClickListener(new View.OnClickListener() {
+        btn_callUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel: 800-8000-722 "));
+                intent.setData(Uri.parse("tel: 800-8000-7222"));
                 startActivity(intent);
             }
         });
-        btnEmail.setOnClickListener(new View.OnClickListener() {
+        btn_contactSupport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_SEND);

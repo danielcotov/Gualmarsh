@@ -33,7 +33,7 @@
             android:background="@color/transparent"
             android:textColorHint="@color/textColorGray"
             android:textColor="@color/white"
-            android:hint="Search"
+            android:hint="@string/search"
             android:layout_marginStart="20dp"
             android:textSize="30sp"/>
 
@@ -49,14 +49,13 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/logo"
-            android:alpha=".25"/>
+            android:src="@drawable/logo"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enter text to start your search"
-            android:textColor="@color/textColorGray"
+            android:text="@string/search_text"
+            android:textColor="@color/white"
             android:textSize="20dp"
             android:fontFamily="sans-serif-light"
             android:textAlignment="center"
