@@ -33,9 +33,12 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.sc703.gualmarsh.R;
+import com.sc703.gualmarsh.database.models.product.Product;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ShowItemFragment extends Fragment {
 
@@ -132,6 +135,29 @@ public class ShowItemFragment extends Fragment {
                 tvDate.setText(date);
             }
         };
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference productCategory = bdRef.child("productCategories/" + viewModel.getCategoryCode().getValue());
+                DatabaseReference product = bdRef.child("products/" + viewModel.getCategoryCode().getValue());
+                Map<String, Object> productAdd = new HashMap<>();
+                if (addItem(v)) {
+                    try{
+                        int productKey = Integer.parseInt(viewModel.getProductCount().getValue()) + 1;
+                        productAdd.put(Integer.toString(productKey), new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
+                                Long.parseLong(edtPrice.getText().toString()), Long.parseLong(edtQuantity.getText().toString())));
+                        productCategory.updateChildren(productAdd);
+                        product.updateChildren(productAdd);
+                        //uploadImage(v);
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+        });
 
         imvClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,29 +171,20 @@ public class ShowItemFragment extends Fragment {
     }
     public void loadImage (Context context, ImageView imvImage, String code){
         String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".jpg";
-        File cacheFile = new File(cachePath);
-        if (!cacheFile.exists()){
-            storage = FirebaseStorage.getInstance().getReference().child("Resources/Products/"+ code + ".jpg");
-            File localFile = null;
-            try {
-                localFile = new File(context.getCacheDir(), code + ".jpg");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            final File FINAL_FILE = localFile;
-            storage.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                    String file = FINAL_FILE.getAbsolutePath();
-                    imvImage.setImageBitmap(BitmapFactory.decodeFile(file));
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                }
-            });
-        }else{
-            imvImage.setImageBitmap(BitmapFactory.decodeFile(cachePath));
+        imvImage.setImageBitmap(BitmapFactory.decodeFile(cachePath));
+
+    }
+    public boolean addItem(View view) {
+        String code = edtCode.getText().toString();
+        String name = edtName.getText().toString();
+        String description = edtDescription.getText().toString();
+        String price = edtPrice.getText().toString();
+        String quantity = edtQuantity.getText().toString();
+
+        if (validateCode(code) | validateName(name) | validateDescription(description) | validatePrice(price) | validateQuantity(quantity)) {
+            return true;
+        } else {
+            return false;
         }
     }
 

@@ -23,6 +23,7 @@
             android:layout_gravity="center">
 
             <TextView
+                android:id="@+id/tv_settingsMain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="27dp"
@@ -50,6 +51,7 @@
                 app:tint="@color/white"/>
 
             <TextView
+                android:id="@+id/tv_settings_aboutUs"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/settings_Web"
@@ -82,6 +84,7 @@
                 app:tint="@color/white"/>
 
             <TextView
+                android:id="@+id/tv_settings_callUs"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/settings_phone"
@@ -114,6 +117,7 @@
                 app:tint="@color/white"/>
 
             <TextView
+                android:id="@+id/tv_settings_contactSupport"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/settings_email"
@@ -146,6 +150,7 @@
                 app:tint="@color/white"/>
 
             <TextView
+                android:id="@+id/tv_settings_changeLanguage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/settings_translate"
@@ -178,6 +183,7 @@
                 app:tint="@color/white"/>
 
             <TextView
+                android:id="@+id/tv_settings_logOut"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/settings_Log_Out"

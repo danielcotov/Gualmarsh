@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Gualmarsh</string>
+    <string name="title_activity_home_login" translatable="false">HomeLoginActivity</string>
+    <string name="title_activity_principal" translatable="false">PrincipalActivity</string>
+    <string name="title_activity_log_in" translatable="false">LoginActivity</string>
+    <string name="home_fragment_label" translatable="false">Home Fragment</string>
+    <string name="login_fragment_label" translatable="false">Login Fragment</string>
+    <string name="register_fragment_label" translatable="false">Register Fragment</string>
+    <string name="item_fragment_label" translatable="false">Item Fragment</string>
+    <string name="product_fragment_label" translatable="false">Product Fragment</string>
+    <string name="search_fragment_label" translatable="false">Search Fragment</string>
+    <string name="settings_fragment_label" translatable="false">Settings Fragment</string>
+    <string name="web_fragment_label" translatable="false">Web Fragment</string>
+
+    <!--Login & Register-->
+    <string name="next">Siguiente</string>
+    <string name="previous">Anterior</string>
+    <string name="log_in_upperCase">INGRESAR</string>
+    <string name="register_upperCase">REGISTRARSE</string>
+    <string name="name_hint">Nombre</string>
+    <string name="email_address_hint">Correo Electrónico</string>
+    <string name="password_hint">Contraseña</string>
+    <string name="confirm_password_hint">Confirmar Contraseña</string>
+    <string name="register_new_account"><u>Registrar una cuenta nueva</u></string>
+    <string name="already_have_account"><u>Ya tengo una cuenta</u></string>
+
+    <!--Bottom Navigation Bar-->
+    <string name="nav_dashboard">Tablero</string>
+    <string name="nav_items">Inventario</string>
+    <string name="nav_search">Buscar</string>
+    <string name="nav_settings">Preferencias</string>
+
+    <!--Dashboard-->
+    <string name="dashboard_summary">RESUMEN</string>
+    <string name="dashboard_main">Tablero</string>
+    <string name="dashboard_recent_items">ARTICULOS RECIENTES</string>
+    <string name="dashboard_items">Artículos</string>
+    <string name="dashboard_categories">Categorías</string>
+    <string name="dashboard_quantity">Cantidad Total</string>
+    <string name="dashboard_total">Valor Total</string>
+
+    <!--Settings-->
+    <string name="settings_main">Preferencias</string>
+    <string name="settings_Log_Out">CERRAR SESION</string>
+    <string name="settings_Web">ACERCA DE NOSOTROS</string>
+    <string name="settings_email">CONTACTAR SOPORTE</string>
+    <string name="settings_phone">LLAMAR</string>
+    <string name="settings_translate">CAMBIAR IDIOMA</string>
+
+
+    <!--Items-->
+    <string name="inventory_main">Inventario</string>
+    <string name="inventory_products_main">Productos</string>
+    <string name="inventory_lastUpdated">Última Modificación</string>
+
+    <!--Add Item-->
+    <string name="addItem_btnSave">GUARDAR</string>
+    <string name="addItem_enterItemName">Ingresar Nombre de Artículo</string>
+    <string name="addItem_Quantity">Cantidad</string>
+    <string name="addItem_Barcode">Código</string>
+    <string name="addItem_Price">Precio</string>
+    <string name="addItem_Unit">|  unidad(es)</string>
+    <string name="addItem_expirationDate">Fecha de Expiración</string>
+    <string name="addItem_Description">Descripción</string>
+
+    <!--Show Item-->
+    <string name="showItem_btnSave">GUARDAR</string>
+    <string name="showItem_enterItemName">Ingresar Nombre de Artículo</string>
+    <string name="showItem_Quantity">Cantidad</string>
+    <string name="showItem_Barcode">Código</string>
+    <string name="showItem_Price">Precio</string>
+    <string name="showItem_Unit">|  unidad(es)</string>
+    <string name="showItem_expirationDate">Fecha de Expiración</string>
+    <string name="showItem_Description">Descripción</string>
+    <string name="showItem_TotalPrice">Precio Total</string>
+    <string name="showItem_LastUpdated">Última Modificación</string>
+    <string name="showItem_iconDelete">Eliminar</string>
+    <string name="showItem_iconMove">Mover</string>
+    <string name="showItem_iconExport">Exportar</string>
+
+    <!--Pop up-->
+    <string name="discardPopUp_Title">¿Descartar Cambios?</string>
+    <string name="discardPopUp_Text">¿Está seguro que desea descartar los cambios?</string>
+    <string name="discardPopup_Cancel">Cancelar</string>
+    <string name="discardPopup_Discard">Descartar</string>
+
+    <!--Validations-->
+    <string name="emptyField">El campo no puede estar vacío</string>
+    <string name="incorrect_username">El usuario ingresado está incorrecto, favor intentar de nuevo</string>
+    <string name="invalid_password">Contraseña debe tener mínimo 1 dígito, 1 mayúscula, 1 minúscula y un carácter especial</string>
+    <string name="invalid_password_length">Contraseña debe tener mínimo seis carácteres</string>
+    <string name="password_mismatch">Contraseñas no coinciden</string>
+    <string name="incorrect_email">Formato de correo inválido</string>
+
+    <!-- Toast Strings -->
+    <string name="signed_out">Sesión cerrada</string>
+    <string name="registration_failed">Registro fallido, favor intentar de nuevo</string>
+
+    <!--Search-->
+    <string name="search">Buscar</string>
+    <string name="search_text">Ingresar texto para comenzar búsqueda</string>
+</resources>
