@@ -38,15 +38,6 @@ import java.util.Locale;
 
 public class SettingsFragment extends Fragment {
 
-    boolean languageSelected = true;
-    Resources resources;
-    Context context;
-    //Settings
-    TextView tv_settings_changeLanguage, tv_settings_aboutUs, tv_settings_callUs,tv_settings_contactSupport,
-            tv_settings_logOut, tv_settings_main;
-    private ItemViewModel viewModel;
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,78 +49,12 @@ public class SettingsFragment extends Fragment {
         LinearLayout btn_callUs = root.findViewById(R.id.btn_settings_callUs);
         LinearLayout btn_aboutUs = root.findViewById(R.id.btn_settings_aboutUs);
         LinearLayout btn_translate = root.findViewById(R.id.btn_settings_translate);
-        viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
-
-        //Settings
-        tv_settings_changeLanguage = root.findViewById(R.id.tv_settings_changeLanguage);
-        tv_settings_aboutUs = root.findViewById(R.id.tv_settings_aboutUs);
-        tv_settings_callUs = root.findViewById(R.id.tv_settings_callUs);
-        tv_settings_contactSupport = root.findViewById(R.id.tv_settings_contactSupport);
-        tv_settings_logOut = root.findViewById(R.id.tv_settings_logOut);
-        tv_settings_main = root.findViewById(R.id.tv_settingsMain);
 
 
         btn_translate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String[] language ={"ENGLISH","ESPAÑOL"};
-                final int checkedItem;
-
-                if(languageSelected){
-                    viewModel.setLanguageSelected("ENGLISH");
-
-                }else{
-                    viewModel.setLanguageSelected("ESPAÑOL");
-                }
-
-                if (viewModel.getLanguageSelected().equals("ENGLISH")){
-                    checkedItem = 0;
-                }else{
-                    checkedItem = 1;
-                }
-
-                final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Select language").setSingleChoiceItems(language, checkedItem, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        languageSelected = language[which].equals("ENGLISH");
-
-                        if(language[which].equals("ENGLISH")){
-                            context = LocaleHelper.setLocale(getContext(), "en");
-                            resources = context.getResources();
-
-                            //Settings
-                            tv_settings_changeLanguage.setText(resources.getString(R.string.settings_translate));
-                            tv_settings_aboutUs.setText(resources.getString(R.string.settings_Web));
-                            tv_settings_callUs.setText(resources.getString(R.string.settings_phone));
-                            tv_settings_logOut.setText(resources.getString(R.string.settings_Log_Out));
-                            tv_settings_contactSupport.setText(resources.getString(R.string.settings_email));
-                            tv_settings_main.setText(resources.getString(R.string.settings_main));
-
-                        }
-                        if(language[which].equals("ESPAÑOL")){
-                            context = LocaleHelper.setLocale(getContext(), "es");
-                            resources = context.getResources();
-
-                            //Settings
-                            tv_settings_changeLanguage.setText(resources.getString(R.string.settings_translate));
-                            tv_settings_aboutUs.setText(resources.getString(R.string.settings_Web));
-                            tv_settings_callUs.setText(resources.getString(R.string.settings_phone));
-                            tv_settings_logOut.setText(resources.getString(R.string.settings_Log_Out));
-                            tv_settings_contactSupport.setText(resources.getString(R.string.settings_email));
-                            tv_settings_main.setText(resources.getString(R.string.settings_main));
-
-                        }
-                    }
-
-                }).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-                builder.create().show();
+                startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCALE_SETTINGS), 0);
             }
         });
 
