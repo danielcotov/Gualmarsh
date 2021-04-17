@@ -148,11 +148,15 @@ public class SettingsFragment extends Fragment {
         btn_contactSupport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String[] TO = {"gadafasolutions@gmail.com"};
+                String SUBJECT = "Support Assistance";
+                String MAIL = "Hi Support Team," + "\n" + "I need your assistance with the app." + "\n" + "Kind regards,";
+
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("message/rfc822");
-                intent.putExtra(Intent.EXTRA_EMAIL, "gadafasolutions@gmail.com");
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
-                intent.putExtra(Intent.EXTRA_TEXT, "Insert email body");
+                intent.putExtra(Intent.EXTRA_EMAIL, TO);
+                intent.putExtra(Intent.EXTRA_SUBJECT, SUBJECT);
+                intent.putExtra(Intent.EXTRA_TEXT, MAIL);
                 startActivity(Intent.createChooser(intent, "Send Email"));
             }
         });
