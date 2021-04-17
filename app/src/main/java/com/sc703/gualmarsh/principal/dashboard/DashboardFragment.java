@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -28,6 +30,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sc703.gualmarsh.R;
 import com.sc703.gualmarsh.login.LoginActivity;
+import com.sc703.gualmarsh.principal.inventory.ItemViewModel;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public class DashboardFragment extends Fragment {
     TextView itemsNum;
@@ -37,9 +43,14 @@ public class DashboardFragment extends Fragment {
     private FirebaseDatabase FBDB = FirebaseDatabase.getInstance();
     private DatabaseReference BDref = FBDB.getReference();
     private DatabaseReference categoriesref = BDref.child("categories");
-    private DatabaseReference allRefs = FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference allProducts = BDref.child("products");
+    private Long count = Long.parseLong("0");
+    private Long count2 = Long.parseLong("0");
+    private ItemViewModel viewModel;
+    private int sum;
+    private int sum2;
 
-    @Override
+        @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
@@ -53,18 +64,35 @@ public class DashboardFragment extends Fragment {
             window.setStatusBarColor(getActivity().getResources().getColor(R.color.w_darkBG));
         }
 
+        BDref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                count = snapshot.child("products").getChildrenCount();
+                loadWidgets(count);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         return root;
     }
     @Override
     public void onStart() {
         super.onStart();
+
+
+    }
+    public void loadWidgets(Long count){
+         count2 = count;
         categoriesref.addListenerForSingleValueEvent (new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 String textCategories = String.valueOf(snapshot.getChildrenCount());
-//                dashboardQuantity.setText(String.valueOf(snapshot.getChildrenCount()));
 
                 categoriesNum.setText(textCategories);
             }
@@ -75,28 +103,41 @@ public class DashboardFragment extends Fragment {
                 categoriesNum.setText(text);
             }
         });
-        allRefs.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                long count = 0;
-                long productSnapshotPrice = 0;
+        viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
+        for (int i = 1; i <= count; i++){
+            System.out.println(allProducts.child(Integer.toString(i)));
 
-                DataSnapshot productCattSnapshot = snapshot.child("productCategories");
-                DataSnapshot productSnapshot = snapshot.child("products");
-                count = count + productCattSnapshot.getChildrenCount();
-                count = count + productSnapshot.getChildrenCount();
-                dashboardQuantity.setText(String.valueOf(count));
+            allProducts.child(Integer.toString(i)).child("quantity").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    viewModel.setProductCount(snapshot.getValue().toString());
+                    sum += Integer.parseInt(snapshot.getValue().toString());
+                    dashboardQuantity.setText(String.valueOf(sum));
+                    itemsNum.setText(String.valueOf(count));
 
-//                productSnapshotPrice = productSnapshotPrice + snapshot.child("products").child("1").getValue(Long.class );
-//                productSnapshotPrice = productSnapshotPrice + (long) snapshot.child("productCategories").child("price").getValue();
-//                dashboardTotal.setText(snapshot.child("products").child("1").child("price").getValue());
-            }
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+            allProducts.child(Integer.toString(i)).child("price").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                   viewModel.setProductPrice(snapshot.getValue().toString());
+                   sum2+= Integer.parseInt(snapshot.getValue().toString());
+                   dashboardTotal.setText(String.valueOf(sum2));
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        }
 
     }
 }
