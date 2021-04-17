@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -31,6 +32,7 @@ import com.sc703.gualmarsh.LocaleHelper;
 import com.sc703.gualmarsh.MainActivity;
 import com.sc703.gualmarsh.R;
 import com.sc703.gualmarsh.login.LoginActivity;
+import com.sc703.gualmarsh.principal.inventory.ItemViewModel;
 
 import java.util.Locale;
 
@@ -42,6 +44,8 @@ public class SettingsFragment extends Fragment {
     //Settings
     TextView tv_settings_changeLanguage, tv_settings_aboutUs, tv_settings_callUs,tv_settings_contactSupport,
             tv_settings_logOut, tv_settings_main;
+    private ItemViewModel viewModel;
+
 
     @Nullable
     @Override
@@ -54,6 +58,7 @@ public class SettingsFragment extends Fragment {
         LinearLayout btn_callUs = root.findViewById(R.id.btn_settings_callUs);
         LinearLayout btn_aboutUs = root.findViewById(R.id.btn_settings_aboutUs);
         LinearLayout btn_translate = root.findViewById(R.id.btn_settings_translate);
+        viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
 
         //Settings
         tv_settings_changeLanguage = root.findViewById(R.id.tv_settings_changeLanguage);
@@ -71,6 +76,13 @@ public class SettingsFragment extends Fragment {
                 final int checkedItem;
 
                 if(languageSelected){
+                    viewModel.setLanguageSelected("ENGLISH");
+
+                }else{
+                    viewModel.setLanguageSelected("ESPAÑOL");
+                }
+
+                if (viewModel.getLanguageSelected().equals("ENGLISH")){
                     checkedItem = 0;
                 }else{
                     checkedItem = 1;
