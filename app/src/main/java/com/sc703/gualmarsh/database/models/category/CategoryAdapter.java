@@ -141,8 +141,6 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
                                                 append(snapshot.child(Integer.toString(i)).child("code").getValue().toString()).append(",").
                                                 append(snapshot.child(Integer.toString(i)).child("price").getValue().toString()).append(",").
                                                 append(snapshot.child(Integer.toString(i)).child("description").getValue().toString());
-                                        Log.e("Tag3", snapshot.child(Integer.toString(i)).child("name").getValue().toString());
-                                        Log.e("Tag4", snapshot.child(Integer.toString(i)).child("code").getValue().toString());
                                     }
 
                                     try{
@@ -154,7 +152,7 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
                                         File fileLocation = new File(v.getContext().getFilesDir(), "data.csv");
                                         Uri path = FileProvider.getUriForFile(context, "com.sc703.gualmarsh.FileProvider", fileLocation);
                                         Intent fileIntent = new Intent(Intent.ACTION_SEND);
-                                        fileIntent.setType("text/csv");
+                                        fileIntent.setType("text/*");
                                         fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Data");
                                         fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                         fileIntent.putExtra(Intent.EXTRA_STREAM, path);
