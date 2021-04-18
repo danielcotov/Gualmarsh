@@ -31,12 +31,12 @@
                 android:textSize="35sp" />
 
             <ImageView
-                android:id="@+id/dashboardFilter"
+                android:id="@+id/btn_export"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="154dp"
                 android:layout_marginTop="37.5dp"
-                android:src="@drawable/ic_filter"
+                android:src="@drawable/ic_import_export"
                 app:tint="@color/w_blue" />
 
         </LinearLayout>
