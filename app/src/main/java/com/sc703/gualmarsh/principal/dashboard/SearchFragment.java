@@ -112,7 +112,6 @@ public class SearchFragment extends Fragment {
                 searchAdapter = new SearchAdapter(options);
                 recyclerView.setAdapter(searchAdapter);
             }
-            searchAdapter.startListening();
         } else {
             FirebaseRecyclerOptions<Product> options
                     = new FirebaseRecyclerOptions.Builder<Product>()
@@ -121,6 +120,7 @@ public class SearchFragment extends Fragment {
             searchAdapter = new SearchAdapter(options);
             recyclerView.setAdapter(searchAdapter);
         }
+        searchAdapter.startListening();
     }
     @Override
     public void onStop() {
