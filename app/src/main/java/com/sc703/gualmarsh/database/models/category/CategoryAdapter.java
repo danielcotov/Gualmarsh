@@ -2,7 +2,9 @@ package com.sc703.gualmarsh.database.models.category;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -36,6 +39,7 @@ import com.sc703.gualmarsh.principal.inventory.ItemClickListener;
 import com.sc703.gualmarsh.principal.inventory.ItemViewModel;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -129,9 +133,35 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
                             bdRef.child("productCategories").child(snapshot.child("code").getValue().toString()).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    StringBuilder data = new StringBuilder();
+                                    data.append("Product Name,Quantity,Barcode,Price,Description");
                                     for(int i=1; i<=snapshot.getChildrenCount(); i++){
+                                        data.append("\n").append(snapshot.child(Integer.toString(i)).child("name").getValue().toString()).append(",").
+                                                append(snapshot.child(Integer.toString(i)).child("quantity").getValue().toString()).append(",").
+                                                append(snapshot.child(Integer.toString(i)).child("code").getValue().toString()).append(",").
+                                                append(snapshot.child(Integer.toString(i)).child("price").getValue().toString()).append(",").
+                                                append(snapshot.child(Integer.toString(i)).child("description").getValue().toString());
                                         Log.e("Tag3", snapshot.child(Integer.toString(i)).child("name").getValue().toString());
                                         Log.e("Tag4", snapshot.child(Integer.toString(i)).child("code").getValue().toString());
+                                    }
+
+                                    try{
+                                        FileOutputStream out = v.getContext().openFileOutput("data.csv", Context.MODE_PRIVATE);
+                                        out.write((data.toString()).getBytes());
+                                        out.close();
+
+                                        Context context = v.getContext();
+                                        File fileLocation = new File(v.getContext().getFilesDir(), "data.csv");
+                                        Uri path = FileProvider.getUriForFile(context, "com.sc703.gualmarsh.FileProvider", fileLocation);
+                                        Intent fileIntent = new Intent(Intent.ACTION_SEND);
+                                        fileIntent.setType("text/csv");
+                                        fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Data");
+                                        fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                        fileIntent.putExtra(Intent.EXTRA_STREAM, path);
+                                        v.getContext().startActivity(Intent.createChooser(fileIntent, "Open with"));
+
+                                    }catch(Exception e){
+                                        e.printStackTrace();
                                     }
                                 }
 
