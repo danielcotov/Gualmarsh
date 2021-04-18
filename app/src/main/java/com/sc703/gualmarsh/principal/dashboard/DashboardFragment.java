@@ -50,26 +50,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class DashboardFragment extends Fragment {
-    TextView itemsNum;
-    TextView categoriesNum;
-    TextView dashboardQuantity;
-    TextView dashboardTotal;
+    private TextView itemsNum, categoriesNum, dashboardQuantity, dashboardTotal;
     private FirebaseDatabase FBDB = FirebaseDatabase.getInstance();
     private DatabaseReference BDref = FBDB.getReference();
     private DatabaseReference categoriesref = BDref.child("categories");
     private DatabaseReference allProducts = BDref.child("products");
-    private DatabaseReference productCategories = BDref.child("productCategories");
     private Long count = Long.parseLong("0");
-    String counter = "0";
+    private String counter = "0";
     private ItemViewModel viewModel;
     private int sum;
     private int sum2;
-    String fullDB;
-    Calendar calendar = Calendar.getInstance();
-    final int year = calendar.get(Calendar.YEAR);
-    final int month = calendar.get(Calendar.MONTH);
-    final int day = calendar.get(Calendar.DAY_OF_MONTH);
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,7 +75,6 @@ public class DashboardFragment extends Fragment {
             Window window = getActivity().getWindow();
             window.setStatusBarColor(getActivity().getResources().getColor(R.color.w_darkBG));
         }
-
         BDref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -95,7 +84,6 @@ public class DashboardFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
         exportButton.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +142,6 @@ public class DashboardFragment extends Fragment {
 
                 }
             });
-
         }
 
     }
@@ -172,14 +159,13 @@ public class DashboardFragment extends Fragment {
                             append(snapshot.child(Integer.toString(i)).child("quantity").getValue().toString());
 
                 }
-
                 try{
                     FileOutputStream out = getContext().openFileOutput("data.csv", Context.MODE_PRIVATE);
                     out.write((data.toString()).getBytes());
                     out.close();
 
                     Context context = getContext();
-                    File fileLocation = new File(getContext().getFilesDir(), "backup."+ year + month + day + ".csv");
+                    File fileLocation = new File(getContext().getFilesDir(), "data.csv");
                     Uri path = FileProvider.getUriForFile(context, "com.sc703.gualmarsh.FileProvider", fileLocation);
                     Intent fileIntent = new Intent(Intent.ACTION_SEND);
                     fileIntent.setType("text/csv");
