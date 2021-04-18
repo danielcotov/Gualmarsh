@@ -13,8 +13,9 @@ public class ItemViewModel extends ViewModel {
     private final MutableLiveData<String> productQuantity = new MutableLiveData<>();
     private final MutableLiveData<String> productPrice = new MutableLiveData<>();
     private final MutableLiveData<String> productDescription = new MutableLiveData<>();
-    private final MutableLiveData<String> languageSelected = new MutableLiveData<>();
+    private final MutableLiveData<String> productSearch = new MutableLiveData<>();
     private final MutableLiveData<String> productCount = new MutableLiveData<>();
+
 
     public void setCategoryCode(String category){
         categoryCode.setValue(category);
@@ -37,11 +38,11 @@ public class ItemViewModel extends ViewModel {
     public void setProductDescription(String description){
         productDescription.setValue(description);
     }
-    public void setLanguageSelected(String language){
-        languageSelected.setValue(language);
+    public void setProductSearch(String search){
+        productSearch.setValue(search);
     }
-    public MutableLiveData<String> getLanguageSelected() {
-        return languageSelected;
+    public MutableLiveData<String> getProductSearch() {
+        return productSearch;
     }
     public LiveData<String> getCategoryCode() {
         return categoryCode;
