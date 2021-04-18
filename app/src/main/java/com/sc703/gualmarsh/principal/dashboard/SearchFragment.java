@@ -43,7 +43,7 @@ public class SearchFragment extends Fragment {
     private ItemViewModel viewModel;
     private EditText edtSearchBar;
     private LinearLayout logoSearch;
-    private final DatabaseReference productRef = bdRef.child("products/");
+    private DatabaseReference productRef = bdRef.child("products");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,8 +74,6 @@ public class SearchFragment extends Fragment {
                                 }catch (Exception e){
                                     e.printStackTrace();
                                 }
-
-
                             }
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
@@ -83,9 +81,9 @@ public class SearchFragment extends Fragment {
                             }
                         });
 
-                    } catch (Exception e) {
+                    }catch(Exception e){
                     }
-                } else {
+                }else{
                     logoSearch.setVisibility(View.VISIBLE);
                     searchProduct(Long.parseLong("0"), "EmptySearch");
                 }
@@ -93,20 +91,41 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+
             }
         });
         return root;
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
     public void searchProduct(Long count, String search) {
         viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
-        for (int i = 1; i <= count; i++) {
+        if (!search.equals("EmptySearch")) {
+            for (int i = 1; i <= count; i++) {
+                FirebaseRecyclerOptions<Product> options
+                        = new FirebaseRecyclerOptions.Builder<Product>()
+                        .setQuery(productRef.orderByChild("name").startAt(search).endAt(search + "\uf899"), Product.class)
+                        .build();
+                searchAdapter = new SearchAdapter(options);
+                recyclerView.setAdapter(searchAdapter);
+            }
+            searchAdapter.startListening();
+        } else {
             FirebaseRecyclerOptions<Product> options
                     = new FirebaseRecyclerOptions.Builder<Product>()
                     .setQuery(productRef.orderByChild("name").startAt(search).endAt(search + "\uf899"), Product.class)
                     .build();
             searchAdapter = new SearchAdapter(options);
             recyclerView.setAdapter(searchAdapter);
-            searchAdapter.startListening();
         }
     }
+    @Override
+    public void onStop() {
+        super.onStop();
+        searchAdapter.stopListening();
+    }
+
 }
