@@ -144,10 +144,11 @@ public class ShowItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 StringBuilder data = new StringBuilder();
-                data.append("Time,Distance");
-                for(int i=0; i<5; i++){
-                    data.append("\n").append(String.valueOf(i)).append(",").append(String.valueOf(i * i));
-                }
+                data.append("Product Name,Quantity,Barcode,Price,Description");
+                data.append("\n").append(String.valueOf(viewModel.getProductName().getValue())).append(",").append((viewModel.getProductQuantity()).getValue()).append(",").
+                        append(String.valueOf(viewModel.getProductCode().getValue())).append(",").append(viewModel.getProductPrice().getValue()).append(",").
+                        append(String.valueOf(viewModel.getProductDescription().getValue()));
+
 
                 try{
                     FileOutputStream out = getContext().openFileOutput("data.csv", Context.MODE_PRIVATE);
@@ -162,7 +163,7 @@ public class ShowItemFragment extends Fragment {
                     fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Data");
                     fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     fileIntent.putExtra(Intent.EXTRA_STREAM, path);
-                    startActivity(Intent.createChooser(fileIntent, "Send mail"));
+                    startActivity(Intent.createChooser(fileIntent, "Open with"));
 
                 }catch(Exception e){
                     e.printStackTrace();
@@ -205,9 +206,6 @@ public class ShowItemFragment extends Fragment {
         return root;
     }
 
-    public void export(View view){
-
-    }
 
     public void loadImage (Context context, ImageView imvImage, String code){
         String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".jpg";

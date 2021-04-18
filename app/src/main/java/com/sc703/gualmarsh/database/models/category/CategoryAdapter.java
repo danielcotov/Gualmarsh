@@ -3,6 +3,7 @@ package com.sc703.gualmarsh.database.models.category;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,6 +22,11 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -37,8 +43,10 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
     private ItemClickListener itemClickListener;
     private GridLayoutManager gridLayoutManager;
     private StorageReference storage;
-
-
+    private final FirebaseDatabase fDatabase = FirebaseDatabase.getInstance();
+    private final DatabaseReference bdRef = fDatabase.getReference();
+    private ItemViewModel viewModel;
+    int position;
 
 
     public CategoryAdapter(@NonNull FirebaseRecyclerOptions<Category> options, GridLayoutManager gridLayoutManager) {
@@ -58,7 +66,7 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
 
     public class Holder extends RecyclerView.ViewHolder {
         TextView tvCategoryCode, tvCategoryName, tvCategoryQuantity;
-        ImageView imvImage;
+        ImageView imvImage, imvExport;
 
         public Holder(View item, int viewType) {
             super(item);
@@ -67,11 +75,13 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
                 tvCategoryCode = item.findViewById(R.id.tv_grid_code);
                 tvCategoryName = item.findViewById(R.id.tv_grid_name);
                 tvCategoryQuantity = item.findViewById(R.id.tv_grid_quantity);
+
             } else {
                 imvImage = item.findViewById(R.id.imv_list_itemPhoto);
                 tvCategoryCode = item.findViewById(R.id.tv_list_code);
                 tvCategoryName = item.findViewById(R.id.tv_list_name);
                 tvCategoryQuantity = item.findViewById(R.id.tv_list_quantity);
+                imvExport = item.findViewById(R.id.list_more);
             }
             itemView.setOnClickListener(new OnClickListener() {
                 @Override
@@ -82,8 +92,10 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
                     }
                 }
             });
+
         }
     }
+
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -105,15 +117,54 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
         } else {
             holder.tvCategoryQuantity.setText("");
         }
+
+        try {
+            holder.imvExport.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    bdRef.child("categories").child(Integer.toString(position+1)).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Log.e("Tag1", snapshot.child("code").getValue().toString());
+                            bdRef.child("productCategories").child(snapshot.child("code").getValue().toString()).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for(int i=1; i<=snapshot.getChildrenCount(); i++){
+                                        Log.e("Tag3", snapshot.child(Integer.toString(i)).child("name").getValue().toString());
+                                        Log.e("Tag4", snapshot.child(Integer.toString(i)).child("code").getValue().toString());
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
+            });
+        } catch (Exception e) {
+
+        }
+
     }
+
     public void setOnItemClickListener(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
-    public void loadImages (Context context, ImageView imvImage, String code){
+
+    public void loadImages(Context context, ImageView imvImage, String code) {
         String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".jpg";
         File cacheFile = new File(cachePath);
-        if (!cacheFile.exists()){
-            storage = FirebaseStorage.getInstance().getReference().child("Resources/Categories/"+ code + ".jpg");
+        if (!cacheFile.exists()) {
+            storage = FirebaseStorage.getInstance().getReference().child("Resources/Categories/" + code + ".jpg");
             File localFile = null;
             try {
                 localFile = new File(context.getCacheDir(), code + ".jpg");
@@ -132,7 +183,7 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
                 public void onFailure(@NonNull Exception e) {
                 }
             });
-        }else{
+        } else {
             imvImage.setImageBitmap(BitmapFactory.decodeFile(cachePath));
         }
     }
