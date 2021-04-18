@@ -42,17 +42,6 @@
         </LinearLayout>
 
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:clipChildren="false"
-            android:clipToPadding="false">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/dashboardSummaryDivider"
@@ -165,7 +154,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="35dp">
 
 
                     <LinearLayout
@@ -251,11 +241,6 @@
 
                 </LinearLayout>
 
-
-
-                </LinearLayout>
-
-        </ScrollView>
 
     </LinearLayout>
 

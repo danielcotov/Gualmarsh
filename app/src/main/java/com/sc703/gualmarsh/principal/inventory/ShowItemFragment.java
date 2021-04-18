@@ -3,11 +3,14 @@ package com.sc703.gualmarsh.principal.inventory;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -23,6 +26,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -36,6 +40,7 @@ import com.sc703.gualmarsh.R;
 import com.sc703.gualmarsh.database.models.product.Product;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,15 +60,14 @@ public class ShowItemFragment extends Fragment {
     private Button btnCancel, btnDiscard;
     private AlertDialog dialog;
     private AlertDialog.Builder builder;
-
-    public ShowItemFragment() {
-    }
+    LinearLayout btn_export;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_show_item, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
+        btn_export = root.findViewById(R.id.showItem_Export);
         imvShowImage = root.findViewById(R.id.showItem_Photo);
         edtName = root.findViewById(R.id.edt_showItem_productName);
         edtCode = root.findViewById(R.id.edt_showItem_barcode);
@@ -135,6 +139,37 @@ public class ShowItemFragment extends Fragment {
                 tvDate.setText(date);
             }
         };
+
+        btn_export.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringBuilder data = new StringBuilder();
+                data.append("Time,Distance");
+                for(int i=0; i<5; i++){
+                    data.append("\n").append(String.valueOf(i)).append(",").append(String.valueOf(i * i));
+                }
+
+                try{
+                    FileOutputStream out = getContext().openFileOutput("data.csv", Context.MODE_PRIVATE);
+                    out.write((data.toString()).getBytes());
+                    out.close();
+
+                    Context context = getContext();
+                    File fileLocation = new File(getContext().getFilesDir(), "data.csv");
+                    Uri path = FileProvider.getUriForFile(context, "com.sc703.gualmarsh.FileProvider", fileLocation);
+                    Intent fileIntent = new Intent(Intent.ACTION_SEND);
+                    fileIntent.setType("text/csv");
+                    fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Data");
+                    fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    fileIntent.putExtra(Intent.EXTRA_STREAM, path);
+                    startActivity(Intent.createChooser(fileIntent, "Send mail"));
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,6 +204,11 @@ public class ShowItemFragment extends Fragment {
 
         return root;
     }
+
+    public void export(View view){
+
+    }
+
     public void loadImage (Context context, ImageView imvImage, String code){
         String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".jpg";
         imvImage.setImageBitmap(BitmapFactory.decodeFile(cachePath));
