@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel;
 
 public class ItemViewModel extends ViewModel {
     private final MutableLiveData<String> categoryCode = new MutableLiveData<>();
+    private final MutableLiveData<String> categoryKey = new MutableLiveData<>();
+    private final MutableLiveData<String> categoryQuantity = new MutableLiveData<>();
     private final MutableLiveData<String> productCode = new MutableLiveData<>();
     private final MutableLiveData<String> productName = new MutableLiveData<>();
     private final MutableLiveData<String> productQuantity = new MutableLiveData<>();
@@ -19,6 +21,12 @@ public class ItemViewModel extends ViewModel {
 
     public void setCategoryCode(String category){
         categoryCode.setValue(category);
+    }
+    public void setCategoryKey(String key){
+        categoryKey.setValue(key);
+    }
+    public void setCategoryQuantity(String quantity){
+        categoryQuantity.setValue(quantity);
     }
     public void setProductCode(String product){
         productCode.setValue(product);
@@ -46,6 +54,12 @@ public class ItemViewModel extends ViewModel {
     }
     public LiveData<String> getCategoryCode() {
         return categoryCode;
+    }
+    public MutableLiveData<String> getCategoryKey() {
+        return categoryKey;
+    }
+    public MutableLiveData<String> getCategoryQuantity() {
+        return categoryQuantity;
     }
     public LiveData<String> getProductCode() {
         return productCode;

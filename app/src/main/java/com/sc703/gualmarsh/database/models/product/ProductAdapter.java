@@ -63,7 +63,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
     }
 
     public class Holder extends RecyclerView.ViewHolder{
-        TextView tvProductCode, tvProductName, tvProductQuantity;
+        TextView tvProductCode, tvProductName, tvProductQuantity, tvProductPrice;
         ImageView imvImage;
 
         public Holder(View item, int viewType){
@@ -73,11 +73,13 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                 tvProductCode = item.findViewById(R.id.tv_grid_code);
                 tvProductName = item.findViewById(R.id.tv_grid_name);
                 tvProductQuantity = item.findViewById(R.id.tv_grid_quantity);
+                tvProductPrice = item.findViewById(R.id.tv_grid_price);
             }else{
                 imvImage = item.findViewById(R.id.imv_list_itemPhoto);
                 tvProductCode = item.findViewById(R.id.tv_list_code);
                 tvProductName = item.findViewById(R.id.tv_list_name);
                 tvProductQuantity = item.findViewById(R.id.tv_list_quantity);
+                tvProductPrice = item.findViewById(R.id.tv_list_price);
             }
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -107,11 +109,13 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
         loadImage(holder.imvImage.getContext(), holder.imvImage, model.getCode());
         holder.tvProductCode.setText(model.getCode());
         holder.tvProductName.setText(String.format(String.valueOf(model.getName())));
-        if (model.getQuantity() != null) {
+        try{
             holder.tvProductQuantity.setText(model.getQuantity().toString());
-        }else{
-            holder.tvProductQuantity.setText("");
+            holder.tvProductPrice.setText(model.getPrice().toString());
+        }catch(Exception e){
+            e.printStackTrace();
         }
+
 
     }
 

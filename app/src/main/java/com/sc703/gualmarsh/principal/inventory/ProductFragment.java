@@ -63,7 +63,7 @@ public class ProductFragment extends Fragment {
                 ValueEventListener valueEventListener = new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        viewModel.setProductCount(Long.toString(snapshot.child("productCategories/" + viewModel.getCategoryCode().getValue()).getChildrenCount()));
+                        viewModel.setProductCount(Long.toString(snapshot.child("products/").getChildrenCount()));
                     }
 
                     @Override

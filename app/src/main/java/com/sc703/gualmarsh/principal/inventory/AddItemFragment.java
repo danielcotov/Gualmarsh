@@ -50,6 +50,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -170,7 +171,8 @@ public class AddItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 DatabaseReference productCategory = bdRef.child("productCategories/" + viewModel.getCategoryCode().getValue());
-                DatabaseReference product = bdRef.child("products/" + viewModel.getCategoryCode().getValue());
+                DatabaseReference product = bdRef.child("products");
+                DatabaseReference category = bdRef.child("categories");
                 Map<String, Object> productAdd = new HashMap<>();
                 if (addItem(v)) {
                     try{
@@ -179,6 +181,25 @@ public class AddItemFragment extends Fragment {
                                 Long.parseLong(edtPrice.getText().toString()), Long.parseLong(edtQuantity.getText().toString())));
                         productCategory.updateChildren(productAdd);
                         product.updateChildren(productAdd);
+                        category.child(viewModel.getCategoryKey().getValue()).child("quantity").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Long quantity = Long.parseLong(snapshot.getValue().toString()) + 1;
+                                Log.e("T", quantity.toString());
+                                viewModel.setCategoryQuantity(quantity.toString());
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                        Log.e("TAGTEST", viewModel.getCategoryQuantity().getValue());
+
+                        category.child(viewModel.getCategoryKey().getValue()).child("quantity").setValue(Long.parseLong(viewModel.getCategoryQuantity().getValue()));
+
+
                         uploadImage(v);
 
                     }catch (Exception e){

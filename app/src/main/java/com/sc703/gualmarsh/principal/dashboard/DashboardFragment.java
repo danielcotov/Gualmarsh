@@ -50,13 +50,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class DashboardFragment extends Fragment {
-    private TextView itemsNum, categoriesNum, dashboardQuantity, dashboardTotal;
-    private FirebaseDatabase FBDB = FirebaseDatabase.getInstance();
-    private DatabaseReference BDref = FBDB.getReference();
-    private DatabaseReference categoriesref = BDref.child("categories");
-    private DatabaseReference allProducts = BDref.child("products");
+    TextView itemsNum, categoriesNum, dashboardQuantity, dashboardTotal;
+    private FirebaseDatabase fDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference bdRef = fDatabase.getReference();
+    private DatabaseReference categoriesRef = bdRef.child("categories");
+    private DatabaseReference allProducts = bdRef.child("products");
     private Long count = Long.parseLong("0");
-    private String counter = "0";
+    String counter = "0";
     private ItemViewModel viewModel;
     private int sum;
     private int sum2;
@@ -75,7 +75,8 @@ public class DashboardFragment extends Fragment {
             Window window = getActivity().getWindow();
             window.setStatusBarColor(getActivity().getResources().getColor(R.color.w_darkBG));
         }
-        BDref.addValueEventListener(new ValueEventListener() {
+
+        bdRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 count = snapshot.child("products").getChildrenCount();
@@ -84,6 +85,7 @@ public class DashboardFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
         exportButton.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +99,7 @@ public class DashboardFragment extends Fragment {
     }
 
     public void loadWidgets(Long count){
-        categoriesref.addListenerForSingleValueEvent (new ValueEventListener() {
+        categoriesRef.addListenerForSingleValueEvent (new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -117,10 +119,15 @@ public class DashboardFragment extends Fragment {
             allProducts.child(Integer.toString(i)).child("quantity").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    viewModel.setProductCount(snapshot.getValue().toString());
-                    sum += Integer.parseInt(snapshot.getValue().toString());
-                    dashboardQuantity.setText(String.valueOf(sum));
-                    itemsNum.setText(String.valueOf(count));
+                    try{
+                        Log.e("TAG",snapshot.getValue().toString());
+                        sum += Integer.parseInt(snapshot.getValue().toString());
+                        dashboardQuantity.setText(String.valueOf(sum));
+                        itemsNum.setText(String.valueOf(count));
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
                 }
 
                 @Override
@@ -131,9 +138,13 @@ public class DashboardFragment extends Fragment {
             allProducts.child(Integer.toString(i)).child("price").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                   viewModel.setProductPrice(snapshot.getValue().toString());
-                   sum2+= Integer.parseInt(snapshot.getValue().toString());
-                   dashboardTotal.setText(String.valueOf(sum2));
+                   try{
+                       sum2+= Integer.parseInt(snapshot.getValue().toString());
+                       dashboardTotal.setText(String.valueOf(sum2));
+                   }catch (Exception e){
+                       e.printStackTrace();
+                   }
+
 
                 }
 
@@ -142,11 +153,12 @@ public class DashboardFragment extends Fragment {
 
                 }
             });
+
         }
 
     }
     public void exportDB(){
-        BDref.child("productCategories").child("CAT0"+ counter).addValueEventListener(new ValueEventListener() {
+        bdRef.child("productCategories").child("CAT0"+ counter).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 StringBuilder data = new StringBuilder();
@@ -159,6 +171,7 @@ public class DashboardFragment extends Fragment {
                             append(snapshot.child(Integer.toString(i)).child("quantity").getValue().toString());
 
                 }
+
                 try{
                     FileOutputStream out = getContext().openFileOutput("data.csv", Context.MODE_PRIVATE);
                     out.write((data.toString()).getBytes());
