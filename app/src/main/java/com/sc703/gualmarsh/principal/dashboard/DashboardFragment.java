@@ -56,8 +56,9 @@ public class DashboardFragment extends Fragment {
     private DatabaseReference categoriesRef = bdRef.child("categories");
     private DatabaseReference allProducts = bdRef.child("products");
     private Long count = Long.parseLong("0");
-    String counter = "0";
+    private Long counter = Long.parseLong("0");
     private ItemViewModel viewModel;
+    private StringBuilder data = new StringBuilder();
     private int sum;
     private int sum2;
 
@@ -158,27 +159,33 @@ public class DashboardFragment extends Fragment {
 
     }
     public void exportDB(){
-        bdRef.child("productCategories").child("CAT0"+ counter).addValueEventListener(new ValueEventListener() {
+        data.append("Category,ID,Code,Quantity,Price,Name,Description");
+        bdRef.child("productCategories").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                StringBuilder data = new StringBuilder();
-                data.append("Product Code,Description,Name,Price,Quantity");
-                for(int i=1; i<=snapshot.getChildrenCount(); i++){
-                    data.append("\n").append(snapshot.child(Integer.toString(i)).child("code").getValue().toString()).append(",").
-                            append(snapshot.child(Integer.toString(i)).child("description").getValue().toString()).append(",").
-                            append(snapshot.child(Integer.toString(i)).child("name").getValue().toString()).append(",").
-                            append(snapshot.child(Integer.toString(i)).child("price").getValue().toString()).append(",").
-                            append(snapshot.child(Integer.toString(i)).child("quantity").getValue().toString());
+                for(DataSnapshot ds : snapshot.getChildren()){
+                    count++;
+                    int i = 0;
+                    for(DataSnapshot catds: ds.getChildren()){
+                        i++;
+                        data.append("\n");
+                        data.append(ds.getKey());
+                        data.append(",").append(snapshot.child(Integer.toString(i)));
+                            data.append(catds.child("code").getValue().toString()).append(",").
+                                    append(catds.child("quantity").getValue().toString()).append(",").
+                                    append(catds.child("price").getValue().toString()).append(",").
+                                    append(catds.child("name").getValue().toString()).append(",").
+                                    append(catds.child("description").getValue().toString());
+                    }
 
                 }
-
                 try{
                     FileOutputStream out = getContext().openFileOutput("data.csv", Context.MODE_PRIVATE);
                     out.write((data.toString()).getBytes());
                     out.close();
 
                     Context context = getContext();
-                    File fileLocation = new File(getContext().getFilesDir(), "data.csv");
+                    File fileLocation = new File(getContext().getFilesDir(), "dbdata.csv");
                     Uri path = FileProvider.getUriForFile(context, "com.sc703.gualmarsh.FileProvider", fileLocation);
                     Intent fileIntent = new Intent(Intent.ACTION_SEND);
                     fileIntent.setType("text/csv");
@@ -190,8 +197,7 @@ public class DashboardFragment extends Fragment {
                 }catch(Exception e){
                     e.printStackTrace();
                 }
-
-
+                Log.e("DATA:",data.toString());
             }
 
             @Override
@@ -199,7 +205,6 @@ public class DashboardFragment extends Fragment {
 
             }
         });
-
 
     }
 
