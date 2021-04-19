@@ -170,7 +170,7 @@ public class DashboardFragment extends Fragment {
                         i++;
                         data.append("\n");
                         data.append(ds.getKey());
-                        data.append(",").append(snapshot.child(Integer.toString(i)));
+                        data.append(",");
                             data.append(catds.child("code").getValue().toString()).append(",").
                                     append(catds.child("quantity").getValue().toString()).append(",").
                                     append(catds.child("price").getValue().toString()).append(",").
