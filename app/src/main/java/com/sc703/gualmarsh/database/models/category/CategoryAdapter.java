@@ -7,11 +7,14 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
@@ -43,7 +46,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryAdapter.Holder> {
+public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryAdapter.Holder> implements PopupMenu.OnMenuItemClickListener {
     private ItemClickListener itemClickListener;
     private GridLayoutManager gridLayoutManager;
     private StorageReference storage;
@@ -51,6 +54,17 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
     private final DatabaseReference bdRef = fDatabase.getReference();
     private ItemViewModel viewModel;
 
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.popupMenu_delete:
+                return true;
+            case R.id.popupMenu_export:
+                return true;
+            default:
+                return false;
+        }
+    }
 
     public CategoryAdapter(@NonNull FirebaseRecyclerOptions<Category> options, GridLayoutManager gridLayoutManager) {
         super(options);
@@ -110,6 +124,9 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
 
     }
 
+
+
+
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.Holder holder, int position, @NonNull Category model) {
         loadImages(holder.imvImage.getContext(), holder.imvImage, model.getCode());
@@ -121,65 +138,84 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
             holder.tvCategoryQuantity.setText("");
         }
 
+
         try {
             holder.imvExport.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    bdRef.child("categories").child(Integer.toString(position+1)).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Log.e("Tag1", snapshot.child("code").getValue().toString());
-                            bdRef.child("productCategories").child(snapshot.child("code").getValue().toString()).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    StringBuilder data = new StringBuilder();
-                                    data.append("Product Name,Quantity,Barcode,Price,Description");
-                                    int j=1;
-                                    for(int i=1; i<=dataSnapshot.getChildrenCount(); j++){
-                                        try{
-                                            data.append("\n").append(dataSnapshot.child(Integer.toString(j)).child("name").getValue().toString()).append(",").
-                                                    append(dataSnapshot.child(Integer.toString(j)).child("quantity").getValue().toString()).append(",").
-                                                    append(dataSnapshot.child(Integer.toString(j)).child("code").getValue().toString()).append(",").
-                                                    append(dataSnapshot.child(Integer.toString(j)).child("price").getValue().toString()).append(",").
-                                                    append(dataSnapshot.child(Integer.toString(j)).child("description").getValue().toString());
-                                            i++;
-                                        }catch (Exception e){
+                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+                    popupMenu.inflate(R.menu.item_popup_menu);
+                    popupMenu.show();
 
-                                        }
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            if(item.getItemId() == R.id.popupMenu_delete){
+                                Toast.makeText(v.getContext(), "DELETE", Toast.LENGTH_SHORT).show();
+                            }
+                            if(item.getItemId() == R.id.popupMenu_export){
+                                bdRef.child("categories").child(Integer.toString(position+1)).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        Log.e("Tag1", snapshot.child("code").getValue().toString());
+                                        bdRef.child("productCategories").child(snapshot.child("code").getValue().toString()).addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                StringBuilder data = new StringBuilder();
+                                                data.append("Product Name,Quantity,Barcode,Price,Description");
+                                                int j=1;
+                                                for(int i=1; i<=dataSnapshot.getChildrenCount(); j++){
+                                                    try{
+                                                        data.append("\n").append(dataSnapshot.child(Integer.toString(j)).child("name").getValue().toString()).append(",").
+                                                                append(dataSnapshot.child(Integer.toString(j)).child("quantity").getValue().toString()).append(",").
+                                                                append(dataSnapshot.child(Integer.toString(j)).child("code").getValue().toString()).append(",").
+                                                                append(dataSnapshot.child(Integer.toString(j)).child("price").getValue().toString()).append(",").
+                                                                append(dataSnapshot.child(Integer.toString(j)).child("description").getValue().toString());
+                                                        i++;
+                                                    }catch (Exception e){
+
+                                                    }
+                                                }
+
+                                                try{
+                                                    FileOutputStream out = v.getContext().openFileOutput("data.csv", Context.MODE_PRIVATE);
+                                                    out.write((data.toString()).getBytes());
+                                                    out.close();
+
+                                                    Context context = v.getContext();
+                                                    File fileLocation = new File(v.getContext().getFilesDir(), "data.csv");
+                                                    Uri path = FileProvider.getUriForFile(context, "com.sc703.gualmarsh.FileProvider", fileLocation);
+                                                    Intent fileIntent = new Intent(Intent.ACTION_SEND);
+                                                    fileIntent.setType("text/*");
+                                                    fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Data");
+                                                    fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                                    fileIntent.putExtra(Intent.EXTRA_STREAM, path);
+                                                    v.getContext().startActivity(Intent.createChooser(fileIntent, "Open with"));
+
+                                                }catch(Exception e){
+                                                    e.printStackTrace();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
                                     }
 
-                                    try{
-                                        FileOutputStream out = v.getContext().openFileOutput("data.csv", Context.MODE_PRIVATE);
-                                        out.write((data.toString()).getBytes());
-                                        out.close();
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
 
-                                        Context context = v.getContext();
-                                        File fileLocation = new File(v.getContext().getFilesDir(), "data.csv");
-                                        Uri path = FileProvider.getUriForFile(context, "com.sc703.gualmarsh.FileProvider", fileLocation);
-                                        Intent fileIntent = new Intent(Intent.ACTION_SEND);
-                                        fileIntent.setType("text/*");
-                                        fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Data");
-                                        fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                        fileIntent.putExtra(Intent.EXTRA_STREAM, path);
-                                        v.getContext().startActivity(Intent.createChooser(fileIntent, "Open with"));
-
-                                    }catch(Exception e){
-                                        e.printStackTrace();
                                     }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
+                                });
+                            }
+                            return false;
                         }
                     });
+
+
+
 
                 }
             });

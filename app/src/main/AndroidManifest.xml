@@ -13,14 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gualmarsh">
         <activity
-            android:name=".principal.PrincipalActivity"></activity>
+            android:name=".principal.PrincipalActivity"
             android:label="@string/title_activity_principal"
-            android:theme="@style/Theme.Gualmarsh.NoActionBar" />
-        <activity android:name=".login.LoginActivity"></activity>
-            android:theme="@style/Theme.Gualmarsh.Background"/>
+            android:theme="@style/Theme.Gualmarsh.NoActionBar">
+        </activity>
+        <activity android:name=".login.LoginActivity"
+            android:theme="@style/Theme.Gualmarsh.Background">
+        </activity>
         <activity
-            android:name=".MainActivity">
-            android:theme="@style/Theme.Gualmarsh.NoActionBar"/>
+            android:name=".MainActivity"
+            android:theme="@style/Theme.Gualmarsh.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
