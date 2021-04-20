@@ -3,17 +3,21 @@ package com.sc703.gualmarsh.database.models.product;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +26,11 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -30,6 +39,7 @@ import com.sc703.gualmarsh.principal.PrincipalActivity;
 import com.sc703.gualmarsh.principal.inventory.ItemClickListener;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdapter.Holder>  {
@@ -37,7 +47,8 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
     private ItemClickListener itemClickListener;
     private GridLayoutManager gridLayoutManager;
     private StorageReference storage;
-
+    private final FirebaseDatabase fDatabase = FirebaseDatabase.getInstance();
+    private final DatabaseReference bdRef = fDatabase.getReference();
 
 
     public ProductAdapter(@NonNull FirebaseRecyclerOptions<Product> options, GridLayoutManager gridLayoutManager)
@@ -64,7 +75,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
 
     public class Holder extends RecyclerView.ViewHolder{
         TextView tvProductCode, tvProductName, tvProductQuantity, tvProductPrice;
-        ImageView imvImage;
+        ImageView imvImage, imvExport;
 
         public Holder(View item, int viewType){
             super(item);
@@ -80,6 +91,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                 tvProductName = item.findViewById(R.id.tv_list_name);
                 tvProductQuantity = item.findViewById(R.id.tv_list_quantity);
                 tvProductPrice = item.findViewById(R.id.tv_list_price);
+                imvExport = item.findViewById(R.id.list_more);
             }
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +126,83 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
             holder.tvProductPrice.setText(model.getPrice().toString());
         }catch(Exception e){
             e.printStackTrace();
+        }
+
+        try {
+            holder.imvExport.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+                    popupMenu.inflate(R.menu.item_popup_menu);
+                    popupMenu.show();
+
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            if(item.getItemId() == R.id.popupMenu_delete){
+                                Toast.makeText(v.getContext(), "DELETE", Toast.LENGTH_SHORT).show();
+                            }
+                            if(item.getItemId() == R.id.popupMenu_export){
+                                bdRef.child("products").child(Integer.toString(position)).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        StringBuilder data = new StringBuilder();
+                                        data.append("Product Name,Quantity,Barcode,Price,Description");
+                                        try{
+                                            Log.e("TAG3", snapshot.child(Integer.toString(position)).child("name").getValue().toString());
+                                            data.append("\n").append(snapshot.child(Integer.toString(2)).child("name").getValue().toString()).append(",").
+                                                    append(snapshot.child(Integer.toString(2)).child("quantity").getValue().toString()).append(",").
+                                                    append(snapshot.child(Integer.toString(2)).child("code").getValue().toString()).append(",").
+                                                    append(snapshot.child(Integer.toString(2)).child("price").getValue().toString()).append(",").
+                                                    append(snapshot.child(Integer.toString(2)).child("description").getValue().toString());
+                                        }catch (Exception e){
+
+                                        }
+
+
+                                        try{
+                                            FileOutputStream out = v.getContext().openFileOutput("data.csv", Context.MODE_PRIVATE);
+                                            out.write((data.toString()).getBytes());
+                                            out.close();
+
+                                            Context context = v.getContext();
+                                            File fileLocation = new File(v.getContext().getFilesDir(), "data.csv");
+                                            Uri path = FileProvider.getUriForFile(context, "com.sc703.gualmarsh.FileProvider", fileLocation);
+                                            Intent fileIntent = new Intent(Intent.ACTION_SEND);
+                                            fileIntent.setType("text/csv");
+                                            fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Data");
+                                            fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                            fileIntent.putExtra(Intent.EXTRA_STREAM, path);
+                                            v.getContext().startActivity(Intent.createChooser(fileIntent, "Open with"));
+
+                                        }catch(Exception e){
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+
+
+
+
+                            }
+                            return false;
+                        }
+                    });
+
+
+
+
+                }
+            });
+        } catch (Exception e) {
+
         }
 
 

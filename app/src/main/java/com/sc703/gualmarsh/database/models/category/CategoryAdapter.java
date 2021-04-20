@@ -46,7 +46,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryAdapter.Holder> implements PopupMenu.OnMenuItemClickListener {
+public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryAdapter.Holder> {
     private ItemClickListener itemClickListener;
     private GridLayoutManager gridLayoutManager;
     private StorageReference storage;
@@ -54,17 +54,6 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
     private final DatabaseReference bdRef = fDatabase.getReference();
     private ItemViewModel viewModel;
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.popupMenu_delete:
-                return true;
-            case R.id.popupMenu_export:
-                return true;
-            default:
-                return false;
-        }
-    }
 
     public CategoryAdapter(@NonNull FirebaseRecyclerOptions<Category> options, GridLayoutManager gridLayoutManager) {
         super(options);
