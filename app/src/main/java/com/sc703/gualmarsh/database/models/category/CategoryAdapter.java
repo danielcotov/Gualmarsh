@@ -50,7 +50,6 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
     private final FirebaseDatabase fDatabase = FirebaseDatabase.getInstance();
     private final DatabaseReference bdRef = fDatabase.getReference();
     private ItemViewModel viewModel;
-    int position;
 
 
     public CategoryAdapter(@NonNull FirebaseRecyclerOptions<Category> options, GridLayoutManager gridLayoutManager) {
@@ -132,15 +131,21 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
                             Log.e("Tag1", snapshot.child("code").getValue().toString());
                             bdRef.child("productCategories").child(snapshot.child("code").getValue().toString()).addValueEventListener(new ValueEventListener() {
                                 @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     StringBuilder data = new StringBuilder();
                                     data.append("Product Name,Quantity,Barcode,Price,Description");
-                                    for(int i=1; i<=snapshot.getChildrenCount(); i++){
-                                        data.append("\n").append(snapshot.child(Integer.toString(i)).child("name").getValue().toString()).append(",").
-                                                append(snapshot.child(Integer.toString(i)).child("quantity").getValue().toString()).append(",").
-                                                append(snapshot.child(Integer.toString(i)).child("code").getValue().toString()).append(",").
-                                                append(snapshot.child(Integer.toString(i)).child("price").getValue().toString()).append(",").
-                                                append(snapshot.child(Integer.toString(i)).child("description").getValue().toString());
+                                    int j=1;
+                                    for(int i=1; i<=dataSnapshot.getChildrenCount(); j++){
+                                        try{
+                                            data.append("\n").append(dataSnapshot.child(Integer.toString(j)).child("name").getValue().toString()).append(",").
+                                                    append(dataSnapshot.child(Integer.toString(j)).child("quantity").getValue().toString()).append(",").
+                                                    append(dataSnapshot.child(Integer.toString(j)).child("code").getValue().toString()).append(",").
+                                                    append(dataSnapshot.child(Integer.toString(j)).child("price").getValue().toString()).append(",").
+                                                    append(dataSnapshot.child(Integer.toString(j)).child("description").getValue().toString());
+                                            i++;
+                                        }catch (Exception e){
+
+                                        }
                                     }
 
                                     try{
