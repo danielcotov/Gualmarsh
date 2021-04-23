@@ -1,6 +1,7 @@
 package com.sc703.gualmarsh.principal.inventory;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,7 +103,13 @@ public class InventoryFragment extends Fragment {
                     }
                 });
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
-                navController.navigate(R.id.action_Items_to_Products);
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        navController.navigate(R.id.action_Items_to_Products);
+                    }
+                }, 10);
             }
         });
 
