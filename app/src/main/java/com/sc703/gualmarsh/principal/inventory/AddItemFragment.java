@@ -257,7 +257,7 @@ public class AddItemFragment extends Fragment {
         String quantity = edtQuantity.getText().toString();
         String date = tvDate.getText().toString();
 
-        if (validateCode(code) | validateName(name) | validateDescription(description) | validatePrice(price) | validateQuantity(quantity) | validateExpiration(date)) {
+        if (validateCode(code) & validateName(name) & validateDescription(description) & validatePrice(price) & validateQuantity(quantity) & validateExpiration(date)) {
             return true;
         } else {
             return false;

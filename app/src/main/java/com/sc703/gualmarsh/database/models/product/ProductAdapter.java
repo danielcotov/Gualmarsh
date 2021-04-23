@@ -153,7 +153,6 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                                         StringBuilder data = new StringBuilder();
                                         data.append("Product Name,Quantity,Barcode,Price,Description");
                                         try{
-                                            Log.e("TAG3", snapshot.child(Integer.toString(position)).child("name").getValue().toString());
                                             data.append("\n").append(snapshot.child(Integer.toString(2)).child("name").getValue().toString()).append(",").
                                                     append(snapshot.child(Integer.toString(2)).child("quantity").getValue().toString()).append(",").
                                                     append(snapshot.child(Integer.toString(2)).child("code").getValue().toString()).append(",").
@@ -204,12 +203,6 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
         viewModel = new ViewModelProvider(currentFragment.requireActivity()).get(ItemViewModel.class);
         String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".jpg";
         File cacheFile = new File(cachePath);
-        Log.e("TAG1",navController.getPreviousBackStackEntry().getDestination().toString());
-        try{
-            Log.e("TAG1",viewModel.getProductChanged().getValue());
-        }catch (Exception e){
-
-        }
 
         if (!cacheFile.exists() || (navController.getPreviousBackStackEntry().getDestination().toString().contains("showItem") && viewModel.getProductChanged().getValue() != null) ){
             storage = FirebaseStorage.getInstance().getReference().child("Resources/Products/"+ code + ".jpg");

@@ -140,7 +140,6 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
                                 bdRef.child("categories").child(Integer.toString(position+1)).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        Log.e("Tag1", snapshot.child("code").getValue().toString());
                                         bdRef.child("productCategories").child(snapshot.child("code").getValue().toString()).addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

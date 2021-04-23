@@ -364,8 +364,9 @@ public class ShowItemFragment extends Fragment {
         String price = edtPrice.getText().toString();
         String quantity = edtQuantity.getText().toString();
         String date = tvDate.getText().toString();
+        Log.e("TAF1", date);
 
-        if (validateCode(code) | validateName(name) | validateDescription(description) | validatePrice(price) | validateQuantity(quantity) | validateExpiration(date)) {
+        if (validateCode(code) & validateName(name) & validateDescription(description) & validatePrice(price) & validateQuantity(quantity) & validateExpiration(date)) {
             return true;
         } else {
             return false;
