@@ -17,6 +17,8 @@ public class ItemViewModel extends ViewModel {
     private final MutableLiveData<String> productDescription = new MutableLiveData<>();
     private final MutableLiveData<String> productSearch = new MutableLiveData<>();
     private final MutableLiveData<String> productCount = new MutableLiveData<>();
+    private final MutableLiveData<String> productKey = new MutableLiveData<>();
+    private final MutableLiveData<String> productCategory = new MutableLiveData<>();
 
 
     public void setCategoryCode(String category){
@@ -49,8 +51,11 @@ public class ItemViewModel extends ViewModel {
     public void setProductSearch(String search){
         productSearch.setValue(search);
     }
-    public MutableLiveData<String> getProductSearch() {
-        return productSearch;
+    public void setProductKey(String key){
+        productKey.setValue(key);
+    }
+    public void setProductCategory(String category){
+        productCategory.setValue(category);
     }
     public LiveData<String> getCategoryCode() {
         return categoryCode;
@@ -78,5 +83,14 @@ public class ItemViewModel extends ViewModel {
     }
     public MutableLiveData<String> getProductDescription() {
         return productDescription;
+    }
+    public MutableLiveData<String> getProductSearch() {
+        return productSearch;
+    }
+    public MutableLiveData<String> getProductKey() {
+        return productKey;
+    }
+    public MutableLiveData<String> getProductCategory() {
+        return productCategory;
     }
 }

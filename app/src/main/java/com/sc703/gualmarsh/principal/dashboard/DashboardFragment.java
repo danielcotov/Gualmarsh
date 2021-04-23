@@ -121,7 +121,6 @@ public class DashboardFragment extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     try{
-                        Log.e("TAG",snapshot.getValue().toString());
                         sum += Integer.parseInt(snapshot.getValue().toString());
                         dashboardQuantity.setText(String.valueOf(sum));
                         itemsNum.setText(String.valueOf(count));

@@ -123,7 +123,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
         holder.tvProductName.setText(String.format(String.valueOf(model.getName())));
         try{
             holder.tvProductQuantity.setText(model.getQuantity().toString());
-            holder.tvProductPrice.setText(model.getPrice().toString());
+            holder.tvProductPrice.setText("¢" + model.getPrice().toString());
         }catch(Exception e){
             e.printStackTrace();
         }

@@ -19,6 +19,7 @@ import androidx.navigation.Navigation;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +95,6 @@ public class ShowItemFragment extends Fragment {
         bQuantity = edtQuantity.getText().toString();
         bDescription = edtDescription.getText().toString();
         bPrice = edtPrice.getText().toString();
-
         TextWatcher watcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -174,15 +174,23 @@ public class ShowItemFragment extends Fragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference productCategory = bdRef.child("productCategories/" + viewModel.getCategoryCode().getValue());
-                DatabaseReference product = bdRef.child("products/" + viewModel.getCategoryCode().getValue());
+                DatabaseReference productCategory;
+                if (viewModel.getCategoryCode().getValue() != null){
+                    productCategory = bdRef.child("productCategories/" + viewModel.getCategoryCode().getValue());
+                }else{
+                    productCategory = bdRef.child("productCategories/" + viewModel.getProductCategory().getValue());
+                }
+                DatabaseReference product = bdRef.child("products/");
                 Map<String, Object> productAdd = new HashMap<>();
                 if (addItem(v)) {
                     try{
-                        int productKey = Integer.parseInt(viewModel.getProductCount().getValue()) + 1;
+                        Log.e("TAG2", viewModel.getProductKey().getValue());
+                        int productKey = Integer.parseInt(viewModel.getProductKey().getValue());
                         productAdd.put(Integer.toString(productKey), new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
-                                Long.parseLong(edtPrice.getText().toString()), Long.parseLong(edtQuantity.getText().toString())));
+                                Long.parseLong(edtPrice.getText().toString().substring(1)), Long.parseLong(edtQuantity.getText().toString())));
                         productCategory.updateChildren(productAdd);
+                        productAdd.put(Integer.toString(productKey),  new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
+                                Long.parseLong(edtPrice.getText().toString().substring(1)), Long.parseLong(edtQuantity.getText().toString()), viewModel.getCategoryCode().getValue()));
                         product.updateChildren(productAdd);
                         //uploadImage(v);
 

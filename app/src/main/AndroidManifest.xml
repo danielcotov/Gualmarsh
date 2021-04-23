@@ -21,7 +21,7 @@
             android:theme="@style/Theme.Gualmarsh.Background">
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:theme="@style/Theme.Gualmarsh.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

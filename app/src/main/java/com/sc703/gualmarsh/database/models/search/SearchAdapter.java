@@ -1,4 +1,4 @@
-package com.sc703.gualmarsh.database.models;
+package com.sc703.gualmarsh.database.models.search;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
@@ -20,7 +20,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.sc703.gualmarsh.R;
 import com.sc703.gualmarsh.database.models.product.Product;
-import com.sc703.gualmarsh.database.models.product.ProductAdapter;
 import com.sc703.gualmarsh.principal.inventory.ItemClickListener;
 
 import java.io.File;
@@ -35,7 +34,7 @@ public class SearchAdapter extends FirebaseRecyclerAdapter<Product, SearchAdapte
     }
 
     public class Holder extends RecyclerView.ViewHolder {
-        TextView tvProductCode, tvProductName, tvProductQuantity;
+        TextView tvProductCode, tvProductName, tvProductQuantity, tvProductPrice;
         ImageView imvImage;
 
         public Holder(View item, int viewType) {
@@ -44,6 +43,7 @@ public class SearchAdapter extends FirebaseRecyclerAdapter<Product, SearchAdapte
             tvProductCode = item.findViewById(R.id.tv_list_code);
             tvProductName = item.findViewById(R.id.tv_list_name);
             tvProductQuantity = item.findViewById(R.id.tv_list_quantity);
+            tvProductPrice = item.findViewById(R.id.tv_list_price);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -69,11 +69,16 @@ public class SearchAdapter extends FirebaseRecyclerAdapter<Product, SearchAdapte
     public void onBindViewHolder(@NonNull SearchAdapter.Holder holder, int position, @NonNull Product model) {
         loadImages(holder.imvImage.getContext(), holder.imvImage, model.getCode());
         holder.tvProductCode.setText(model.getCode());
-        holder.tvProductName.setText(String.format(String.valueOf(model.getName())));
+        holder.tvProductName.setText(String.valueOf(model.getName()));
         if (model.getQuantity() != null) {
             holder.tvProductQuantity.setText(model.getQuantity().toString());
         } else {
             holder.tvProductQuantity.setText("");
+        }
+        if (model.getPrice() != null) {
+            holder.tvProductPrice.setText("¢" + model.getPrice().toString());
+        } else {
+            holder.tvProductPrice.setText("");
         }
 
     }

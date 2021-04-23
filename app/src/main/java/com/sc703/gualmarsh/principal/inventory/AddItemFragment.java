@@ -180,6 +180,8 @@ public class AddItemFragment extends Fragment {
                         productAdd.put(Integer.toString(productKey), new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
                                 Long.parseLong(edtPrice.getText().toString()), Long.parseLong(edtQuantity.getText().toString())));
                         productCategory.updateChildren(productAdd);
+                        productAdd.put(Integer.toString(productKey),  new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
+                                Long.parseLong(edtPrice.getText().toString()), Long.parseLong(edtQuantity.getText().toString()), viewModel.getCategoryCode().getValue()));
                         product.updateChildren(productAdd);
                         category.child(viewModel.getCategoryKey().getValue()).child("quantity").addValueEventListener(new ValueEventListener() {
                             @Override
@@ -195,7 +197,6 @@ public class AddItemFragment extends Fragment {
 
                             }
                         });
-                        Log.e("TAGTEST", viewModel.getCategoryQuantity().getValue());
 
                         category.child(viewModel.getCategoryKey().getValue()).child("quantity").setValue(Long.parseLong(viewModel.getCategoryQuantity().getValue()));
 

@@ -5,7 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,13 +27,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sc703.gualmarsh.R;
-import com.sc703.gualmarsh.database.models.SearchAdapter;
-import com.sc703.gualmarsh.database.models.category.Category;
+import com.sc703.gualmarsh.database.models.search.SearchAdapter;
 import com.sc703.gualmarsh.database.models.product.Product;
-import com.sc703.gualmarsh.database.models.product.ProductAdapter;
+import com.sc703.gualmarsh.principal.inventory.ItemClickListener;
 import com.sc703.gualmarsh.principal.inventory.ItemViewModel;
-
-import java.sql.SQLOutput;
 
 
 public class SearchFragment extends Fragment {
@@ -54,6 +53,7 @@ public class SearchFragment extends Fragment {
         recyclerView = root.findViewById(R.id.recyclerviewSearch);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         edtSearchBar = root.findViewById(R.id.edt_search);
+
         edtSearchBar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -111,6 +111,7 @@ public class SearchFragment extends Fragment {
                         .build();
                 searchAdapter = new SearchAdapter(options);
                 recyclerView.setAdapter(searchAdapter);
+
             }
         } else {
             FirebaseRecyclerOptions<Product> options
@@ -119,13 +120,58 @@ public class SearchFragment extends Fragment {
                     .build();
             searchAdapter = new SearchAdapter(options);
             recyclerView.setAdapter(searchAdapter);
+
         }
+        searchAdapter.setOnItemClickListener(new ItemClickListener() {
+            @Override
+            public void OnItemClick(int position) {
+                searchAdapter.getRef(position).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        try {
+                            if (snapshot.getValue() != null) {
+                                try {
+                                    viewModel.setProductKey(snapshot.getKey());
+                                    viewModel.setProductCode(snapshot.child("code").getValue().toString());
+                                    viewModel.setProductName(snapshot.child("name").getValue().toString());
+                                    viewModel.setProductDescription(snapshot.child("description").getValue().toString());
+                                    viewModel.setProductPrice("¢" + snapshot.child("price").getValue().toString());
+                                    viewModel.setProductQuantity(snapshot.child("quantity").getValue().toString());
+                                    viewModel.setProductCategory(snapshot.child("category").getValue().toString());
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                Log.e("TAG", " it's null.");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.e("onCancelled", " cancelled");
+                    }
+                });
+                ;
+
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
+                navController.navigate(R.id.action_Search_to_Show);
+            }
+        });
         searchAdapter.startListening();
     }
     @Override
     public void onStop() {
         super.onStop();
-        searchAdapter.stopListening();
+        try{
+            searchAdapter.stopListening();
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
+
     }
 
 }

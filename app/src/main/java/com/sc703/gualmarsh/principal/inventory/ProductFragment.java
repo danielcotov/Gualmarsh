@@ -124,6 +124,7 @@ public class ProductFragment extends Fragment {
                         try {
                             if (snapshot.getValue() != null) {
                                 try {
+                                    viewModel.setProductKey(snapshot.getKey());
                                     viewModel.setProductCode(snapshot.child("code").getValue().toString());
                                     viewModel.setProductName(snapshot.child("name").getValue().toString());
                                     viewModel.setProductDescription(snapshot.child("description").getValue().toString());

@@ -42,6 +42,9 @@
         android:name="com.sc703.gualmarsh.principal.dashboard.SearchFragment"
         android:label="@string/search_fragment_label"
         tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_Search_to_Show"
+            app:destination="@id/showItemFragment" />
     </fragment>
     <fragment
         android:id="@+id/addItemFragment"

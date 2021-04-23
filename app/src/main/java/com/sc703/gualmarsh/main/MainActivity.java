@@ -1,14 +1,11 @@
-package com.sc703.gualmarsh;
+package com.sc703.gualmarsh.main;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 
+import com.sc703.gualmarsh.R;
 import com.sc703.gualmarsh.login.LoginActivity;
 
 import java.util.Timer;
