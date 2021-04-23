@@ -105,7 +105,7 @@ public class ShowItemFragment extends Fragment {
         edtDescription.setText(viewModel.getProductDescription().getValue());
         edtPrice.setText(viewModel.getProductPrice().getValue());
         int totalPrice = Integer.parseInt(viewModel.getProductPrice().getValue().substring(1)) * Integer.parseInt(viewModel.getProductQuantity().getValue());
-        edtTotalPrice.setText(Integer.toString(totalPrice));
+        edtTotalPrice.setText("¢" + Integer.toString(totalPrice));
         tvDate.setText(viewModel.getProductExpiration().getValue());
         loadImage(getContext(), imvShowImage, viewModel.getProductCode().getValue());
         NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
@@ -257,6 +257,7 @@ public class ShowItemFragment extends Fragment {
                 } else {
                     productCategory = bdRef.child("productCategories/" + viewModel.getProductCategory().getValue() + "/" + viewModel.getProductKey().getValue());
                 }
+                Log.e("TAGG", viewModel.getProductKey().getValue());
                 DatabaseReference product = bdRef.child("products/" + viewModel.getProductKey().getValue());
                 product.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

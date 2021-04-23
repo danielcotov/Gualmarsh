@@ -116,12 +116,12 @@ public class DashboardFragment extends Fragment {
             allProducts.child(Integer.toString(i)).child("price").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                   try{
-                       sum2+= Integer.parseInt(snapshot.getValue().toString());
-                       dashboardTotal.setText(String.valueOf(sum2));
-                   }catch (Exception e){
-                       e.printStackTrace();
-                   }
+                    try{
+                        sum2+= Integer.parseInt(snapshot.getValue().toString());
+                        dashboardTotal.setText(String.valueOf(sum2));
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
 
 
                 }
@@ -148,11 +148,11 @@ public class DashboardFragment extends Fragment {
                         data.append("\n");
                         data.append(ds.getKey());
                         data.append(",");
-                            data.append(catds.child("code").getValue().toString()).append(",").
-                                    append(catds.child("quantity").getValue().toString()).append(",").
-                                    append(catds.child("price").getValue().toString()).append(",").
-                                    append(catds.child("name").getValue().toString()).append(",").
-                                    append(catds.child("description").getValue().toString());
+                        data.append(catds.child("code").getValue().toString()).append(",").
+                                append(catds.child("quantity").getValue().toString()).append(",").
+                                append(catds.child("price").getValue().toString()).append(",").
+                                append(catds.child("name").getValue().toString()).append(",").
+                                append(catds.child("description").getValue().toString());
                     }
 
                 }
@@ -174,7 +174,7 @@ public class DashboardFragment extends Fragment {
                 }catch(Exception e){
                     e.printStackTrace();
                 }
-
+                Log.e("DATA:",data.toString());
             }
 
             @Override
