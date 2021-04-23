@@ -2,7 +2,6 @@ package com.sc703.gualmarsh.principal.inventory;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -10,23 +9,17 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,13 +32,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,9 +43,8 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.sc703.gualmarsh.R;
+import com.sc703.gualmarsh.database.models.itemView.ItemViewModel;
 import com.sc703.gualmarsh.database.models.product.Product;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -66,7 +52,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.ContentValues.TAG;
 
 
 public class AddItemFragment extends Fragment {
@@ -98,6 +83,7 @@ public class AddItemFragment extends Fragment {
         edtDescription = root.findViewById(R.id.edt_addItem_description);
         edtPrice = root.findViewById(R.id.edt_addItem_price);
         tvDate = root.findViewById(R.id.tv_datePicker);
+
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
@@ -178,19 +164,17 @@ public class AddItemFragment extends Fragment {
                     try{
                         int productKey = Integer.parseInt(viewModel.getProductCount().getValue()) + 1;
                         productAdd.put(Integer.toString(productKey), new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
-                                Long.parseLong(edtPrice.getText().toString()), Long.parseLong(edtQuantity.getText().toString())));
+                                Long.parseLong(edtPrice.getText().toString()), Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString()));
                         productCategory.updateChildren(productAdd);
                         productAdd.put(Integer.toString(productKey),  new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
-                                Long.parseLong(edtPrice.getText().toString()), Long.parseLong(edtQuantity.getText().toString()), viewModel.getCategoryCode().getValue()));
+                                Long.parseLong(edtPrice.getText().toString()), Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString(), viewModel.getCategoryCode().getValue()));
                         product.updateChildren(productAdd);
                         category.child(viewModel.getCategoryKey().getValue()).child("quantity").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 Long quantity = Long.parseLong(snapshot.getValue().toString()) + 1;
                                 viewModel.setCategoryQuantity(quantity.toString());
-
                             }
-
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -256,14 +240,24 @@ public class AddItemFragment extends Fragment {
             return true;
         }
     }
+    private boolean validateExpiration(String date) {
+        if (date.isEmpty()) {
+            tvDate.setError(getText(R.string.emptyField));
+            return false;
+        } else {
+            tvDate.setError(null);
+            return true;
+        }
+    }
     public boolean addItem(View view) {
         String code = edtCode.getText().toString();
         String name = edtName.getText().toString();
         String description = edtDescription.getText().toString();
         String price = edtPrice.getText().toString();
         String quantity = edtQuantity.getText().toString();
+        String date = tvDate.getText().toString();
 
-        if (validateCode(code) | validateName(name) | validateDescription(description) | validatePrice(price) | validateQuantity(quantity)) {
+        if (validateCode(code) | validateName(name) | validateDescription(description) | validatePrice(price) | validateQuantity(quantity) | validateExpiration(date)) {
             return true;
         } else {
             return false;

@@ -1,4 +1,4 @@
-package com.sc703.gualmarsh.principal.inventory;
+package com.sc703.gualmarsh.database.models.itemView;
 
 
 import androidx.lifecycle.LiveData;
@@ -15,6 +15,8 @@ public class ItemViewModel extends ViewModel {
     private final MutableLiveData<String> productQuantity = new MutableLiveData<>();
     private final MutableLiveData<String> productPrice = new MutableLiveData<>();
     private final MutableLiveData<String> productDescription = new MutableLiveData<>();
+    private final MutableLiveData<String> productExpiration = new MutableLiveData<>();
+    private final MutableLiveData<String> productTotalPrice = new MutableLiveData<>();
     private final MutableLiveData<String> productSearch = new MutableLiveData<>();
     private final MutableLiveData<String> productCount = new MutableLiveData<>();
     private final MutableLiveData<String> productKey = new MutableLiveData<>();
@@ -47,6 +49,12 @@ public class ItemViewModel extends ViewModel {
     }
     public void setProductDescription(String description){
         productDescription.setValue(description);
+    }
+    public void setProductExpiration(String expiration){
+        productExpiration.setValue(expiration);
+    }
+    public void setProductTotalPrice(String totalPrice){
+        productTotalPrice.setValue(totalPrice);
     }
     public void setProductSearch(String search){
         productSearch.setValue(search);
@@ -86,6 +94,12 @@ public class ItemViewModel extends ViewModel {
     }
     public MutableLiveData<String> getProductDescription() {
         return productDescription;
+    }
+    public MutableLiveData<String> getProductExpiration() {
+        return productExpiration;
+    }
+    public MutableLiveData<String> getProductTotalPrice() {
+        return productTotalPrice;
     }
     public MutableLiveData<String> getProductSearch() {
         return productSearch;

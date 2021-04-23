@@ -18,9 +18,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,14 +34,11 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.sc703.gualmarsh.R;
-import com.sc703.gualmarsh.principal.inventory.InventoryFragment;
 import com.sc703.gualmarsh.principal.inventory.ItemClickListener;
-import com.sc703.gualmarsh.principal.inventory.ItemViewModel;
+import com.sc703.gualmarsh.database.models.itemView.ItemViewModel;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryAdapter.Holder> {
     private ItemClickListener itemClickListener;

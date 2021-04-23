@@ -23,7 +23,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -39,13 +38,11 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.sc703.gualmarsh.R;
-import com.sc703.gualmarsh.principal.PrincipalActivity;
 import com.sc703.gualmarsh.principal.inventory.ItemClickListener;
-import com.sc703.gualmarsh.principal.inventory.ItemViewModel;
+import com.sc703.gualmarsh.database.models.itemView.ItemViewModel;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdapter.Holder>  {
 
@@ -207,6 +204,13 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
         viewModel = new ViewModelProvider(currentFragment.requireActivity()).get(ItemViewModel.class);
         String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".jpg";
         File cacheFile = new File(cachePath);
+        Log.e("TAG1",navController.getPreviousBackStackEntry().getDestination().toString());
+        try{
+            Log.e("TAG1",viewModel.getProductChanged().getValue());
+        }catch (Exception e){
+
+        }
+
         if (!cacheFile.exists() || (navController.getPreviousBackStackEntry().getDestination().toString().contains("showItem") && viewModel.getProductChanged().getValue() != null) ){
             storage = FirebaseStorage.getInstance().getReference().child("Resources/Products/"+ code + ".jpg");
             File localFile = null;

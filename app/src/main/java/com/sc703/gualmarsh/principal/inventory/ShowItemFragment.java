@@ -1,12 +1,10 @@
 package com.sc703.gualmarsh.principal.inventory;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -24,7 +22,6 @@ import androidx.navigation.Navigation;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,19 +36,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.sc703.gualmarsh.R;
+import com.sc703.gualmarsh.database.models.itemView.ItemViewModel;
 import com.sc703.gualmarsh.database.models.product.Product;
 
 import java.io.File;
@@ -69,7 +65,7 @@ public class ShowItemFragment extends Fragment {
     private final DatabaseReference bdRef = fDatabase.getReference();
     private ItemViewModel viewModel;
     private ImageView imvShowImage, imvClose, imvDelete;
-    private EditText edtName, edtQuantity, edtCode, edtDescription, edtPrice;
+    private EditText edtName, edtQuantity, edtCode, edtDescription, edtPrice, edtTotalPrice;
     private String bName, bQuantity, bCode, bDescription, bPrice;
     private Button btnSave;
     private StorageReference storage;
@@ -91,6 +87,7 @@ public class ShowItemFragment extends Fragment {
         edtQuantity = root.findViewById(R.id.edt_showItem_quantity);
         edtDescription = root.findViewById(R.id.edt_showItem_description);
         edtPrice = root.findViewById(R.id.edt_showItem_price);
+        edtTotalPrice = root.findViewById(R.id.edt_showItem_totalPrice);
         imvClose = root.findViewById(R.id.showItem_Close);
         btnSave = root.findViewById(R.id.btn_showItem_Save);
         progressBar = root.findViewById(R.id.showItem_Progressbar);
@@ -107,6 +104,9 @@ public class ShowItemFragment extends Fragment {
         edtQuantity.setText(viewModel.getProductQuantity().getValue());
         edtDescription.setText(viewModel.getProductDescription().getValue());
         edtPrice.setText(viewModel.getProductPrice().getValue());
+        int totalPrice = Integer.parseInt(viewModel.getProductPrice().getValue().substring(1)) * Integer.parseInt(viewModel.getProductQuantity().getValue());
+        edtTotalPrice.setText(Integer.toString(totalPrice));
+        tvDate.setText(viewModel.getProductExpiration().getValue());
         loadImage(getContext(), imvShowImage, viewModel.getProductCode().getValue());
         NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
 
@@ -126,6 +126,14 @@ public class ShowItemFragment extends Fragment {
                 if((!s.toString().equals(bName)) && (!s.toString().equals(bCode)) && (!s.toString().equals(bQuantity)) &&
                         (!s.toString().equals(bDescription)) && (!s.toString().equals(bPrice))){
                     btnSave.setVisibility(View.VISIBLE);
+                    try{
+                        int totalPrice = Integer.parseInt(edtPrice.getText().toString().substring(1)) * Integer.parseInt(edtQuantity.getText().toString());
+                        edtTotalPrice.setText(Integer.toString(totalPrice));
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+
                 }else{
                     btnSave.setVisibility(View.GONE);
                 }
@@ -141,6 +149,7 @@ public class ShowItemFragment extends Fragment {
         edtDescription.addTextChangedListener(watcher);
         edtPrice.addTextChangedListener(watcher);
         edtQuantity.addTextChangedListener(watcher);
+        tvDate.addTextChangedListener(watcher);
 
         tvDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,16 +215,29 @@ public class ShowItemFragment extends Fragment {
                 }
                 DatabaseReference product = bdRef.child("products/");
                 Map<String, Object> productAdd = new HashMap<>();
-                if (addItem(v)) {
+                if (validateItem()) {
                     try{
                         int productKey = Integer.parseInt(viewModel.getProductKey().getValue());
                         productAdd.put(Integer.toString(productKey), new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
-                                Long.parseLong(edtPrice.getText().toString().substring(1)), Long.parseLong(edtQuantity.getText().toString())));
+                                Long.parseLong(edtPrice.getText().toString().substring(1)), Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString()));
                         productCategory.updateChildren(productAdd);
                         productAdd.put(Integer.toString(productKey),  new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
-                                Long.parseLong(edtPrice.getText().toString().substring(1)), Long.parseLong(edtQuantity.getText().toString()), viewModel.getCategoryCode().getValue()));
+                                Long.parseLong(edtPrice.getText().toString().substring(1)), Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString(), viewModel.getCategoryCode().getValue()));
                         product.updateChildren(productAdd);
-                        uploadImage(v);
+                        if (uploadImage()){
+                            final Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    viewModel.setProductChanged("true");
+                                    navController.navigate(R.id.action_Show_to_Products);
+                                }
+                            }, 1000);
+                        }else{
+                            navController.navigate(R.id.action_Show_to_Products);
+                        }
+
+
 
                     }catch (Exception e){
                         e.printStackTrace();
@@ -306,27 +328,28 @@ public class ShowItemFragment extends Fragment {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         resultLauncher.launch(Intent.createChooser(intent, "Select an image"));
     }
-    private void uploadImage(View view){
+    private boolean uploadImage(){
         storage = FirebaseStorage.getInstance().getReference().child("Resources/Products");
 
-        if (imagePath != null){
+        if (imagePath != null) {
             StorageReference ref = storage.child(edtCode.getText().toString() + ".jpg");
             ref.putFile(imagePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     progressBar.setVisibility(View.GONE);
-                    NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
-                    navController.navigate(R.id.action_Show_to_Products);
-                    viewModel.setProductChanged("true");
+
                 }
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                    double progress = ((100*snapshot.getBytesTransferred())/snapshot.getTotalByteCount());
+                    double progress = ((100 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount());
                     progressBar.setVisibility(View.VISIBLE);
-                    progressBar.setProgress((int)progress);
+                    progressBar.setProgress((int) progress);
                 }
             });
+            return true;
+        }else{
+            return false;
         }
     }
     public void loadImage (Context context, ImageView imvImage, String code){
@@ -334,14 +357,15 @@ public class ShowItemFragment extends Fragment {
         imvImage.setImageBitmap(BitmapFactory.decodeFile(cachePath));
 
     }
-    public boolean addItem(View view) {
+    public boolean validateItem() {
         String code = edtCode.getText().toString();
         String name = edtName.getText().toString();
         String description = edtDescription.getText().toString();
         String price = edtPrice.getText().toString();
         String quantity = edtQuantity.getText().toString();
+        String date = tvDate.getText().toString();
 
-        if (validateCode(code) | validateName(name) | validateDescription(description) | validatePrice(price) | validateQuantity(quantity)) {
+        if (validateCode(code) | validateName(name) | validateDescription(description) | validatePrice(price) | validateQuantity(quantity) | validateExpiration(date)) {
             return true;
         } else {
             return false;
@@ -394,6 +418,15 @@ public class ShowItemFragment extends Fragment {
             return false;
         } else {
             edtQuantity.setError(null);
+            return true;
+        }
+    }
+    private boolean validateExpiration(String date) {
+        if (date.isEmpty()) {
+            tvDate.setError(getText(R.string.emptyField));
+            return false;
+        } else {
+            tvDate.setError(null);
             return true;
         }
     }

@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,7 +30,7 @@ import com.sc703.gualmarsh.R;
 import com.sc703.gualmarsh.database.models.search.SearchAdapter;
 import com.sc703.gualmarsh.database.models.product.Product;
 import com.sc703.gualmarsh.principal.inventory.ItemClickListener;
-import com.sc703.gualmarsh.principal.inventory.ItemViewModel;
+import com.sc703.gualmarsh.database.models.itemView.ItemViewModel;
 
 
 public class SearchFragment extends Fragment {
@@ -139,7 +138,6 @@ public class SearchFragment extends Fragment {
                                     viewModel.setProductPrice("¢" + snapshot.child("price").getValue().toString());
                                     viewModel.setProductQuantity(snapshot.child("quantity").getValue().toString());
                                     viewModel.setProductCategory(snapshot.child("category").getValue().toString());
-
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

@@ -6,19 +6,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -30,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.sc703.gualmarsh.R;
 import com.sc703.gualmarsh.database.models.category.Category;
 import com.sc703.gualmarsh.database.models.category.CategoryAdapter;
+import com.sc703.gualmarsh.database.models.itemView.ItemViewModel;
 
 public class InventoryFragment extends Fragment {
 
