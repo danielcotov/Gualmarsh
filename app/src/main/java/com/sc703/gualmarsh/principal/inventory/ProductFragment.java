@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -130,7 +131,6 @@ public class ProductFragment extends Fragment {
                                     viewModel.setProductDescription(snapshot.child("description").getValue().toString());
                                     viewModel.setProductPrice("¢" + snapshot.child("price").getValue().toString());
                                     viewModel.setProductQuantity(snapshot.child("quantity").getValue().toString());
-
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -147,10 +147,16 @@ public class ProductFragment extends Fragment {
                         Log.e("onCancelled", " cancelled");
                     }
                 });
-                ;
-
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
-                navController.navigate(R.id.action_Products_to_Show);
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        navController.navigate(R.id.action_Products_to_Show);
+                    }
+                }, 10);
+
+
             }
         });
         return root;

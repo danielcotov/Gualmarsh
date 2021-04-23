@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -51,7 +52,7 @@ public class ShowItemFragment extends Fragment {
     private final FirebaseDatabase fDatabase = FirebaseDatabase.getInstance();
     private final DatabaseReference bdRef = fDatabase.getReference();
     private ItemViewModel viewModel;
-    private ImageView imvShowImage, imvClose;
+    private ImageView imvShowImage, imvClose, imvDelete;
     private EditText edtName, edtQuantity, edtCode, edtDescription, edtPrice;
     private String bName, bQuantity, bCode, bDescription, bPrice;
     private Button btnSave;
@@ -77,17 +78,21 @@ public class ShowItemFragment extends Fragment {
         edtPrice = root.findViewById(R.id.edt_showItem_price);
         imvClose = root.findViewById(R.id.showItem_Close);
         btnSave = root.findViewById(R.id.btn_showItem_Save);
+        imvDelete = root.findViewById(R.id.imv_showItem_Delete);
         tvDate = root.findViewById(R.id.tv_showItem_datePicker);
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+
         edtName.setText(viewModel.getProductName().getValue());
         edtCode.setText(viewModel.getProductCode().getValue());
         edtQuantity.setText(viewModel.getProductQuantity().getValue());
         edtDescription.setText(viewModel.getProductDescription().getValue());
         edtPrice.setText(viewModel.getProductPrice().getValue());
         loadImage(getContext(), imvShowImage, viewModel.getProductCode().getValue());
+        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
 
 
         bName = edtName.getText().toString();
@@ -175,6 +180,39 @@ public class ShowItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 DatabaseReference productCategory;
+
+                if (navController.getPreviousBackStackEntry().getDestination().toString().contains("productFragment")){
+                    productCategory = bdRef.child("productCategories/" + viewModel.getCategoryCode().getValue());
+                }else{
+                    productCategory = bdRef.child("productCategories/" + viewModel.getProductCategory().getValue());
+                    viewModel.setCategoryCode(viewModel.getProductCategory().getValue());
+                }
+                DatabaseReference product = bdRef.child("products/");
+                Map<String, Object> productAdd = new HashMap<>();
+                if (addItem(v)) {
+                    try{
+                        int productKey = Integer.parseInt(viewModel.getProductKey().getValue());
+                        productAdd.put(Integer.toString(productKey), new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
+                                Long.parseLong(edtPrice.getText().toString().substring(1)), Long.parseLong(edtQuantity.getText().toString())));
+                        productCategory.updateChildren(productAdd);
+                        productAdd.put(Integer.toString(productKey),  new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
+                                Long.parseLong(edtPrice.getText().toString().substring(1)), Long.parseLong(edtQuantity.getText().toString()), viewModel.getCategoryCode().getValue()));
+                        product.updateChildren(productAdd);
+                        //uploadImage(v);
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+        });
+
+        imvDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference productCategory;
                 if (viewModel.getCategoryCode().getValue() != null){
                     productCategory = bdRef.child("productCategories/" + viewModel.getCategoryCode().getValue());
                 }else{
@@ -203,11 +241,19 @@ public class ShowItemFragment extends Fragment {
 
         });
 
+
+
         imvClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
-                navController.navigate(R.id.action_Show_to_Products);
+
+
+                if (navController.getPreviousBackStackEntry().getDestination().toString().contains("productFragment")){
+                    navController.navigate(R.id.action_Show_to_Products);
+                }else{
+                    navController.navigate(R.id.action_Show_to_Search);
+                }
+
             }
         });
 

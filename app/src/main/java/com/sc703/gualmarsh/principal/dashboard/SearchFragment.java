@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -155,10 +156,15 @@ public class SearchFragment extends Fragment {
                         Log.e("onCancelled", " cancelled");
                     }
                 });
-                ;
-
+                final Handler handler = new Handler();
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
-                navController.navigate(R.id.action_Search_to_Show);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        navController.navigate(R.id.action_Search_to_Show);
+                    }
+                }, 10);
+
             }
         });
         searchAdapter.startListening();

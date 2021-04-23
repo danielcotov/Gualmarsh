@@ -63,6 +63,9 @@
         <action
             android:id="@+id/action_Show_to_Products"
             app:destination="@id/productFragment" />
+        <action
+            android:id="@+id/action_Show_to_Search"
+            app:destination="@id/searchFragment" />
     </fragment>
     <navigation android:id="@+id/navigationSettings"
         app:startDestination="@id/settingsFragment">
