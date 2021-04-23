@@ -18,6 +18,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,6 +41,7 @@ import com.google.firebase.storage.StorageReference;
 import com.sc703.gualmarsh.R;
 import com.sc703.gualmarsh.principal.PrincipalActivity;
 import com.sc703.gualmarsh.principal.inventory.ItemClickListener;
+import com.sc703.gualmarsh.principal.inventory.ItemViewModel;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -49,12 +54,17 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
     private StorageReference storage;
     private final FirebaseDatabase fDatabase = FirebaseDatabase.getInstance();
     private final DatabaseReference bdRef = fDatabase.getReference();
+    private Activity activity;
+    private ItemViewModel viewModel;
+    private Context currentContext;
+    private Fragment currentFragment;
 
-
-    public ProductAdapter(@NonNull FirebaseRecyclerOptions<Product> options, GridLayoutManager gridLayoutManager)
+    public ProductAdapter(@NonNull FirebaseRecyclerOptions<Product> options, GridLayoutManager gridLayoutManager, Activity activity, Fragment currentFragment)
     {
         super(options);
         this.gridLayoutManager = gridLayoutManager;
+        this.activity = activity;
+        this.currentFragment = currentFragment;
     }
 
 
@@ -115,7 +125,6 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
             return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_item_view, parent, false), viewType);
         }
     }
-
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.Holder holder, int position, @NonNull Product model) {
         loadImage(holder.imvImage.getContext(), holder.imvImage, model.getCode());
@@ -127,7 +136,6 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
         }catch(Exception e){
             e.printStackTrace();
         }
-
         try {
             holder.imvExport.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -135,7 +143,6 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                     PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
                     popupMenu.inflate(R.menu.item_popup_menu);
                     popupMenu.show();
-
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
@@ -156,10 +163,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                                                     append(snapshot.child(Integer.toString(2)).child("price").getValue().toString()).append(",").
                                                     append(snapshot.child(Integer.toString(2)).child("description").getValue().toString());
                                         }catch (Exception e){
-
                                         }
-
-
                                         try{
                                             FileOutputStream out = v.getContext().openFileOutput("data.csv", Context.MODE_PRIVATE);
                                             out.write((data.toString()).getBytes());
@@ -178,34 +182,20 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                                         }catch(Exception e){
                                             e.printStackTrace();
                                         }
-
                                     }
-
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
 
                                     }
                                 });
-
-
-
-
-
                             }
                             return false;
                         }
                     });
-
-
-
-
                 }
             });
         } catch (Exception e) {
-
         }
-
-
     }
 
     public void setOnItemClickListener(ItemClickListener itemClickListener){
@@ -213,9 +203,11 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
 
     }
     public void loadImage (Context context, ImageView imvImage, String code){
+        NavController navController = Navigation.findNavController(activity, R.id.nav_principal_fragment);
+        viewModel = new ViewModelProvider(currentFragment.requireActivity()).get(ItemViewModel.class);
         String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".jpg";
         File cacheFile = new File(cachePath);
-        if (!cacheFile.exists()){
+        if (!cacheFile.exists() || (navController.getPreviousBackStackEntry().getDestination().toString().contains("showItem") && viewModel.getProductChanged().getValue() != null) ){
             storage = FirebaseStorage.getInstance().getReference().child("Resources/Products/"+ code + ".jpg");
             File localFile = null;
             try {
@@ -229,6 +221,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                     String file = FINAL_FILE.getAbsolutePath();
                     imvImage.setImageBitmap(BitmapFactory.decodeFile(file));
+                    viewModel.setProductChanged(null);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

@@ -85,7 +85,7 @@ public class ProductFragment extends Fragment {
                 = new FirebaseRecyclerOptions.Builder<Product>()
                 .setQuery(product, Product.class)
                 .build();
-        productAdapter = new ProductAdapter(options, gridLayoutManager);
+        productAdapter = new ProductAdapter(options, gridLayoutManager, getActivity(), this);
         recyclerView.setAdapter(productAdapter);
 
         ImageView imvChangeView = root.findViewById(R.id.imv_change_view_inventory_product);

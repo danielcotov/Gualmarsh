@@ -187,7 +187,6 @@ public class AddItemFragment extends Fragment {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 Long quantity = Long.parseLong(snapshot.getValue().toString()) + 1;
-                                Log.e("T", quantity.toString());
                                 viewModel.setCategoryQuantity(quantity.toString());
 
                             }
@@ -197,10 +196,7 @@ public class AddItemFragment extends Fragment {
 
                             }
                         });
-
-                        category.child(viewModel.getCategoryKey().getValue()).child("quantity").setValue(Long.parseLong(viewModel.getCategoryQuantity().getValue()));
-
-
+                        //category.child(viewModel.getCategoryKey().getValue()).child("quantity").setValue(Long.parseLong(viewModel.getCategoryQuantity().getValue()));
                         uploadImage(v);
 
                     }catch (Exception e){

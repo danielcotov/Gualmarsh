@@ -4,11 +4,16 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
@@ -17,6 +22,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -29,7 +35,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,15 +45,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.sc703.gualmarsh.R;
 import com.sc703.gualmarsh.database.models.product.Product;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.app.Activity.RESULT_OK;
 
 public class ShowItemFragment extends Fragment {
 
@@ -59,10 +72,9 @@ public class ShowItemFragment extends Fragment {
     private StorageReference storage;
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private TextView tvDate;
-    private Button btnCancel, btnDiscard;
-    private AlertDialog dialog;
-    private AlertDialog.Builder builder;
-    LinearLayout btn_export;
+    private Uri imagePath;
+    private LinearLayout btn_export;
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,6 +90,7 @@ public class ShowItemFragment extends Fragment {
         edtPrice = root.findViewById(R.id.edt_showItem_price);
         imvClose = root.findViewById(R.id.showItem_Close);
         btnSave = root.findViewById(R.id.btn_showItem_Save);
+        progressBar = root.findViewById(R.id.showItem_Progressbar);
         imvDelete = root.findViewById(R.id.imv_showItem_Delete);
         tvDate = root.findViewById(R.id.tv_showItem_datePicker);
         Calendar calendar = Calendar.getInstance();
@@ -105,7 +118,6 @@ public class ShowItemFragment extends Fragment {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if((!s.toString().equals(bName)) && (!s.toString().equals(bCode)) && (!s.toString().equals(bQuantity)) &&
@@ -115,7 +127,6 @@ public class ShowItemFragment extends Fragment {
                     btnSave.setVisibility(View.GONE);
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -153,8 +164,6 @@ public class ShowItemFragment extends Fragment {
                 data.append("\n").append(String.valueOf(viewModel.getProductName().getValue())).append(",").append((viewModel.getProductQuantity()).getValue()).append(",").
                         append(String.valueOf(viewModel.getProductCode().getValue())).append(",").append(viewModel.getProductPrice().getValue()).append(",").
                         append(String.valueOf(viewModel.getProductDescription().getValue()));
-
-
                 try{
                     FileOutputStream out = getContext().openFileOutput("data.csv", Context.MODE_PRIVATE);
                     out.write((data.toString()).getBytes());
@@ -169,13 +178,18 @@ public class ShowItemFragment extends Fragment {
                     fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     fileIntent.putExtra(Intent.EXTRA_STREAM, path);
                     startActivity(Intent.createChooser(fileIntent, "Open with"));
-
                 }catch(Exception e){
                     e.printStackTrace();
                 }
             }
         });
+        imvShowImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImage();
 
+            }
+        });
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -198,7 +212,7 @@ public class ShowItemFragment extends Fragment {
                         productAdd.put(Integer.toString(productKey),  new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
                                 Long.parseLong(edtPrice.getText().toString().substring(1)), Long.parseLong(edtQuantity.getText().toString()), viewModel.getCategoryCode().getValue()));
                         product.updateChildren(productAdd);
-                        //uploadImage(v);
+                        uploadImage(v);
 
                     }catch (Exception e){
                         e.printStackTrace();
@@ -241,8 +255,6 @@ public class ShowItemFragment extends Fragment {
 
         });
 
-
-
         imvClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -259,8 +271,53 @@ public class ShowItemFragment extends Fragment {
 
         return root;
     }
+    ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if (result.getResultCode() == RESULT_OK) {
+                Intent data = result.getData();
+                imagePath = data.getData();
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imagePath);
+                    imvShowImage.setBackgroundColor(0x292929);
+                    imvShowImage.setImageBitmap(bitmap);
+                    btnSave.setVisibility(View.VISIBLE);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "An issue occurred while loading the image", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    });
+    private void selectImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        resultLauncher.launch(Intent.createChooser(intent, "Select an image"));
+    }
+    private void uploadImage(View view){
+        storage = FirebaseStorage.getInstance().getReference().child("Resources/Products");
 
-
+        if (imagePath != null){
+            StorageReference ref = storage.child(edtCode.getText().toString() + ".jpg");
+            ref.putFile(imagePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    progressBar.setVisibility(View.GONE);
+                    NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
+                    navController.navigate(R.id.action_Show_to_Products);
+                    viewModel.setProductChanged("true");
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    double progress = ((100*snapshot.getBytesTransferred())/snapshot.getTotalByteCount());
+                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setProgress((int)progress);
+                }
+            });
+        }
+    }
     public void loadImage (Context context, ImageView imvImage, String code){
         String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".jpg";
         imvImage.setImageBitmap(BitmapFactory.decodeFile(cachePath));

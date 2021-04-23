@@ -7,6 +7,17 @@
     android:layout_marginBottom="56dp"
     android:background="@color/w_darkBG">
 
+    <ProgressBar
+        android:id="@+id/showItem_Progressbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:max="100"
+        android:backgroundTint="@color/white"
+        android:indeterminateTint="@color/w_yellow"
+        android:layout_marginTop="-7dp"
+        android:visibility="gone"/>
 
         <LinearLayout
             android:id="@+id/close_save"
