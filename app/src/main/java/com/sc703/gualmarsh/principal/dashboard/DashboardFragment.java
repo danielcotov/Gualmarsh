@@ -57,7 +57,6 @@ public class DashboardFragment extends Fragment {
     private DatabaseReference allProducts = bdRef.child("products");
     private Long count = Long.parseLong("0");
     private Long counter = Long.parseLong("0");
-    private ItemViewModel viewModel;
     private StringBuilder data = new StringBuilder();
     private int sum;
     private int sum2;
@@ -115,7 +114,6 @@ public class DashboardFragment extends Fragment {
                 categoriesNum.setText(text);
             }
         });
-        viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
         for (int i = 1; i <= count; i++){
             allProducts.child(Integer.toString(i)).child("quantity").addValueEventListener(new ValueEventListener() {
                 @Override

@@ -41,8 +41,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -227,32 +230,40 @@ public class ShowItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 DatabaseReference productCategory;
-                if (viewModel.getCategoryCode().getValue() != null){
-                    productCategory = bdRef.child("productCategories/" + viewModel.getCategoryCode().getValue());
-                }else{
-                    productCategory = bdRef.child("productCategories/" + viewModel.getProductCategory().getValue());
+                if (navController.getPreviousBackStackEntry().getDestination().toString().contains("productFragment")) {
+                    productCategory = bdRef.child("productCategories/" + viewModel.getCategoryCode().getValue() + "/" + viewModel.getProductKey().getValue());
+                } else {
+                    productCategory = bdRef.child("productCategories/" + viewModel.getProductCategory().getValue() + "/" + viewModel.getProductKey().getValue());
                 }
-                DatabaseReference product = bdRef.child("products/");
-                Map<String, Object> productAdd = new HashMap<>();
-                if (addItem(v)) {
-                    try{
-                        Log.e("TAG2", viewModel.getProductKey().getValue());
-                        int productKey = Integer.parseInt(viewModel.getProductKey().getValue());
-                        productAdd.put(Integer.toString(productKey), new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
-                                Long.parseLong(edtPrice.getText().toString().substring(1)), Long.parseLong(edtQuantity.getText().toString())));
-                        productCategory.updateChildren(productAdd);
-                        productAdd.put(Integer.toString(productKey),  new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
-                                Long.parseLong(edtPrice.getText().toString().substring(1)), Long.parseLong(edtQuantity.getText().toString()), viewModel.getCategoryCode().getValue()));
-                        product.updateChildren(productAdd);
-                        //uploadImage(v);
-
-                    }catch (Exception e){
-                        e.printStackTrace();
+                DatabaseReference product = bdRef.child("products/" + viewModel.getProductKey().getValue());
+                product.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        snapshot.getRef().removeValue();
                     }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                productCategory.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        snapshot.getRef().removeValue();
+
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                if (navController.getPreviousBackStackEntry().getDestination().toString().contains("productFragment")){
+                    navController.navigate(R.id.action_Show_to_Products);
+                }else{
+                    navController.navigate(R.id.action_Show_to_Search);
                 }
             }
-
         });
 
         imvClose.setOnClickListener(new View.OnClickListener() {
