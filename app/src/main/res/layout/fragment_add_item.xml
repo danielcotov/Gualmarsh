@@ -36,9 +36,9 @@
 
         <Button
             android:id="@+id/btn_addItem_Save"
-            android:layout_width="wrap_content"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="255dp"
+            android:layout_marginStart="220dp"
             android:layout_marginTop="19dp"
             android:layout_marginEnd="26dp"
             android:text="@string/addItem_btnSave"
