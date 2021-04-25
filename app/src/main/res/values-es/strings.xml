@@ -100,4 +100,8 @@
     <!--Search-->
     <string name="search">Buscar</string>
     <string name="search_text">Ingresar texto para comenzar búsqueda</string>
+    <string name="deletePopUp_Title">¿Eliminar artículo?</string>
+    <string name="deletePopUp_Text">¿Está seguro que desea eliminar el artículo?</string>
+    <string name="deletePopup_Cancel">Cancelar</string>
+    <string name="deletePopup_Discard">Eliminar</string>
 </resources>

@@ -83,6 +83,10 @@
     <string name="discardPopUp_Text">Are you sure you want to discard your changes?</string>
     <string name="discardPopup_Cancel">Cancel</string>
     <string name="discardPopup_Discard">Discard</string>
+    <string name="deletePopUp_Title">Delete item?</string>
+    <string name="deletePopUp_Text">Are you sure you want to delete this item?</string>
+    <string name="deletePopup_Cancel">Cancel</string>
+    <string name="deletePopup_Discard">Delete</string>
 
     <!--Validations-->
     <string name="emptyField">Field cannot be empty</string>

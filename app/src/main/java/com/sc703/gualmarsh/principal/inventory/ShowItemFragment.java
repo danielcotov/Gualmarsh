@@ -1,10 +1,13 @@
 package com.sc703.gualmarsh.principal.inventory;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -27,6 +30,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -67,13 +71,15 @@ public class ShowItemFragment extends Fragment {
     private ImageView imvShowImage, imvClose, imvDelete;
     private EditText edtName, edtQuantity, edtCode, edtDescription, edtPrice, edtTotalPrice;
     private String bName, bQuantity, bCode, bDescription, bPrice;
-    private Button btnSave;
+    private Button btnSave, btnCancel, btnDelete;
     private StorageReference storage;
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private TextView tvDate;
     private Uri imagePath;
     private LinearLayout btn_export;
     private ProgressBar progressBar;
+    private AlertDialog dialog;
+    private AlertDialog.Builder builder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -251,41 +257,65 @@ public class ShowItemFragment extends Fragment {
         imvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference productCategory;
-                if (navController.getPreviousBackStackEntry().getDestination().toString().contains("productFragment")) {
-                    productCategory = bdRef.child("productCategories/" + viewModel.getCategoryCode().getValue() + "/" + viewModel.getProductKey().getValue());
-                } else {
-                    productCategory = bdRef.child("productCategories/" + viewModel.getProductCategory().getValue() + "/" + viewModel.getProductKey().getValue());
-                }
-                Log.e("TAGG", viewModel.getProductKey().getValue());
-                DatabaseReference product = bdRef.child("products/" + viewModel.getProductKey().getValue());
-                product.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        snapshot.getRef().removeValue();
-                    }
+                builder = new AlertDialog.Builder(v.getContext());
+                View view = getLayoutInflater().inflate(R.layout.delete_popup, null, false);
+                btnCancel = view.findViewById(R.id.btn_discardPopup_Cancel);
+                btnDelete = view.findViewById(R.id.btn_discardPopup_Discard);
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                builder.setView(view);
+                dialog = builder.create();
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.getWindow().clearFlags(WindowManager.LayoutParams.DIM_AMOUNT_CHANGED);
+                dialog.show();
 
+                btnDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DatabaseReference productCategory;
+                        if (navController.getPreviousBackStackEntry().getDestination().toString().contains("productFragment")) {
+                            productCategory = bdRef.child("productCategories/" + viewModel.getCategoryCode().getValue() + "/" + viewModel.getProductKey().getValue());
+                        } else {
+                            productCategory = bdRef.child("productCategories/" + viewModel.getProductCategory().getValue() + "/" + viewModel.getProductKey().getValue());
+                        }
+                        Log.e("TAGG", viewModel.getProductKey().getValue());
+                        DatabaseReference product = bdRef.child("products/" + viewModel.getProductKey().getValue());
+                        product.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                snapshot.getRef().removeValue();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                        productCategory.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                snapshot.getRef().removeValue();
+
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                        if (navController.getPreviousBackStackEntry().getDestination().toString().contains("productFragment")){
+                            navController.navigate(R.id.action_Show_to_Products);
+                        }else{
+                            navController.navigate(R.id.action_Show_to_Search);
+                        }
+                        dialog.dismiss();
                     }
                 });
-                productCategory.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        snapshot.getRef().removeValue();
 
-                    }
+                btnCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
+                    public void onClick(View v) {
+                        dialog.dismiss();
                     }
                 });
-                if (navController.getPreviousBackStackEntry().getDestination().toString().contains("productFragment")){
-                    navController.navigate(R.id.action_Show_to_Products);
-                }else{
-                    navController.navigate(R.id.action_Show_to_Search);
-                }
             }
         });
 
