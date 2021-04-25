@@ -134,7 +134,7 @@
             android:id="@+id/tv_addItem_Unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
+            android:layout_marginStart="115dp"
             android:layout_marginTop="48dp"
             android:text="@string/addItem_Unit"
             android:textColor="@color/textColorGray"

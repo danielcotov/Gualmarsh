@@ -107,15 +107,16 @@
                 <LinearLayout
                     android:id="@+id/showItem_Icons1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="13dp"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:id="@+id/showItem_Delete"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="26dp"
-                        android:layout_marginTop="32.5dp"
+                        android:layout_weight="3"
                         android:orientation="vertical">
 
                         <ImageView
@@ -142,8 +143,7 @@
                         android:id="@+id/showItem_Move"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="107dp"
-                        android:layout_marginTop="32.5dp"
+                        android:layout_weight="3"
                         android:orientation="vertical">
 
                         <ImageView
@@ -170,8 +170,7 @@
                         android:id="@+id/showItem_Export"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="107dp"
-                        android:layout_marginTop="32.5dp"
+                        android:layout_weight="3"
                         android:orientation="vertical">
 
                         <ImageView
@@ -239,7 +238,7 @@
                     android:id="@+id/tv_showItem_Unit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="140dp"
+                    android:layout_marginStart="115dp"
                     android:layout_marginTop="48dp"
                     android:text="@string/showItem_Unit"
                     android:textColor="@color/textColorGray"
