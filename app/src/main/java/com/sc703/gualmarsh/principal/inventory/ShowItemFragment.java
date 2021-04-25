@@ -71,7 +71,7 @@ public class ShowItemFragment extends Fragment {
     private ImageView imvShowImage, imvClose, imvDelete;
     private EditText edtName, edtQuantity, edtCode, edtDescription, edtPrice, edtTotalPrice;
     private String bName, bQuantity, bCode, bDescription, bPrice;
-    private Button btnSave, btnCancel, btnDelete;
+    private Button btnSave, btnCancel, btnDelete, btnDiscard, btnDisCancel;
     private StorageReference storage;
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private TextView tvDate;
@@ -259,8 +259,8 @@ public class ShowItemFragment extends Fragment {
             public void onClick(View v) {
                 builder = new AlertDialog.Builder(v.getContext());
                 View view = getLayoutInflater().inflate(R.layout.delete_popup, null, false);
-                btnCancel = view.findViewById(R.id.btn_discardPopup_Cancel);
-                btnDelete = view.findViewById(R.id.btn_discardPopup_Discard);
+                btnCancel = view.findViewById(R.id.btn_deletePopup_Cancel);
+                btnDelete = view.findViewById(R.id.btn_deletePopup_Delete);
 
                 builder.setView(view);
                 dialog = builder.create();
@@ -322,12 +322,42 @@ public class ShowItemFragment extends Fragment {
         imvClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(btnSave.getVisibility() == View.VISIBLE){
+                    builder = new AlertDialog.Builder(v.getContext());
+                    View view = getLayoutInflater().inflate(R.layout.close_popup, null, false);
+                    btnCancel = view.findViewById(R.id.btn_discardPopup_Cancel);
+                    btnDiscard = view.findViewById(R.id.btn_discardPopup_Discard);
 
+                    builder.setView(view);
+                    dialog = builder.create();
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.getWindow().clearFlags(WindowManager.LayoutParams.DIM_AMOUNT_CHANGED);
+                    dialog.show();
 
-                if (navController.getPreviousBackStackEntry().getDestination().toString().contains("productFragment")){
-                    navController.navigate(R.id.action_Show_to_Products);
+                    btnDiscard.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (navController.getPreviousBackStackEntry().getDestination().toString().contains("productFragment")){
+                                navController.navigate(R.id.action_Show_to_Products);
+                            }else{
+                                navController.navigate(R.id.action_Show_to_Search);
+                            }
+                            dialog.dismiss();
+                        }
+                    });
+
+                    btnCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
                 }else{
-                    navController.navigate(R.id.action_Show_to_Search);
+                    if (navController.getPreviousBackStackEntry().getDestination().toString().contains("productFragment")){
+                        navController.navigate(R.id.action_Show_to_Products);
+                    }else{
+                        navController.navigate(R.id.action_Show_to_Search);
+                    }
                 }
 
             }
