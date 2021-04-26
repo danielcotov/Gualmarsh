@@ -107,20 +107,23 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
 
     }
 
-
-
-
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.Holder holder, int position, @NonNull Category model) {
         loadImages(holder.imvImage.getContext(), holder.imvImage, model.getCode());
         holder.tvCategoryCode.setText(model.getCode());
         holder.tvCategoryName.setText(String.format(String.valueOf(model.getName())));
-        if (model.getQuantity() != null) {
-            holder.tvCategoryQuantity.setText(model.getQuantity().toString());
-        } else {
-            holder.tvCategoryQuantity.setText("");
-        }
+        DatabaseReference productCategory = bdRef.child("productCategories/" + model.getCode());
+        productCategory.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                holder.tvCategoryQuantity.setText(Long.toString(snapshot.getChildrenCount()));
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         try {
             holder.imvExport.setOnClickListener(new OnClickListener() {
@@ -195,16 +198,11 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
                             return false;
                         }
                     });
-
-
-
-
                 }
             });
         } catch (Exception e) {
 
         }
-
     }
 
     public void setOnItemClickListener(ItemClickListener itemClickListener) {

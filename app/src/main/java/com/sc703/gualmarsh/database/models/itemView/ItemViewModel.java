@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel;
 public class ItemViewModel extends ViewModel {
     private final MutableLiveData<String> categoryCode = new MutableLiveData<>();
     private final MutableLiveData<String> categoryKey = new MutableLiveData<>();
-    private final MutableLiveData<String> categoryQuantity = new MutableLiveData<>();
     private final MutableLiveData<String> productCode = new MutableLiveData<>();
     private final MutableLiveData<String> productName = new MutableLiveData<>();
     private final MutableLiveData<String> productQuantity = new MutableLiveData<>();
@@ -22,7 +21,6 @@ public class ItemViewModel extends ViewModel {
     private final MutableLiveData<String> productKey = new MutableLiveData<>();
     private final MutableLiveData<String> productCategory = new MutableLiveData<>();
     private final MutableLiveData<String> productChanged = new MutableLiveData<>();
-    private final MutableLiveData<String> X = new MutableLiveData<>();
     private final MutableLiveData<String> lastUpdated = new MutableLiveData<>();
     private final MutableLiveData<String> imagePath = new MutableLiveData<>();
 
@@ -31,9 +29,6 @@ public class ItemViewModel extends ViewModel {
     }
     public void setCategoryKey(String key){
         categoryKey.setValue(key);
-    }
-    public void setCategoryQuantity(String quantity){
-        categoryQuantity.setValue(quantity);
     }
     public void setProductCode(String product){
         productCode.setValue(product);
@@ -71,9 +66,6 @@ public class ItemViewModel extends ViewModel {
     public void setProductChanged(String changed){
         productChanged.setValue(changed);
     }
-    public void setX(String string){
-        X.setValue(string);
-    }
     public void setLastUpdated(String date){
         lastUpdated.setValue(date);
     }
@@ -85,9 +77,6 @@ public class ItemViewModel extends ViewModel {
     }
     public MutableLiveData<String> getCategoryKey() {
         return categoryKey;
-    }
-    public MutableLiveData<String> getCategoryQuantity() {
-        return categoryQuantity;
     }
     public LiveData<String> getProductCode() {
         return productCode;
@@ -124,9 +113,6 @@ public class ItemViewModel extends ViewModel {
     }
     public MutableLiveData<String> getProductChanged() {
         return productChanged;
-    }
-    public MutableLiveData<String> getX() {
-        return X;
     }
     public MutableLiveData<String> getLastUpdated() {
         return lastUpdated;

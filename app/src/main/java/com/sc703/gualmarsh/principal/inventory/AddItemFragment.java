@@ -165,14 +165,12 @@ public class AddItemFragment extends Fragment {
             public void onClick(View v) {
                 DatabaseReference productCategory = bdRef.child("productCategories/" + viewModel.getCategoryCode().getValue());
                 DatabaseReference product = bdRef.child("products");
-                DatabaseReference category = bdRef.child("categories");
                 Map<String, Object> productAdd = new HashMap<>();
                 if (addItem(v)) {
                     try{
                         totalPrice = Long.parseLong(edtPrice.getText().toString()) * Long.parseLong(edtQuantity.getText().toString());
                         SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yyyy");
                         currentDate = sdf.format(calendar.getTime());
-                        Log.e("TAGDATE", currentDate);
                         int productKey = Integer.parseInt(viewModel.getProductCount().getValue()) + 1;
                         productAdd.put(Integer.toString(productKey), new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
                                 Long.parseLong(edtPrice.getText().toString()), totalPrice, Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString(), currentDate));
@@ -180,18 +178,6 @@ public class AddItemFragment extends Fragment {
                         productAdd.put(Integer.toString(productKey),  new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
                                 Long.parseLong(edtPrice.getText().toString()), totalPrice, Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString(), currentDate, viewModel.getCategoryCode().getValue()));
                         product.updateChildren(productAdd);
-                        category.child(viewModel.getCategoryKey().getValue()).child("quantity").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                Long quantity = Long.parseLong(snapshot.getValue().toString()) + 1;
-                                viewModel.setCategoryQuantity(quantity.toString());
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                        //category.child(viewModel.getCategoryKey().getValue()).child("quantity").setValue(Long.parseLong(viewModel.getCategoryQuantity().getValue()));
                         uploadImage(v);
 
                     }catch (Exception e){
