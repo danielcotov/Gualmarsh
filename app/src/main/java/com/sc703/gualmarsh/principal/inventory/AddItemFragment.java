@@ -67,6 +67,7 @@ public class AddItemFragment extends Fragment {
     private AlertDialog dialog;
     private AlertDialog.Builder builder;
     private Uri imagePath;
+    private Long totalPrice;
     private StorageReference storage;
 
     @Override
@@ -83,6 +84,7 @@ public class AddItemFragment extends Fragment {
         edtDescription = root.findViewById(R.id.edt_addItem_description);
         edtPrice = root.findViewById(R.id.edt_addItem_price);
         tvDate = root.findViewById(R.id.tv_datePicker);
+
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -162,12 +164,13 @@ public class AddItemFragment extends Fragment {
                 Map<String, Object> productAdd = new HashMap<>();
                 if (addItem(v)) {
                     try{
+                        totalPrice = Long.parseLong(edtPrice.getText().toString()) * Long.parseLong(edtQuantity.getText().toString());
                         int productKey = Integer.parseInt(viewModel.getProductCount().getValue()) + 1;
                         productAdd.put(Integer.toString(productKey), new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
-                                Long.parseLong(edtPrice.getText().toString()), Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString()));
+                                Long.parseLong(edtPrice.getText().toString()), totalPrice, Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString()));
                         productCategory.updateChildren(productAdd);
                         productAdd.put(Integer.toString(productKey),  new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
-                                Long.parseLong(edtPrice.getText().toString()), Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString(), viewModel.getCategoryCode().getValue()));
+                                Long.parseLong(edtPrice.getText().toString()), totalPrice, Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString(), viewModel.getCategoryCode().getValue()));
                         product.updateChildren(productAdd);
                         category.child(viewModel.getCategoryKey().getValue()).child("quantity").addValueEventListener(new ValueEventListener() {
                             @Override

@@ -30,13 +30,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 public class DashboardFragment extends Fragment {
-    TextView itemsNum, categoriesNum, dashboardQuantity, dashboardTotal;
+    private TextView itemsNum, categoriesNum, dashboardQuantity, dashboardTotal;
     private FirebaseDatabase fDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference bdRef = fDatabase.getReference();
     private DatabaseReference categoriesRef = bdRef.child("categories");
     private DatabaseReference allProducts = bdRef.child("products");
     private Long count = Long.parseLong("0");
-    private Long counter = Long.parseLong("0");
     private StringBuilder data = new StringBuilder();
     private int sum;
     private int sum2;
@@ -113,7 +112,7 @@ public class DashboardFragment extends Fragment {
 
                 }
             });
-            allProducts.child(Integer.toString(i)).child("price").addValueEventListener(new ValueEventListener() {
+            allProducts.child(Integer.toString(i)).child("totalPrice").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     try{
@@ -136,7 +135,7 @@ public class DashboardFragment extends Fragment {
 
     }
     public void exportDB(){
-        data.append("Category,ID,Code,Quantity,Price,Name,Description");
+        data.append("Category,ID,Code,Quantity,Unit Price,Name,Description");
         bdRef.child("productCategories").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -150,7 +149,7 @@ public class DashboardFragment extends Fragment {
                         data.append(",");
                         data.append(catds.child("code").getValue().toString()).append(",").
                                 append(catds.child("quantity").getValue().toString()).append(",").
-                                append(catds.child("price").getValue().toString()).append(",").
+                                append(catds.child("unitPrice").getValue().toString()).append(",").
                                 append(catds.child("name").getValue().toString()).append(",").
                                 append(catds.child("description").getValue().toString());
                     }

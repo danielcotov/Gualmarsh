@@ -135,7 +135,7 @@ public class SearchFragment extends Fragment {
                                     viewModel.setProductCode(snapshot.child("code").getValue().toString());
                                     viewModel.setProductName(snapshot.child("name").getValue().toString());
                                     viewModel.setProductDescription(snapshot.child("description").getValue().toString());
-                                    viewModel.setProductPrice("¢" + snapshot.child("price").getValue().toString());
+                                    viewModel.setProductPrice("¢" + snapshot.child("unitPrice").getValue().toString());
                                     viewModel.setProductQuantity(snapshot.child("quantity").getValue().toString());
                                     viewModel.setProductCategory(snapshot.child("category").getValue().toString());
                                 } catch (Exception e) {

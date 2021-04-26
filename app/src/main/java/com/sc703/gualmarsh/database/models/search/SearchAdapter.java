@@ -34,7 +34,7 @@ public class SearchAdapter extends FirebaseRecyclerAdapter<Product, SearchAdapte
     }
 
     public class Holder extends RecyclerView.ViewHolder {
-        TextView tvProductCode, tvProductName, tvProductQuantity, tvProductPrice;
+        TextView tvProductCode, tvProductName, tvProductQuantity, tvProductUnitPrice;
         ImageView imvImage;
 
         public Holder(View item, int viewType) {
@@ -43,7 +43,7 @@ public class SearchAdapter extends FirebaseRecyclerAdapter<Product, SearchAdapte
             tvProductCode = item.findViewById(R.id.tv_list_code);
             tvProductName = item.findViewById(R.id.tv_list_name);
             tvProductQuantity = item.findViewById(R.id.tv_list_quantity);
-            tvProductPrice = item.findViewById(R.id.tv_list_price);
+            tvProductUnitPrice = item.findViewById(R.id.tv_list_price);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -75,10 +75,10 @@ public class SearchAdapter extends FirebaseRecyclerAdapter<Product, SearchAdapte
         } else {
             holder.tvProductQuantity.setText("");
         }
-        if (model.getPrice() != null) {
-            holder.tvProductPrice.setText("¢" + model.getPrice().toString());
+        if (model.getUnitPrice() != null) {
+            holder.tvProductUnitPrice.setText("¢" + model.getUnitPrice().toString());
         } else {
-            holder.tvProductPrice.setText("");
+            holder.tvProductUnitPrice.setText("");
         }
 
     }

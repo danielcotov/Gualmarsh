@@ -144,14 +144,14 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                 StringBuilder data = new StringBuilder();
-                                                data.append("Product Name,Quantity,Barcode,Price,Description");
+                                                data.append("Product Name,Quantity,Barcode,Unit Price,Description");
                                                 int j=1;
                                                 for(int i=1; i<=dataSnapshot.getChildrenCount(); j++){
                                                     try{
                                                         data.append("\n").append(dataSnapshot.child(Integer.toString(j)).child("name").getValue().toString()).append(",").
                                                                 append(dataSnapshot.child(Integer.toString(j)).child("quantity").getValue().toString()).append(",").
                                                                 append(dataSnapshot.child(Integer.toString(j)).child("code").getValue().toString()).append(",").
-                                                                append(dataSnapshot.child(Integer.toString(j)).child("price").getValue().toString()).append(",").
+                                                                append(dataSnapshot.child(Integer.toString(j)).child("unitPrice").getValue().toString()).append(",").
                                                                 append(dataSnapshot.child(Integer.toString(j)).child("description").getValue().toString());
                                                         i++;
                                                     }catch (Exception e){

@@ -122,7 +122,7 @@ public class ProductFragment extends Fragment {
                                     viewModel.setProductCode(snapshot.child("code").getValue().toString());
                                     viewModel.setProductName(snapshot.child("name").getValue().toString());
                                     viewModel.setProductDescription(snapshot.child("description").getValue().toString());
-                                    viewModel.setProductPrice("¢" + snapshot.child("price").getValue().toString());
+                                    viewModel.setProductPrice("¢" + snapshot.child("unitPrice").getValue().toString());
                                     viewModel.setProductQuantity(snapshot.child("quantity").getValue().toString());
                                     viewModel.setProductExpiration(snapshot.child("expiration").getValue().toString());
                                 } catch (Exception e) {

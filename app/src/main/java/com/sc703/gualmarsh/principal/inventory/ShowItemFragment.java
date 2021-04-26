@@ -219,10 +219,10 @@ public class ShowItemFragment extends Fragment {
                     try{
                         int productKey = Integer.parseInt(viewModel.getProductKey().getValue());
                         productAdd.put(Integer.toString(productKey), new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
-                                Long.parseLong(edtPrice.getText().toString().substring(1)), Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString()));
+                                Long.parseLong(edtPrice.getText().toString().substring(1)), Long.parseLong(edtTotalPrice.getText().toString().substring(1)), Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString()));
                         productCategory.updateChildren(productAdd);
                         productAdd.put(Integer.toString(productKey),  new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
-                                Long.parseLong(edtPrice.getText().toString().substring(1)), Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString(), viewModel.getCategoryCode().getValue()));
+                                Long.parseLong(edtPrice.getText().toString().substring(1)), Long.parseLong(edtQuantity.getText().toString()), Long.parseLong(edtTotalPrice.getText().toString().substring(1)), tvDate.getText().toString(), viewModel.getCategoryCode().getValue()));
                         product.updateChildren(productAdd);
                         if (uploadImage()){
                             final Handler handler = new Handler();

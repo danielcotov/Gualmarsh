@@ -81,7 +81,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
     }
 
     public class Holder extends RecyclerView.ViewHolder{
-        TextView tvProductCode, tvProductName, tvProductQuantity, tvProductPrice;
+        TextView tvProductCode, tvProductName, tvProductQuantity, tvProductUnitPrice;
         ImageView imvImage, imvExport;
 
         public Holder(View item, int viewType){
@@ -91,13 +91,13 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                 tvProductCode = item.findViewById(R.id.tv_grid_code);
                 tvProductName = item.findViewById(R.id.tv_grid_name);
                 tvProductQuantity = item.findViewById(R.id.tv_grid_quantity);
-                tvProductPrice = item.findViewById(R.id.tv_grid_price);
+                tvProductUnitPrice = item.findViewById(R.id.tv_grid_price);
             }else{
                 imvImage = item.findViewById(R.id.imv_list_itemPhoto);
                 tvProductCode = item.findViewById(R.id.tv_list_code);
                 tvProductName = item.findViewById(R.id.tv_list_name);
                 tvProductQuantity = item.findViewById(R.id.tv_list_quantity);
-                tvProductPrice = item.findViewById(R.id.tv_list_price);
+                tvProductUnitPrice = item.findViewById(R.id.tv_list_price);
                 imvExport = item.findViewById(R.id.list_more);
             }
 
@@ -129,7 +129,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
         holder.tvProductName.setText(String.format(String.valueOf(model.getName())));
         try{
             holder.tvProductQuantity.setText(model.getQuantity().toString());
-            holder.tvProductPrice.setText("¢" + model.getPrice().toString());
+            holder.tvProductUnitPrice.setText("¢" + model.getUnitPrice().toString());
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -151,12 +151,12 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         StringBuilder data = new StringBuilder();
-                                        data.append("Product Name,Quantity,Barcode,Price,Description");
+                                        data.append("Product Name,Quantity,Barcode,Unit Price,Description");
                                         try{
                                             data.append("\n").append(snapshot.child(Integer.toString(2)).child("name").getValue().toString()).append(",").
                                                     append(snapshot.child(Integer.toString(2)).child("quantity").getValue().toString()).append(",").
                                                     append(snapshot.child(Integer.toString(2)).child("code").getValue().toString()).append(",").
-                                                    append(snapshot.child(Integer.toString(2)).child("price").getValue().toString()).append(",").
+                                                    append(snapshot.child(Integer.toString(2)).child("unitPrice").getValue().toString()).append(",").
                                                     append(snapshot.child(Integer.toString(2)).child("description").getValue().toString());
                                         }catch (Exception e){
                                         }
