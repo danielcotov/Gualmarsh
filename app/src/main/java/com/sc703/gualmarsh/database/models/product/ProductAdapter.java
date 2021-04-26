@@ -147,20 +147,21 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                                 Toast.makeText(v.getContext(), "DELETE", Toast.LENGTH_SHORT).show();
                             }
                             if(item.getItemId() == R.id.popupMenu_export){
+                                Log.e("TAG", Integer.toString(position+1));
                                 bdRef.child("products").child(Integer.toString(position+1)).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         StringBuilder data = new StringBuilder();
                                         data.append("Product Name,Quantity,Barcode,Unit Price,Description");
                                         try{
-                                            data.append("\n").append(snapshot.child(Integer.toString(2)).child("name").getValue().toString()).append(",").
-                                                    append(snapshot.child(Integer.toString(2)).child("quantity").getValue().toString()).append(",").
-                                                    append(snapshot.child(Integer.toString(2)).child("code").getValue().toString()).append(",").
-                                                    append(snapshot.child(Integer.toString(2)).child("unitPrice").getValue().toString()).append(",").
-                                                    append(snapshot.child(Integer.toString(2)).child("description").getValue().toString());
-                                        }catch (Exception e){
-                                        }
-                                        try{
+                                            Log.e("TAG1", snapshot.child("name").getValue().toString());
+                                            data.append("\n").append(snapshot.child("name").getValue().toString()).append(",").
+                                                    append(snapshot.child("quantity").getValue().toString()).append(",").
+                                                    append(snapshot.child("code").getValue().toString()).append(",").
+                                                    append(snapshot.child("unitPrice").getValue().toString()).append(",").
+                                                    append(snapshot.child("description").getValue().toString());
+
+
                                             FileOutputStream out = v.getContext().openFileOutput("data.csv", Context.MODE_PRIVATE);
                                             out.write((data.toString()).getBytes());
                                             out.close();
