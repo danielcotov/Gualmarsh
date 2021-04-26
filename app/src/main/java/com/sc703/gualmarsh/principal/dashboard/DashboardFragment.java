@@ -117,7 +117,7 @@ public class DashboardFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     try{
                         sum2+= Integer.parseInt(snapshot.getValue().toString());
-                        dashboardTotal.setText(String.valueOf(sum2));
+                        dashboardTotal.setText("¢" + Integer.toString(sum2));
                     }catch (Exception e){
                         e.printStackTrace();
                     }

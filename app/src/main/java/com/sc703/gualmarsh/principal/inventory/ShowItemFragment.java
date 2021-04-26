@@ -277,7 +277,6 @@ public class ShowItemFragment extends Fragment {
                         } else {
                             productCategory = bdRef.child("productCategories/" + viewModel.getProductCategory().getValue() + "/" + viewModel.getProductKey().getValue());
                         }
-                        Log.e("TAGG", viewModel.getProductKey().getValue());
                         DatabaseReference product = bdRef.child("products/" + viewModel.getProductKey().getValue());
                         product.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override

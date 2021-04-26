@@ -144,7 +144,30 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             if(item.getItemId() == R.id.popupMenu_delete){
-                                Toast.makeText(v.getContext(), "DELETE", Toast.LENGTH_SHORT).show();
+                                getRef(position).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        viewModel.setProductKey(snapshot.getKey());
+                                        snapshot.getRef().removeValue();
+                                        DatabaseReference product = bdRef.child("products/" + viewModel.getProductKey().getValue());
+                                        product.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                snapshot.getRef().removeValue();
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
                             }
                             if(item.getItemId() == R.id.popupMenu_export){
                                 Log.e("TAG", Integer.toString(position+1));
