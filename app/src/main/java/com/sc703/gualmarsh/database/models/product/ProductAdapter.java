@@ -147,7 +147,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                                 Toast.makeText(v.getContext(), "DELETE", Toast.LENGTH_SHORT).show();
                             }
                             if(item.getItemId() == R.id.popupMenu_export){
-                                bdRef.child("products").child(Integer.toString(position)).addValueEventListener(new ValueEventListener() {
+                                bdRef.child("products").child(Integer.toString(position+1)).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         StringBuilder data = new StringBuilder();

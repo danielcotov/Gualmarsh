@@ -18,24 +18,26 @@
             android:id="@+id/dahsboardLayout1"
             android:layout_width="match_parent"
             android:layout_height="79dp"
+            android:gravity="center"
+            android:paddingStart="27dp"
+            android:paddingEnd="27dp"
             android:background="@color/w_darkBG">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="27dp"
-                android:layout_marginTop="25dp"
                 android:fontFamily="sans-serif-black"
                 android:text="@string/dashboard_main"
+                android:layout_weight="5"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/w_blue"
                 android:textSize="35sp" />
 
             <ImageView
                 android:id="@+id/btn_export"
                 android:layout_width="30dp"
+                android:layout_marginTop="10dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="154dp"
-                android:layout_marginTop="37.5dp"
                 android:src="@drawable/ic_import_export"
                 app:tint="@color/w_blue" />
 
