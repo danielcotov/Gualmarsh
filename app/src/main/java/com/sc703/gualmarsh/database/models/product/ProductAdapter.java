@@ -227,7 +227,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
         viewModel = new ViewModelProvider(currentFragment.requireActivity()).get(ItemViewModel.class);
         String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".jpg";
         File cacheFile = new File(cachePath);
-
+        Log.e("TAG", navController.getPreviousBackStackEntry().getDestination().toString());
         if (!cacheFile.exists() || (navController.getPreviousBackStackEntry().getDestination().toString().contains("showItem") && viewModel.getProductChanged().getValue() != null) ){
             storage = FirebaseStorage.getInstance().getReference().child("Resources/Products/"+ code + ".jpg");
             File localFile = null;

@@ -2,13 +2,13 @@ package com.sc703.gualmarsh.database.models.product;
 
 public class Product {
 
-    public String code, name, description, category, expiration;
+    public String code, name, description, category, expiration, lastUpdated;
     public Long unitPrice, totalPrice, quantity;
 
     public Product() {
     }
 
-    public Product(String code, String name, String description, Long unitPrice, Long totalPrice, Long quantity, String expiration) {
+    public Product(String code, String name, String description, Long unitPrice, Long totalPrice, Long quantity, String expiration, String lastUpdated) {
         this.code = code;
         this.name = name;
         this.description = description;
@@ -16,8 +16,9 @@ public class Product {
         this.totalPrice = totalPrice;
         this.quantity = quantity;
         this.expiration = expiration;
+        this.lastUpdated = lastUpdated;
     }
-    public Product(String code, String name, String description, Long unitPrice, Long totalPrice, Long quantity, String expiration, String category) {
+    public Product(String code, String name, String description, Long unitPrice, Long totalPrice, Long quantity, String expiration, String lastUpdated, String category) {
         this.code = code;
         this.name = name;
         this.description = description;
@@ -25,6 +26,7 @@ public class Product {
         this.totalPrice = totalPrice;
         this.quantity = quantity;
         this.category = category;
+        this.lastUpdated = lastUpdated;
         this.expiration = expiration;
     }
 

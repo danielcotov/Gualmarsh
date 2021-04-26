@@ -20,6 +20,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,8 @@ import com.sc703.gualmarsh.database.models.itemView.ItemViewModel;
 import com.sc703.gualmarsh.database.models.product.Product;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,6 +72,7 @@ public class AddItemFragment extends Fragment {
     private Uri imagePath;
     private Long totalPrice;
     private StorageReference storage;
+    private String currentDate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,6 +94,7 @@ public class AddItemFragment extends Fragment {
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
 
         tvDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,12 +170,15 @@ public class AddItemFragment extends Fragment {
                 if (addItem(v)) {
                     try{
                         totalPrice = Long.parseLong(edtPrice.getText().toString()) * Long.parseLong(edtQuantity.getText().toString());
+                        SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yyyy");
+                        currentDate = sdf.format(calendar.getTime());
+                        Log.e("TAGDATE", currentDate);
                         int productKey = Integer.parseInt(viewModel.getProductCount().getValue()) + 1;
                         productAdd.put(Integer.toString(productKey), new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
-                                Long.parseLong(edtPrice.getText().toString()), totalPrice, Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString()));
+                                Long.parseLong(edtPrice.getText().toString()), totalPrice, Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString(), currentDate));
                         productCategory.updateChildren(productAdd);
                         productAdd.put(Integer.toString(productKey),  new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
-                                Long.parseLong(edtPrice.getText().toString()), totalPrice, Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString(), viewModel.getCategoryCode().getValue()));
+                                Long.parseLong(edtPrice.getText().toString()), totalPrice, Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString(), currentDate, viewModel.getCategoryCode().getValue()));
                         product.updateChildren(productAdd);
                         category.child(viewModel.getCategoryKey().getValue()).child("quantity").addValueEventListener(new ValueEventListener() {
                             @Override

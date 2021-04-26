@@ -125,6 +125,7 @@ public class ProductFragment extends Fragment {
                                     viewModel.setProductPrice("¢" + snapshot.child("unitPrice").getValue().toString());
                                     viewModel.setProductQuantity(snapshot.child("quantity").getValue().toString());
                                     viewModel.setProductExpiration(snapshot.child("expiration").getValue().toString());
+                                    viewModel.setLastUpdated(snapshot.child("lastUpdated").getValue().toString());
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

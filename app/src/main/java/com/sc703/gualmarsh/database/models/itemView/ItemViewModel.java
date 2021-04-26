@@ -23,6 +23,8 @@ public class ItemViewModel extends ViewModel {
     private final MutableLiveData<String> productCategory = new MutableLiveData<>();
     private final MutableLiveData<String> productChanged = new MutableLiveData<>();
     private final MutableLiveData<String> X = new MutableLiveData<>();
+    private final MutableLiveData<String> lastUpdated = new MutableLiveData<>();
+    private final MutableLiveData<String> imagePath = new MutableLiveData<>();
 
     public void setCategoryCode(String category){
         categoryCode.setValue(category);
@@ -72,6 +74,12 @@ public class ItemViewModel extends ViewModel {
     public void setX(String string){
         X.setValue(string);
     }
+    public void setLastUpdated(String date){
+        lastUpdated.setValue(date);
+    }
+    public void setImagePath(String path){
+        imagePath.setValue(path);
+    }
     public LiveData<String> getCategoryCode() {
         return categoryCode;
     }
@@ -119,5 +127,11 @@ public class ItemViewModel extends ViewModel {
     }
     public MutableLiveData<String> getX() {
         return X;
+    }
+    public MutableLiveData<String> getLastUpdated() {
+        return lastUpdated;
+    }
+    public MutableLiveData<String> getImagePath() {
+        return imagePath;
     }
 }

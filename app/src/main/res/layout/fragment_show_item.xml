@@ -374,15 +374,15 @@
                     android:textSize="15dp" />
 
 
-                <EditText
-                    android:id="@+id/edt_showItem_totalPrice"
+                <TextView
+                    android:id="@+id/tv_showItem_totalPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="26dp"
                     android:layout_marginTop="44dp"
                     android:background="@null"
                     android:hint="-"
-                    android:textColor="@color/white"
+                    android:textColor="@color/textColorGray"
                     android:textColorHint="@color/white"
                     android:textSize="18sp" />
 
@@ -415,7 +415,7 @@
                     android:layout_marginTop="44dp"
                     android:background="@null"
                     android:hint="-"
-                    android:text="02/10/2021"
+                    android:text=""
                     android:textColor="@color/textColorGray"
                     android:textColorHint="@color/white"
                     android:textSize="18sp" />

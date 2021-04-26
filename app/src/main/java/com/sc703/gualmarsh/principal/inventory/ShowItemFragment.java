@@ -54,9 +54,12 @@ import com.sc703.gualmarsh.R;
 import com.sc703.gualmarsh.database.models.itemView.ItemViewModel;
 import com.sc703.gualmarsh.database.models.product.Product;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,12 +72,12 @@ public class ShowItemFragment extends Fragment {
     private final DatabaseReference bdRef = fDatabase.getReference();
     private ItemViewModel viewModel;
     private ImageView imvShowImage, imvClose, imvDelete;
-    private EditText edtName, edtQuantity, edtCode, edtDescription, edtPrice, edtTotalPrice;
-    private String bName, bQuantity, bCode, bDescription, bPrice;
+    private EditText edtName, edtQuantity, edtCode, edtDescription, edtPrice;
+    private String bName, bQuantity, bCode, bDescription, bPrice, currentDate;
     private Button btnSave, btnCancel, btnDelete, btnDiscard, btnDisCancel;
     private StorageReference storage;
     private DatePickerDialog.OnDateSetListener dateSetListener;
-    private TextView tvDate;
+    private TextView tvDate, tvLastUpdated, tvTotalPrice;
     private Uri imagePath;
     private LinearLayout btn_export;
     private ProgressBar progressBar;
@@ -93,16 +96,20 @@ public class ShowItemFragment extends Fragment {
         edtQuantity = root.findViewById(R.id.edt_showItem_quantity);
         edtDescription = root.findViewById(R.id.edt_showItem_description);
         edtPrice = root.findViewById(R.id.edt_showItem_price);
-        edtTotalPrice = root.findViewById(R.id.edt_showItem_totalPrice);
+        tvTotalPrice = root.findViewById(R.id.tv_showItem_totalPrice);
         imvClose = root.findViewById(R.id.showItem_Close);
         btnSave = root.findViewById(R.id.btn_showItem_Save);
         progressBar = root.findViewById(R.id.showItem_Progressbar);
         imvDelete = root.findViewById(R.id.imv_showItem_Delete);
         tvDate = root.findViewById(R.id.tv_showItem_datePicker);
+        tvLastUpdated = root.findViewById(R.id.tv_showItem_lastUpdated);
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yyyy");
+        currentDate = sdf.format(calendar.getTime());
 
 
         edtName.setText(viewModel.getProductName().getValue());
@@ -111,8 +118,9 @@ public class ShowItemFragment extends Fragment {
         edtDescription.setText(viewModel.getProductDescription().getValue());
         edtPrice.setText(viewModel.getProductPrice().getValue());
         int totalPrice = Integer.parseInt(viewModel.getProductPrice().getValue().substring(1)) * Integer.parseInt(viewModel.getProductQuantity().getValue());
-        edtTotalPrice.setText("¢" + Integer.toString(totalPrice));
+        tvTotalPrice.setText("¢" + totalPrice);
         tvDate.setText(viewModel.getProductExpiration().getValue());
+        tvLastUpdated.setText(viewModel.getLastUpdated().getValue());
         loadImage(getContext(), imvShowImage, viewModel.getProductCode().getValue());
         NavController navController = Navigation.findNavController(getActivity(), R.id.nav_principal_fragment);
 
@@ -129,12 +137,12 @@ public class ShowItemFragment extends Fragment {
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if((!s.toString().equals(bName)) && (!s.toString().equals(bCode)) && (!s.toString().equals(bQuantity)) &&
+                if((!s.toString().equals(bName)) && (!s.toString().equals(bQuantity)) &&
                         (!s.toString().equals(bDescription)) && (!s.toString().equals(bPrice))){
                     btnSave.setVisibility(View.VISIBLE);
                     try{
                         int totalPrice = Integer.parseInt(edtPrice.getText().toString().substring(1)) * Integer.parseInt(edtQuantity.getText().toString());
-                        edtTotalPrice.setText(Integer.toString(totalPrice));
+                        tvTotalPrice.setText("¢" + totalPrice);
                     } catch (Exception e){
                         e.printStackTrace();
                     }
@@ -151,7 +159,26 @@ public class ShowItemFragment extends Fragment {
         };
 
         edtName.addTextChangedListener(watcher);
-        edtCode.addTextChangedListener(watcher);
+        edtCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!s.toString().equals(bCode)){
+                    btnSave.setVisibility(View.VISIBLE);
+                }else{
+                    btnSave.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                imagePath = Uri.parse(viewModel.getImagePath().getValue());
+            }
+        });
         edtDescription.addTextChangedListener(watcher);
         edtPrice.addTextChangedListener(watcher);
         edtQuantity.addTextChangedListener(watcher);
@@ -180,7 +207,7 @@ public class ShowItemFragment extends Fragment {
                 StringBuilder data = new StringBuilder();
                 data.append("Product Name,Quantity,Barcode,Price,Description");
                 data.append("\n").append(String.valueOf(viewModel.getProductName().getValue())).append(",").append((viewModel.getProductQuantity()).getValue()).append(",").
-                        append(String.valueOf(viewModel.getProductCode().getValue())).append(",").append(viewModel.getProductPrice().getValue()).append(",").
+                        append(String.valueOf(viewModel.getProductCode().getValue())).append(",").append(viewModel.getProductPrice().getValue().substring(1)).append(",").
                         append(String.valueOf(viewModel.getProductDescription().getValue()));
                 try{
                     FileOutputStream out = getContext().openFileOutput("data.csv", Context.MODE_PRIVATE);
@@ -225,11 +252,12 @@ public class ShowItemFragment extends Fragment {
                     try{
                         int productKey = Integer.parseInt(viewModel.getProductKey().getValue());
                         productAdd.put(Integer.toString(productKey), new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
-                                Long.parseLong(edtPrice.getText().toString().substring(1)), Long.parseLong(edtTotalPrice.getText().toString().substring(1)), Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString()));
+                                Long.parseLong(edtPrice.getText().toString().substring(1)), Long.parseLong(tvTotalPrice.getText().toString().substring(1)), Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString(), currentDate));
                         productCategory.updateChildren(productAdd);
                         productAdd.put(Integer.toString(productKey),  new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
-                                Long.parseLong(edtPrice.getText().toString().substring(1)), Long.parseLong(edtQuantity.getText().toString()), Long.parseLong(edtTotalPrice.getText().toString().substring(1)), tvDate.getText().toString(), viewModel.getCategoryCode().getValue()));
+                                Long.parseLong(edtPrice.getText().toString().substring(1)), Long.parseLong(tvTotalPrice.getText().toString().substring(1)), Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString(), currentDate, viewModel.getCategoryCode().getValue()));
                         product.updateChildren(productAdd);
+
                         if (uploadImage()){
                             final Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
@@ -242,8 +270,6 @@ public class ShowItemFragment extends Fragment {
                         }else{
                             navController.navigate(R.id.action_Show_to_Products);
                         }
-
-
 
                     }catch (Exception e){
                         e.printStackTrace();
@@ -374,6 +400,7 @@ public class ShowItemFragment extends Fragment {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imagePath);
                     imvShowImage.setBackgroundColor(0x292929);
                     imvShowImage.setImageBitmap(bitmap);
+                    viewModel.setImagePath(imagePath.toString());
                     btnSave.setVisibility(View.VISIBLE);
                 } catch (IOException e) {
                     e.printStackTrace();
