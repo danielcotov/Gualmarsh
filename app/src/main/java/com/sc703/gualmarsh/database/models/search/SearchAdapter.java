@@ -89,13 +89,13 @@ public class SearchAdapter extends FirebaseRecyclerAdapter<Product, SearchAdapte
     }
 
     public void loadImages(Context context, ImageView imvImage, String code) {
-        String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".jpg";
+        String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".png";
         File cacheFile = new File(cachePath);
         if (!cacheFile.exists()) {
-            storage = FirebaseStorage.getInstance().getReference().child("Resources/Products/" + code + ".jpg");
+            storage = FirebaseStorage.getInstance().getReference().child("Resources/Products/" + code + ".png");
             File localFile = null;
             try {
-                localFile = new File(context.getCacheDir(), code + ".jpg");
+                localFile = new File(context.getCacheDir(), code + ".png");
             } catch (Exception e) {
                 e.printStackTrace();
             }

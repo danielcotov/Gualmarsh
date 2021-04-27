@@ -206,13 +206,13 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
     }
 
     public void loadImages(Context context, ImageView imvImage, String code) {
-        String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".jpg";
+        String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".png";
         File cacheFile = new File(cachePath);
         if (!cacheFile.exists()) {
-            storage = FirebaseStorage.getInstance().getReference().child("Resources/Categories/" + code + ".jpg");
+            storage = FirebaseStorage.getInstance().getReference().child("Resources/Categories/" + code + ".png");
             File localFile = null;
             try {
-                localFile = new File(context.getCacheDir(), code + ".jpg");
+                localFile = new File(context.getCacheDir(), code + ".png");
             } catch (Exception e) {
                 e.printStackTrace();
             }
