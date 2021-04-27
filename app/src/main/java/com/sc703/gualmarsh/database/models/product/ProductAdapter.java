@@ -174,14 +174,16 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         StringBuilder data = new StringBuilder();
-                                        data.append("Product Name,Quantity,Barcode,Unit Price,Description");
+                                        data.append("Barcode,Name,Description,Unit Price,Quantity,Total Price,Expiration Date,Last Updated");
                                         try{
-                                            data.append("\n").append(snapshot.child("name").getValue().toString()).append(",").
-                                                    append(snapshot.child("quantity").getValue().toString()).append(",").
-                                                    append(snapshot.child("code").getValue().toString()).append(",").
+                                            data.append("\n").append(snapshot.child("code").getValue().toString()).append(",").
+                                                    append(snapshot.child("name").getValue().toString()).append(",").
+                                                    append(snapshot.child("description").getValue().toString()).append(",").
                                                     append(snapshot.child("unitPrice").getValue().toString()).append(",").
-                                                    append(snapshot.child("description").getValue().toString());
-
+                                                    append(snapshot.child("quantity").getValue().toString()).append(",").
+                                                    append(snapshot.child("totalPrice").getValue().toString()).append(",").
+                                                    append(snapshot.child("expiration").getValue().toString()).append(",").
+                                                    append(snapshot.child("lastUpdated").getValue().toString()).append(",");
 
                                             FileOutputStream out = v.getContext().openFileOutput("data.csv", Context.MODE_PRIVATE);
                                             out.write((data.toString()).getBytes());
@@ -192,7 +194,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                                             Uri path = FileProvider.getUriForFile(context, "com.sc703.gualmarsh.FileProvider", fileLocation);
                                             Intent fileIntent = new Intent(Intent.ACTION_SEND);
                                             fileIntent.setType("text/csv");
-                                            fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Data");
+                                            fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Single Product Data Export");
                                             fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                             fileIntent.putExtra(Intent.EXTRA_STREAM, path);
                                             v.getContext().startActivity(Intent.createChooser(fileIntent, "Open with"));

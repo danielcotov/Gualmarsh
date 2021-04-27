@@ -205,10 +205,11 @@ public class ShowItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 StringBuilder data = new StringBuilder();
-                data.append("Product Name,Quantity,Barcode,Price,Description");
-                data.append("\n").append(String.valueOf(viewModel.getProductName().getValue())).append(",").append((viewModel.getProductQuantity()).getValue()).append(",").
-                        append(String.valueOf(viewModel.getProductCode().getValue())).append(",").append(viewModel.getProductPrice().getValue().substring(1)).append(",").
-                        append(String.valueOf(viewModel.getProductDescription().getValue()));
+                data.append("Barcode,Name,Description,Unit Price,Quantity,Total Price,Expiration Date,Last Updated");
+                data.append("\n").append(viewModel.getProductCode().getValue()).append(",").append(viewModel.getProductName().getValue()).
+                        append(",").append((viewModel.getProductDescription()).getValue()).append(",").append(viewModel.getProductPrice().getValue().substring(1)).append(",").
+                        append(viewModel.getProductQuantity().getValue()).append(",").append(totalPrice).append(",").append(viewModel.getProductExpiration().getValue()).append(",").
+                        append(viewModel.getLastUpdated().getValue());
                 try{
                     FileOutputStream out = getContext().openFileOutput("data.csv", Context.MODE_PRIVATE);
                     out.write((data.toString()).getBytes());
@@ -219,7 +220,7 @@ public class ShowItemFragment extends Fragment {
                     Uri path = FileProvider.getUriForFile(context, "com.sc703.gualmarsh.FileProvider", fileLocation);
                     Intent fileIntent = new Intent(Intent.ACTION_SEND);
                     fileIntent.setType("text/csv");
-                    fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Data");
+                    fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Single Product Data Export");
                     fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     fileIntent.putExtra(Intent.EXTRA_STREAM, path);
                     startActivity(Intent.createChooser(fileIntent, "Open with"));

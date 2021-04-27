@@ -47,6 +47,7 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
     private final FirebaseDatabase fDatabase = FirebaseDatabase.getInstance();
     private final DatabaseReference bdRef = fDatabase.getReference();
     private ItemViewModel viewModel;
+    private StringBuilder data = new StringBuilder();
 
 
     public CategoryAdapter(@NonNull FirebaseRecyclerOptions<Category> options, GridLayoutManager gridLayoutManager) {
@@ -140,29 +141,23 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
                                 Toast.makeText(v.getContext(), "DELETE", Toast.LENGTH_SHORT).show();
                             }
                             if(item.getItemId() == R.id.popupMenu_export){
+
                                 bdRef.child("categories").child(Integer.toString(position+1)).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         bdRef.child("productCategories").child(snapshot.child("code").getValue().toString()).addValueEventListener(new ValueEventListener() {
                                             @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                StringBuilder data = new StringBuilder();
-                                                data.append("Product Name,Quantity,Barcode,Unit Price,Description");
-                                                int j=1;
-                                                for(int i=1; i<=dataSnapshot.getChildrenCount(); j++){
-                                                    try{
-                                                        data.append("\n").append(dataSnapshot.child(Integer.toString(j)).child("name").getValue().toString()).append(",").
-                                                                append(dataSnapshot.child(Integer.toString(j)).child("quantity").getValue().toString()).append(",").
-                                                                append(dataSnapshot.child(Integer.toString(j)).child("code").getValue().toString()).append(",").
-                                                                append(dataSnapshot.child(Integer.toString(j)).child("unitPrice").getValue().toString()).append(",").
-                                                                append(dataSnapshot.child(Integer.toString(j)).child("description").getValue().toString());
-                                                        i++;
-                                                    }catch (Exception e){
-
-                                                    }
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                data.append("Category ID,Barcode,Name,Description,Unit Price,Quantity,Total Price,Expiration Date,Last Updated")
+                                                        .append("\n").append(snapshot.getKey());
+                                                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                                    data.append(",").append(dataSnapshot.child("code").getValue().toString()).
+                                                            append(",").append(dataSnapshot.child("name").getValue().toString()).append(",").append(dataSnapshot.child("description").getValue().toString()).
+                                                            append(",").append(dataSnapshot.child("unitPrice").getValue().toString()).append(",").append(dataSnapshot.child("quantity").getValue().toString()).
+                                                            append(",").append(dataSnapshot.child("totalPrice").getValue().toString()).append(",").append(dataSnapshot.child("expiration").getValue().toString()).
+                                                            append(",").append(dataSnapshot.child("lastUpdated").getValue().toString());
                                                 }
-
-                                                try{
+                                                try {
                                                     FileOutputStream out = v.getContext().openFileOutput("data.csv", Context.MODE_PRIVATE);
                                                     out.write((data.toString()).getBytes());
                                                     out.close();
@@ -171,13 +166,13 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
                                                     File fileLocation = new File(v.getContext().getFilesDir(), "data.csv");
                                                     Uri path = FileProvider.getUriForFile(context, "com.sc703.gualmarsh.FileProvider", fileLocation);
                                                     Intent fileIntent = new Intent(Intent.ACTION_SEND);
-                                                    fileIntent.setType("text/*");
-                                                    fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Data");
+                                                    fileIntent.setType("text/csv");
+                                                    fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Category Data Export");
                                                     fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                                     fileIntent.putExtra(Intent.EXTRA_STREAM, path);
                                                     v.getContext().startActivity(Intent.createChooser(fileIntent, "Open with"));
 
-                                                }catch(Exception e){
+                                                } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }
                                             }
@@ -187,6 +182,7 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
 
                                             }
                                         });
+
                                     }
 
                                     @Override

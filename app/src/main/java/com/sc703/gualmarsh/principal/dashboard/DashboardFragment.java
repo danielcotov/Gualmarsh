@@ -75,7 +75,7 @@ public class DashboardFragment extends Fragment {
         exportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                exportDB();
+                exportProducts();
             }
         });
 
@@ -126,26 +126,18 @@ public class DashboardFragment extends Fragment {
     }
 
 
-    public void exportDB() {
-        data.append("Category,ID,Code,Quantity,Unit Price,Name,Description");
-        bdRef.child("productCategories").addValueEventListener(new ValueEventListener() {
+    public void exportProducts() {
+        data.append("Category ID,Barcode,Name,Description,Unit Price,Quantity,Total Price,Expiration Date,Last Updated");
+        bdRef.child("products").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    count++;
-                    int i = 0;
-                    for (DataSnapshot catds : ds.getChildren()) {
-                        i++;
-                        data.append("\n");
-                        data.append(ds.getKey());
-                        data.append(",");
-                        data.append(catds.child("code").getValue().toString()).append(",").
-                                append(catds.child("quantity").getValue().toString()).append(",").
-                                append(catds.child("unitPrice").getValue().toString()).append(",").
-                                append(catds.child("name").getValue().toString()).append(",").
-                                append(catds.child("description").getValue().toString());
-                    }
 
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    data.append("\n").append(dataSnapshot.child("category").getValue().toString()).append(",").append(dataSnapshot.child("code").getValue().toString()).
+                            append(",").append(dataSnapshot.child("name").getValue().toString()).append(",").append(dataSnapshot.child("description").getValue().toString()).
+                            append(",").append(dataSnapshot.child("unitPrice").getValue().toString()).append(",").append(dataSnapshot.child("quantity").getValue().toString()).
+                            append(",").append(dataSnapshot.child("totalPrice").getValue().toString()).append(",").append(dataSnapshot.child("expiration").getValue().toString()).
+                            append(",").append(dataSnapshot.child("lastUpdated").getValue().toString());
                 }
                 try {
                     FileOutputStream out = getContext().openFileOutput("data.csv", Context.MODE_PRIVATE);
@@ -153,11 +145,11 @@ public class DashboardFragment extends Fragment {
                     out.close();
 
                     Context context = getContext();
-                    File fileLocation = new File(getContext().getFilesDir(), "dbdata.csv");
+                    File fileLocation = new File(getContext().getFilesDir(), "data.csv");
                     Uri path = FileProvider.getUriForFile(context, "com.sc703.gualmarsh.FileProvider", fileLocation);
                     Intent fileIntent = new Intent(Intent.ACTION_SEND);
                     fileIntent.setType("text/csv");
-                    fileIntent.putExtra(Intent.EXTRA_SUBJECT, "DBBackup");
+                    fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Product Data Export");
                     fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     fileIntent.putExtra(Intent.EXTRA_STREAM, path);
                     getContext().startActivity(Intent.createChooser(fileIntent, "Open with"));
