@@ -137,9 +137,7 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            if(item.getItemId() == R.id.popupMenu_delete){
 
-                            }
                             if(item.getItemId() == R.id.popupMenu_export){
 
                                 bdRef.child("categories").child(Integer.toString(position+1)).addValueEventListener(new ValueEventListener() {
