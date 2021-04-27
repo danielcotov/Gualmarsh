@@ -55,6 +55,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
     private ItemViewModel viewModel;
     private Context currentContext;
     private Fragment currentFragment;
+    private StringBuilder data = new StringBuilder();
 
     public ProductAdapter(@NonNull FirebaseRecyclerOptions<Product> options, GridLayoutManager gridLayoutManager, Activity activity, Fragment currentFragment)
     {
@@ -173,7 +174,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                                 bdRef.child("products").child(Integer.toString(position+1)).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        StringBuilder data = new StringBuilder();
+
                                         data.append("Barcode,Name,Description,Unit Price,Quantity,Total Price,Expiration Date,Last Updated");
                                         try{
                                             data.append("\n").append(snapshot.child("code").getValue().toString()).append(",").
@@ -197,7 +198,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                                             fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Single Product Data Export");
                                             fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                             fileIntent.putExtra(Intent.EXTRA_STREAM, path);
-                                            data.setLength(0);
+
                                             v.getContext().startActivity(Intent.createChooser(fileIntent, "Open with"));
 
                                         }catch(Exception e){
@@ -209,10 +210,12 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
 
                                     }
                                 });
+                                data.setLength(0);
                             }
                             return false;
                         }
                     });
+
                 }
             });
         } catch (Exception e) {

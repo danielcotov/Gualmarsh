@@ -176,7 +176,12 @@ public class ShowItemFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                imagePath = Uri.parse(viewModel.getImagePath().getValue());
+                try{
+                    imagePath = Uri.parse(viewModel.getImagePath().getValue());
+                }catch (Exception e){
+
+                }
+
             }
         });
         edtDescription.addTextChangedListener(watcher);
@@ -223,8 +228,9 @@ public class ShowItemFragment extends Fragment {
                     fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Single Product Data Export");
                     fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     fileIntent.putExtra(Intent.EXTRA_STREAM, path);
-                    startActivity(Intent.createChooser(fileIntent, "Open with"));
                     data.setLength(0);
+                    startActivity(Intent.createChooser(fileIntent, "Open with"));
+
                 }catch(Exception e){
                     e.printStackTrace();
                 }
@@ -444,6 +450,7 @@ public class ShowItemFragment extends Fragment {
     public void loadImage (Context context, ImageView imvImage, String code){
         String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".jpg";
         imvImage.setImageBitmap(BitmapFactory.decodeFile(cachePath));
+        viewModel.setImagePath(cachePath);
 
     }
     public boolean validateItem() {

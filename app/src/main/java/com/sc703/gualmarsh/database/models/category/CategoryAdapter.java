@@ -168,7 +168,6 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
                                                     fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Category Data Export");
                                                     fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                                     fileIntent.putExtra(Intent.EXTRA_STREAM, path);
-                                                    data.setLength(0);
                                                     v.getContext().startActivity(Intent.createChooser(fileIntent, "Open with"));
 
                                                 } catch (Exception e) {
@@ -189,6 +188,7 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
 
                                     }
                                 });
+                                data.setLength(0);
                             }
                             return false;
                         }
