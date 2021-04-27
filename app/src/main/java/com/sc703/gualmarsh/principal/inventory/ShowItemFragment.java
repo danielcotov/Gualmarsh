@@ -224,6 +224,7 @@ public class ShowItemFragment extends Fragment {
                     fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     fileIntent.putExtra(Intent.EXTRA_STREAM, path);
                     startActivity(Intent.createChooser(fileIntent, "Open with"));
+                    data.setLength(0);
                 }catch(Exception e){
                     e.printStackTrace();
                 }

@@ -197,6 +197,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                                             fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Single Product Data Export");
                                             fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                             fileIntent.putExtra(Intent.EXTRA_STREAM, path);
+                                            data.setLength(0);
                                             v.getContext().startActivity(Intent.createChooser(fileIntent, "Open with"));
 
                                         }catch(Exception e){

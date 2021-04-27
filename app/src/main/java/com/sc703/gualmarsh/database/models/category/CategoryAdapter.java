@@ -138,7 +138,7 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             if(item.getItemId() == R.id.popupMenu_delete){
-                                Toast.makeText(v.getContext(), "DELETE", Toast.LENGTH_SHORT).show();
+
                             }
                             if(item.getItemId() == R.id.popupMenu_export){
 
@@ -148,10 +148,10 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
                                         bdRef.child("productCategories").child(snapshot.child("code").getValue().toString()).addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                data.append("Category ID,Barcode,Name,Description,Unit Price,Quantity,Total Price,Expiration Date,Last Updated")
-                                                        .append("\n").append(snapshot.getKey());
+                                                data.append("Category ID,Barcode,Name,Description,Unit Price,Quantity,Total Price,Expiration Date,Last Updated");
+
                                                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                                                    data.append(",").append(dataSnapshot.child("code").getValue().toString()).
+                                                    data.append("\n").append(snapshot.getKey()).append(",").append(dataSnapshot.child("code").getValue().toString()).
                                                             append(",").append(dataSnapshot.child("name").getValue().toString()).append(",").append(dataSnapshot.child("description").getValue().toString()).
                                                             append(",").append(dataSnapshot.child("unitPrice").getValue().toString()).append(",").append(dataSnapshot.child("quantity").getValue().toString()).
                                                             append(",").append(dataSnapshot.child("totalPrice").getValue().toString()).append(",").append(dataSnapshot.child("expiration").getValue().toString()).
@@ -170,6 +170,7 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<Category, CategoryA
                                                     fileIntent.putExtra(Intent.EXTRA_SUBJECT, "Category Data Export");
                                                     fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                                     fileIntent.putExtra(Intent.EXTRA_STREAM, path);
+                                                    data.setLength(0);
                                                     v.getContext().startActivity(Intent.createChooser(fileIntent, "Open with"));
 
                                                 } catch (Exception e) {
