@@ -83,7 +83,6 @@ public class InventoryFragment extends Fragment {
                             if (snapshot.getValue() != null) {
                                 try {
                                     viewModel.setCategoryCode(snapshot.getValue().toString());
-                                    viewModel.setCategoryKey(Integer.toString(position + 1));
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

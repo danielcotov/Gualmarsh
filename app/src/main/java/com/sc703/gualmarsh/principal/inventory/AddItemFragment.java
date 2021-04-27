@@ -171,7 +171,7 @@ public class AddItemFragment extends Fragment {
                         totalPrice = Long.parseLong(edtPrice.getText().toString()) * Long.parseLong(edtQuantity.getText().toString());
                         SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yyyy");
                         currentDate = sdf.format(calendar.getTime());
-                        int productKey = Integer.parseInt(viewModel.getProductCount().getValue()) + 1;
+                        int productKey = Integer.parseInt(viewModel.getProductKey().getValue()) + 1;
                         productAdd.put(Integer.toString(productKey), new Product(edtCode.getText().toString(), edtName.getText().toString(), edtDescription.getText().toString(),
                                 Long.parseLong(edtPrice.getText().toString()), totalPrice, Long.parseLong(edtQuantity.getText().toString()), tvDate.getText().toString(), currentDate));
                         productCategory.updateChildren(productAdd);

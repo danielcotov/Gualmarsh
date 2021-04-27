@@ -8,14 +8,12 @@ import androidx.lifecycle.ViewModel;
 
 public class ItemViewModel extends ViewModel {
     private final MutableLiveData<String> categoryCode = new MutableLiveData<>();
-    private final MutableLiveData<String> categoryKey = new MutableLiveData<>();
     private final MutableLiveData<String> productCode = new MutableLiveData<>();
     private final MutableLiveData<String> productName = new MutableLiveData<>();
     private final MutableLiveData<String> productQuantity = new MutableLiveData<>();
     private final MutableLiveData<String> productPrice = new MutableLiveData<>();
     private final MutableLiveData<String> productDescription = new MutableLiveData<>();
     private final MutableLiveData<String> productExpiration = new MutableLiveData<>();
-    private final MutableLiveData<String> productTotalPrice = new MutableLiveData<>();
     private final MutableLiveData<String> productSearch = new MutableLiveData<>();
     private final MutableLiveData<String> productCount = new MutableLiveData<>();
     private final MutableLiveData<String> productKey = new MutableLiveData<>();
@@ -26,9 +24,6 @@ public class ItemViewModel extends ViewModel {
 
     public void setCategoryCode(String category){
         categoryCode.setValue(category);
-    }
-    public void setCategoryKey(String key){
-        categoryKey.setValue(key);
     }
     public void setProductCode(String product){
         productCode.setValue(product);
@@ -51,9 +46,6 @@ public class ItemViewModel extends ViewModel {
     public void setProductExpiration(String expiration){
         productExpiration.setValue(expiration);
     }
-    public void setProductTotalPrice(String totalPrice){
-        productTotalPrice.setValue(totalPrice);
-    }
     public void setProductSearch(String search){
         productSearch.setValue(search);
     }
@@ -75,15 +67,10 @@ public class ItemViewModel extends ViewModel {
     public LiveData<String> getCategoryCode() {
         return categoryCode;
     }
-    public MutableLiveData<String> getCategoryKey() {
-        return categoryKey;
-    }
     public LiveData<String> getProductCode() {
         return productCode;
     }
-    public LiveData<String> getProductCount() {
-        return productCount;
-    }
+
     public MutableLiveData<String> getProductName() {
         return productName;
     }
@@ -99,9 +86,7 @@ public class ItemViewModel extends ViewModel {
     public MutableLiveData<String> getProductExpiration() {
         return productExpiration;
     }
-    public MutableLiveData<String> getProductTotalPrice() {
-        return productTotalPrice;
-    }
+
     public MutableLiveData<String> getProductSearch() {
         return productSearch;
     }

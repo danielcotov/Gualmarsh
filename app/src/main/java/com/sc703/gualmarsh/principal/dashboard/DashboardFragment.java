@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,33 +25,37 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sc703.gualmarsh.R;
+import com.sc703.gualmarsh.database.models.itemView.ItemViewModel;
+import com.sc703.gualmarsh.database.models.product.Product;
 
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Map;
 
 public class DashboardFragment extends Fragment {
     private TextView itemsNum, categoriesNum, dashboardQuantity, dashboardTotal;
     private FirebaseDatabase fDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference bdRef = fDatabase.getReference();
-    private DatabaseReference categoriesRef = bdRef.child("categories");
-    private DatabaseReference allProducts = bdRef.child("products");
+    private DatabaseReference categories = bdRef.child("categories");
+    private DatabaseReference products = bdRef.child("products");
     private Long count = Long.parseLong("0");
     private StringBuilder data = new StringBuilder();
-    private int sum;
-    private int sum2;
+    private int totalQuantity, totalPrice;
+    private ItemViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         itemsNum = root.findViewById(R.id.tv_dashboardItemsNum);
+        viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
         categoriesNum = root.findViewById(R.id.tv_dashboardCategoriesNum);
         dashboardQuantity = root.findViewById(R.id.tv_dashboardQuantityNum);
         dashboardTotal = root.findViewById(R.id.tv_dashboardTotalNum);
         ImageView exportButton = root.findViewById(R.id.btn_export);
 
-        if(Build.VERSION.SDK_INT >= 21){
+        if (Build.VERSION.SDK_INT >= 21) {
             Window window = getActivity().getWindow();
             window.setStatusBarColor(getActivity().getResources().getColor(R.color.w_darkBG));
         }
@@ -77,8 +82,8 @@ public class DashboardFragment extends Fragment {
         return root;
     }
 
-    public void loadWidgets(Long count){
-        categoriesRef.addListenerForSingleValueEvent (new ValueEventListener() {
+    public void loadWidgets(Long count) {
+        categories.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -93,56 +98,43 @@ public class DashboardFragment extends Fragment {
                 categoriesNum.setText(text);
             }
         });
-        for (int i = 1; i <= count; i++){
-            allProducts.child(Integer.toString(i)).child("quantity").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
+        products.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     try{
-                        sum += Integer.parseInt(snapshot.getValue().toString());
-                        dashboardQuantity.setText(String.valueOf(sum));
+                        totalQuantity += Integer.parseInt(dataSnapshot.child("quantity").getValue().toString());
+                        dashboardQuantity.setText(String.valueOf(totalQuantity));
+                        totalPrice += Integer.parseInt(dataSnapshot.child("totalPrice").getValue().toString());
+                        dashboardTotal.setText("¢" + Integer.toString(totalPrice));
                         itemsNum.setText(String.valueOf(count));
+                        viewModel.setProductKey(dataSnapshot.getRef().getKey());
+
                     }catch (Exception e){
                         e.printStackTrace();
                     }
 
                 }
+         }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                }
-            });
-            allProducts.child(Integer.toString(i)).child("totalPrice").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    try{
-                        sum2+= Integer.parseInt(snapshot.getValue().toString());
-                        dashboardTotal.setText("¢" + Integer.toString(sum2));
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-        }
-
+            }
+        });
     }
-    public void exportDB(){
+
+
+    public void exportDB() {
         data.append("Category,ID,Code,Quantity,Unit Price,Name,Description");
         bdRef.child("productCategories").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot ds : snapshot.getChildren()){
+                for (DataSnapshot ds : snapshot.getChildren()) {
                     count++;
                     int i = 0;
-                    for(DataSnapshot catds: ds.getChildren()){
+                    for (DataSnapshot catds : ds.getChildren()) {
                         i++;
                         data.append("\n");
                         data.append(ds.getKey());
@@ -155,7 +147,7 @@ public class DashboardFragment extends Fragment {
                     }
 
                 }
-                try{
+                try {
                     FileOutputStream out = getContext().openFileOutput("data.csv", Context.MODE_PRIVATE);
                     out.write((data.toString()).getBytes());
                     out.close();
@@ -170,10 +162,10 @@ public class DashboardFragment extends Fragment {
                     fileIntent.putExtra(Intent.EXTRA_STREAM, path);
                     getContext().startActivity(Intent.createChooser(fileIntent, "Open with"));
 
-                }catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Log.e("DATA:",data.toString());
+                Log.e("DATA:", data.toString());
             }
 
             @Override

@@ -74,7 +74,7 @@ public class ShowItemFragment extends Fragment {
     private ImageView imvShowImage, imvClose, imvDelete;
     private EditText edtName, edtQuantity, edtCode, edtDescription, edtPrice;
     private String bName, bQuantity, bCode, bDescription, bPrice, currentDate;
-    private Button btnSave, btnCancel, btnDelete, btnDiscard, btnDisCancel;
+    private Button btnSave, btnCancel, btnDelete, btnDiscard;
     private StorageReference storage;
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private TextView tvDate, tvLastUpdated, tvTotalPrice;

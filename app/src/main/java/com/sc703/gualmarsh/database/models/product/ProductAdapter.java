@@ -170,14 +170,12 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                                 });
                             }
                             if(item.getItemId() == R.id.popupMenu_export){
-                                Log.e("TAG", Integer.toString(position+1));
                                 bdRef.child("products").child(Integer.toString(position+1)).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         StringBuilder data = new StringBuilder();
                                         data.append("Product Name,Quantity,Barcode,Unit Price,Description");
                                         try{
-                                            Log.e("TAG1", snapshot.child("name").getValue().toString());
                                             data.append("\n").append(snapshot.child("name").getValue().toString()).append(",").
                                                     append(snapshot.child("quantity").getValue().toString()).append(",").
                                                     append(snapshot.child("code").getValue().toString()).append(",").
@@ -227,7 +225,6 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
         viewModel = new ViewModelProvider(currentFragment.requireActivity()).get(ItemViewModel.class);
         String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".jpg";
         File cacheFile = new File(cachePath);
-        Log.e("TAG", navController.getPreviousBackStackEntry().getDestination().toString());
         if (!cacheFile.exists() || (navController.getPreviousBackStackEntry().getDestination().toString().contains("showItem") && viewModel.getProductChanged().getValue() != null) ){
             storage = FirebaseStorage.getInstance().getReference().child("Resources/Products/"+ code + ".jpg");
             File localFile = null;
