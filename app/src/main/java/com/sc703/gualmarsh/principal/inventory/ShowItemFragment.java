@@ -420,7 +420,7 @@ public class ShowItemFragment extends Fragment {
         storage = FirebaseStorage.getInstance().getReference().child("Resources/Products");
 
         if (imagePath != null) {
-            StorageReference ref = storage.child(edtCode.getText().toString() + ".png");
+            StorageReference ref = storage.child(edtCode.getText().toString() + ".jpg");
             ref.putFile(imagePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -441,7 +441,7 @@ public class ShowItemFragment extends Fragment {
         }
     }
     public void loadImage (Context context, ImageView imvImage, String code){
-        String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".png";
+        String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".jpg";
         imvImage.setImageBitmap(BitmapFactory.decodeFile(cachePath));
 
     }

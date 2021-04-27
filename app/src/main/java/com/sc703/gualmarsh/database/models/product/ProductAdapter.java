@@ -225,13 +225,13 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
     public void loadImage (Context context, ImageView imvImage, String code){
         NavController navController = Navigation.findNavController(activity, R.id.nav_principal_fragment);
         viewModel = new ViewModelProvider(currentFragment.requireActivity()).get(ItemViewModel.class);
-        String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".png";
+        String cachePath = context.getCacheDir().getAbsolutePath() + File.separator + code + ".jpg";
         File cacheFile = new File(cachePath);
         if (!cacheFile.exists() || (navController.getPreviousBackStackEntry().getDestination().toString().contains("showItem") && viewModel.getProductChanged().getValue() != null) ){
-            storage = FirebaseStorage.getInstance().getReference().child("Resources/Products/"+ code + ".png");
+            storage = FirebaseStorage.getInstance().getReference().child("Resources/Products/"+ code + ".jpg");
             File localFile = null;
             try {
-                localFile = new File(context.getCacheDir(), code + ".png");
+                localFile = new File(context.getCacheDir(), code + ".jpg");
             } catch (Exception e) {
                 e.printStackTrace();
             }
