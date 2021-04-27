@@ -127,11 +127,11 @@ public class DashboardFragment extends Fragment {
 
 
     public void exportProducts() {
-        data.append("Category ID,Barcode,Name,Description,Unit Price,Quantity,Total Price,Expiration Date,Last Updated");
+
         bdRef.child("products").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                data.append("Category ID,Barcode,Name,Description,Unit Price,Quantity,Total Price,Expiration Date,Last Updated");
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     data.append("\n").append(dataSnapshot.child("category").getValue().toString()).append(",").append(dataSnapshot.child("code").getValue().toString()).
                             append(",").append(dataSnapshot.child("name").getValue().toString()).append(",").append(dataSnapshot.child("description").getValue().toString()).
